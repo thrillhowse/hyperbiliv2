@@ -61,12 +61,15 @@
   height: 44px;
   max-height: 44px;
   width: 90%;
+  min-width: 0;
   margin: 6px;
   /* No vertical padding: combined with a fixed height it leaves too little
      room for iOS Safari's internal date-field rendering, which forces the
      box to grow taller than declared. Browsers center form control text
-     vertically on their own without it. */
-  padding: 0 8px;
+     vertically on their own without it. Right padding is trimmed to make
+     room for the calendar icon inside the box (see below) instead of the
+     icon adding extra width past the declared border-box width. */
+  padding: 0 4px 0 8px;
   text-align: left;
   font-family: var(--main-font);
   font-size: 16px;
@@ -85,6 +88,14 @@
 .container-inputs input[type='date']::-webkit-date-and-time-value {
   text-align: left;
   margin: 0;
+}
+
+/* The calendar icon button carries its own default margin/padding that can
+   push the control wider than its declared border-box width. Zero it out
+   so the icon fits inside the box instead of extending past it. */
+.container-inputs input[type='date']::-webkit-calendar-picker-indicator {
+  margin: 0;
+  padding: 2px;
 }
 
 .container-inputs input[type='number'] {
@@ -235,7 +246,8 @@ input::-webkit-inner-spin-button {
   height: 44px;
   max-height: 44px;
   margin: 8px 0;
-  padding: 0 8px;
+  min-width: 0;
+  padding: 0 4px 0 8px;
   text-align: center;
   font-family: var(--main-font);
   font-size: 16px;
@@ -246,6 +258,11 @@ input::-webkit-inner-spin-button {
 
 .bili-table input[type='date'].date-selected {
   font-style: normal;
+}
+
+.bili-table input[type='date']::-webkit-calendar-picker-indicator {
+  margin: 0;
+  padding: 2px;
 }
 
 .bili-table input[type='date']::-webkit-date-and-time-value {
