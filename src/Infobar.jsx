@@ -1,13 +1,13 @@
-import './Infobar.css';
-import { useLanguage } from './context/LanguageContext.jsx';
-import { t } from './translations.js';
+import "./Infobar.css";
+import { useLanguage } from "./context/LanguageContext.jsx";
+import { t } from "./translations.js";
 
 export default function Infobar({ showInfobar }) {
   const { lang } = useLanguage();
 
   return (
     <div
-      className={`infobar ${lang === 'fr' ? 'infobar-fr' : ''} ${showInfobar ? 'infobar-active' : ''}`}
+      className={`infobar ${lang === "fr" ? "infobar-fr" : ""} ${showInfobar ? "infobar-active" : ""}`}
     >
       <ul>
         <li>
@@ -44,6 +44,15 @@ export default function Infobar({ showInfobar }) {
           <a href="faq" className="list-link">
             <span className="lucide--circle-question-mark"></span>
             {t[lang].infobar.faq}
+          </a>
+        </li>{" "}
+        <li
+          className="nav-list-item"
+          style={{ color: "var(--color-green-500)", fontWeight: "bold" }}
+        >
+          <a href="pwa" className="list-link">
+            <span className="lucide--smartphone"></span>
+            {t[lang].infobar.pwa}
           </a>
         </li>
       </ul>

@@ -1,7 +1,7 @@
-import './Header.css';
-import { useLanguage } from './context/LanguageContext.jsx';
-import { useState } from 'react';
-import { t } from './translations.js';
+import "./Header.css";
+import { useLanguage } from "./context/LanguageContext.jsx";
+import { useState } from "react";
+import { t } from "./translations.js";
 
 export default function Header({ showInfobar, setShowInfobar }) {
   const { lang, toggle } = useLanguage();
@@ -10,12 +10,12 @@ export default function Header({ showInfobar, setShowInfobar }) {
     <header>
       <span
         id="header-list-icon"
-        className={`solar--list-broken header-icon ${showInfobar ? 'hidden' : ''}`}
+        className={`solar--list-broken header-icon ${showInfobar ? "hidden" : ""}`}
         onClick={() => setShowInfobar(true)}
       ></span>
       <span
         id="header-list-close-icon"
-        className={`material-symbols--close header-icon ${showInfobar ? '' : 'hidden'}`}
+        className={`material-symbols--close header-icon ${showInfobar ? "" : "hidden"}`}
         onClick={() => setShowInfobar(false)}
       ></span>
       <a href="/" className="title-link">
@@ -60,10 +60,19 @@ export default function Header({ showInfobar, setShowInfobar }) {
               {t[lang].infobar.faq}
             </a>
           </li>
+          <li
+            className="nav-list-item"
+            style={{ color: "var(--secondary-color)", fontWeight: "bold" }}
+          >
+            <a href="pwa" className="list-link">
+              <span className="lucide--smartphone"></span>
+              {t[lang].infobar.pwa}
+            </a>
+          </li>
         </ul>
       </div>
       <button onClick={toggle} className="lang-toggle">
-        {lang === 'en' ? 'EN' : 'FR'}
+        {lang === "en" ? "EN" : "FR"}
       </button>
     </header>
   );

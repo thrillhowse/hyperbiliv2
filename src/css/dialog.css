@@ -51,6 +51,44 @@ dialog::backdrop {
   font-family: var(--main-font);
 }
 
+.dialog-tip {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 12px 8px;
+  border: 1px solid var(--color-slate-200, #e4e9ef);
+  border-radius: 8px;
+  background-color: var(--color-slate-100\50, #f8fafc);
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.dialog-tip .tip-icon {
+  margin-top: 2px;
+}
+
+.dialog-tip-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.dialog-tip a {
+  color: var(--color-green-500, #2ea36a);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dialog-tip a:hover {
+  color: var(--color-green-600, #268a59);
+}
+
 .warning-icon-container {
   width: 52px;
   height: 52px;

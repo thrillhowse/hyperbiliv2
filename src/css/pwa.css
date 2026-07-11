@@ -1,0 +1,33 @@
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.pwa-section-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.pwa-icon {
+  width: 16px;
+  height: 16px;
+  margin-inline: 4px;
+}
+
+.pwa-icon-amber {
+  color: var(--color-amber-400);
+}
+
+.pwa-icon-red {
+  color: var(--color-amber-700);
+}
+
+.pwa-ol {
+  margin-bottom: 0;
+}
+
+.pwa-ul {
+  list-style-type: disc;
+  padding-inline-start: 20px;
+  margin-bottom: 20px;
+}

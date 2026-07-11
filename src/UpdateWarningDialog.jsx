@@ -24,6 +24,20 @@ export default function UpdateWarningDialog({
       </p>
       <p className="dialog-text">{t[lang].updateWarning.text1}</p>
       <p className="dialog-text important">{t[lang].updateWarning.text2}</p>
+
+      <p className="dialog-tip">
+        <span className="lucide--smartphone tip-icon"></span>
+        <div className="dialog-tip-container">
+          <span>{t[lang].updateWarning.tip}</span>
+          <a
+            id="seeHowInstall"
+            href="/pwa"
+            dangerouslySetInnerHTML={{
+              __html: t[lang].updateWarning.tipLink,
+            }}
+          ></a>
+        </div>
+      </p>
       <button
         id="closeUpdateWarningDialogBtn"
         className="close-dialog-btn"

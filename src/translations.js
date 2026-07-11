@@ -37,6 +37,7 @@ export const t = {
       privacy: "Privacy",
       contact: "Contact",
       faq: "FAQ",
+      pwa: "App",
     },
 
     // Disclaimer
@@ -261,6 +262,8 @@ export const t = {
         "This version now includes French translations and an updated look & feel.",
       text2:
         "Please carefully review summary and graph results to ensure accuracy and optimal patient care. If you notice any issues, please reach out to hyperbili@outlook.com. Thank you!",
+      tip: "Tip: hyperbili can be installed on your phone.",
+      tipLink: "See how",
       okBtn: "I Understand",
     },
 
@@ -391,6 +394,14 @@ export const t = {
       a4: "No. Although gestational age is considered a neurotoxicity risk factor, it is already incorporated into the different curves when you select the gestational age.",
     },
 
+    pwa: {
+      header: "Install hyperbili on your phone",
+      text1:
+        "<em>hyperbili</em> isn’t a mobile app (you won’t find it in the App Store). However, you can add it to your phone’s home screen so it opens and behaves much like an app — with its own icon and a full-screen experience. This works on iPhone and Android and only takes a minute.",
+      text2:
+        "<b>A quick note</b>: Browser interfaces change over time. If these steps don’t work exactly as described, check your browser’s help page for “Add to Home Screen” or “Install web app.”",
+    },
+
     print: {
       dob: "Date of Birth",
       hob: "Hour of Birth",
@@ -439,6 +450,7 @@ export const t = {
       privacy: "Confidentialité",
       contact: "Coordonnées",
       faq: "FAQ",
+      pwa: "App",
     },
 
     // Disclaimer
@@ -669,6 +681,8 @@ export const t = {
         "Cette version inclut maintenant des traductions françaises et une interface utilisateur mise à jour.",
       text2:
         "Veuillez examiner attentivement le résumé et les graphiques des résultats afin d'en assurer l'exactitude et d'assurer une prise en charge optimale du patient. Si vous constatez le moindre problème, veuillez nous contacter à l'adresse hyperbili@outlook.com. Merci!",
+      tip: "Conseil : l'hyperbili peut être installée sur votre téléphone.",
+      tipLink: "Voyez comment",
       okBtn: "J’ai compris",
     },
 
@@ -804,6 +818,14 @@ export const t = {
       a3: "Oui. Si vous entrez la date et l'heure de naissance ainsi que la date et l'heure du test, <em>hyperbili</em> calcule l'âge en heures pour vous.",
       q4: "Dois-je tenir compte de l'âge gestationnel pour déterminer s'il existe ou non des facteurs de risque ?",
       a4: "Non. Bien que l'âge gestationnel soit considéré comme un facteur de risque de neurotoxicité, il est déjà intégré dans les différentes courbes lorsque vous sélectionnez l'âge gestationnel.",
+    },
+
+    pwa: {
+      header: "Installez hyperbili sur votre téléphone",
+      text1:
+        "<em>hyperbili</em> n'est pas une application mobile (vous ne la trouverez pas sur l'App Store). Cependant, vous pouvez l'ajouter à l'écran d'accueil de votre téléphone pour qu'elle s'ouvre et fonctionne comme une application : avec sa propre icône et un affichage plein écran. Cette opération est compatible avec iPhone et Android et ne prend qu'une minute.",
+      text2:
+        "<b>Remarque importante</b>: les interfaces des navigateurs évoluent avec le temps. Si ces étapes ne fonctionnent pas exactement comme décrit, consultez la page d’aide de votre navigateur pour trouver les options « Ajouter à l’écran d’accueil » ou « Installer l’application Web ».",
     },
 
     print: {
