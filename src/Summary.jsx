@@ -61,7 +61,7 @@ export default function Summary({
 
   // Check RoR
   useEffect(() => {
-    if (summaryGenerated?.rorHigh) {
+    if (summaryGenerated?.rorHigh && riskFactors === "No") {
       setShowRoRWarningDialog(true);
     }
   }, [summaryGenerated]);
