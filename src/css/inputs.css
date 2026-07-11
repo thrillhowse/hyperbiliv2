@@ -62,14 +62,17 @@
   max-height: 44px;
   width: 90%;
   margin: 6px;
+  /* No vertical padding: combined with a fixed height it leaves too little
+     room for iOS Safari's internal date-field rendering, which forces the
+     box to grow taller than declared. Browsers center form control text
+     vertically on their own without it. */
+  padding: 0 8px;
   text-align: left;
   font-family: var(--main-font);
   font-size: 16px;
   font-style: italic;
   color: black;
   background-color: white;
-  display: flex;
-  align-items: center;
 }
 
 .container-inputs input[type='date'].date-selected {
@@ -77,10 +80,8 @@
 }
 
 /* iOS Safari renders a selected date value inside a pseudo-element that is
-   hardcoded to text-align: center and can grow past the input's declared
-   height. Overriding it directly (and centering it within a flex parent)
-   keeps the input's height and left alignment consistent before/after a
-   date is picked. */
+   hardcoded to text-align: center. Override it directly so the value stays
+   left-aligned to match the empty-state placeholder. */
 .container-inputs input[type='date']::-webkit-date-and-time-value {
   text-align: left;
   margin: 0;
@@ -234,15 +235,13 @@ input::-webkit-inner-spin-button {
   height: 44px;
   max-height: 44px;
   margin: 8px 0;
+  padding: 0 8px;
   text-align: center;
   font-family: var(--main-font);
   font-size: 16px;
   font-style: italic;
   color: black;
   background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .bili-table input[type='date'].date-selected {
