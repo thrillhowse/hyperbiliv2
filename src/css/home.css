@@ -1,5 +1,9 @@
-body,
 html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
   font-family:
     var(--main-font),
     system-ui,
@@ -15,8 +19,13 @@ html {
     sans-serif;
   margin: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
+  /* Fixed (not just overflow:hidden) so iOS can't scroll body when a
+     keyboard opens or a field is focused - a fixed box has no scroll
+     concept for the browser to act on, unlike a merely hidden-overflow one. */
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -70,7 +79,7 @@ main {
   justify-content: space-between;
   align-items: center;
   width: 90%;
-  height: 100%;
+  position: relative;
   margin: 0.5rem auto;
   margin-bottom: 5rem;
 }
@@ -300,11 +309,12 @@ footer {
     color: black;
   }
 
-  /* Reset overflow/height constraints that clip print content */
+  /* Reset overflow/height/position constraints that clip print content */
   body,
   html {
     overflow: visible;
     height: auto;
+    position: static;
   }
 
   /* Flex containers don't fragment (paginate) correctly when printing -
