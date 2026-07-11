@@ -85,6 +85,10 @@ p {
   text-align: left;
 }
 
+button {
+  color: black;
+}
+
 .light-bold {
   font-weight: 500;
 }
