@@ -51,6 +51,8 @@
   max-height: 44px;
   margin: 6px;
   font-family: var(--main-font);
+  /* 16px prevents iOS Safari from auto-zooming the page on focus */
+  font-size: 16px;
   background-color: white;
 }
 
@@ -62,14 +64,26 @@
   margin: 6px;
   text-align: left;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   font-style: italic;
   color: black;
   background-color: white;
+  display: flex;
+  align-items: center;
 }
 
 .container-inputs input[type='date'].date-selected {
   font-style: normal;
+}
+
+/* iOS Safari renders a selected date value inside a pseudo-element that is
+   hardcoded to text-align: center and can grow past the input's declared
+   height. Overriding it directly (and centering it within a flex parent)
+   keeps the input's height and left alignment consistent before/after a
+   date is picked. */
+.container-inputs input[type='date']::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
 }
 
 .container-inputs input[type='number'] {
@@ -80,7 +94,7 @@
   margin: 6px;
   text-align: center;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   color: black;
   background-color: white;
 }
@@ -94,7 +108,7 @@
   padding: 12px 8px 12px 6px;
   text-align: left;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   font-style: italic;
   color: black;
   border: 1px solid var(--primary-color);
@@ -108,7 +122,7 @@ select.selected {
 
 .container-inputs select option {
   font-style: normal;
-  font-size: 0.9rem;
+  font-size: 16px;
 }
 
 input::-webkit-outer-spin-button,
@@ -199,7 +213,7 @@ input::-webkit-inner-spin-button {
   border: 1px solid var(--primary-color);
   border-radius: 8px;
   background-color: white;
-  font-size: 0.9rem;
+  font-size: 16px;
   color: black;
   text-align: center;
 }
@@ -210,7 +224,7 @@ input::-webkit-inner-spin-button {
   max-height: 44px;
   margin: 8px 5px;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   color: black;
   background-color: white;
 }
@@ -222,14 +236,22 @@ input::-webkit-inner-spin-button {
   margin: 8px 0;
   text-align: center;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   font-style: italic;
   color: black;
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bili-table input[type='date'].date-selected {
   font-style: normal;
+}
+
+.bili-table input[type='date']::-webkit-date-and-time-value {
+  text-align: center;
+  margin: 0;
 }
 
 /* Remove spinners in all modern browsers */
@@ -251,7 +273,7 @@ input[type='number']::-webkit-inner-spin-button {
   margin: 8px 5px;
   text-align: center;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   color: black;
   background-color: white;
 }
@@ -263,7 +285,7 @@ input[type='number']::-webkit-inner-spin-button {
   margin: 8px 0;
   text-align: center;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 16px;
   font-style: italic;
   color: black;
   border: 1px solid var(--primary-color);
