@@ -22,6 +22,28 @@ export default function Wizard({ showDisclaimer }) {
     containerRef.current?.scrollTo({ top: 0, behavior: "instant" });
   }, [currentStep]);
 
+  // Scrolls a field into view within the internal wizard-container only.
+  // Using fieldRef.current.scrollIntoView() directly would let the browser
+  // walk up to <body>/<html> too - on mobile those are height:100vh with
+  // overflow:hidden (see home.css), which is still programmatically
+  // scrollable even though the user can't scroll it back down. That shoves
+  // the header off-screen and it never returns.
+  const scrollFieldIntoView = (fieldRef) => {
+    const container = containerRef.current;
+    const field = fieldRef.current;
+    if (!container || !field) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const fieldRect = field.getBoundingClientRect();
+    const offset =
+      fieldRect.top -
+      containerRect.top -
+      container.clientHeight / 2 +
+      fieldRect.height / 2;
+
+    container.scrollBy({ top: offset, behavior: "smooth" });
+  };
+
   // Patient Details
   const [dob, setDob] = useState("");
   const [hob, setHob] = useState("");
@@ -77,45 +99,27 @@ export default function Wizard({ showDisclaimer }) {
     // Note: DOB & HOB are optional fields, but if one is filled then the other must be filled as well in order to calculate age in hours for the nomogram
     if (!dob && hob) {
       setShowDOBSubmitErrorMsg(true);
-      dobRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+      scrollFieldIntoView(dobRef);
       return;
     } else if (dob && !hob) {
       setShowHOBSubmitErrorMsg(true);
-      hobRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+      scrollFieldIntoView(hobRef);
       return;
     } else if (!gestAge) {
       setShowGestAgeErrorMsg(true);
-      gestAgeRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+      scrollFieldIntoView(gestAgeRef);
       return;
     } else if (!riskFactors) {
       setShowRiskFactorsErrorMsg(true);
-      riskFactorsRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+      scrollFieldIntoView(riskFactorsRef);
       return;
     } else if (!currentPhototherapy) {
       setShowCurrentPhototherapyErrorMsg(true);
-      currentPhototherapyRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+      scrollFieldIntoView(currentPhototherapyRef);
       return;
     } else if (!previousPhototherapy) {
       setShowPreviousPhototherapyErrorMsg(true);
-      previousPhototherapyRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
+      scrollFieldIntoView(previousPhototherapyRef);
       return;
     }
 
