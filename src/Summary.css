@@ -1,0 +1,24 @@
+.summary-table-header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 8px;
+  padding-top: 18px;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  font-size: large;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.no-bottom-border {
+  border-bottom: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}

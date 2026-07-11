@@ -1,3 +1,4 @@
+import "./Summary.css";
 import { useState, useRef, useEffect } from "react";
 import { useDialogModal } from "./dialog/useDialogModal.js";
 import { useLanguage } from "./context/LanguageContext.jsx";
@@ -95,19 +96,45 @@ export default function Summary({
         {/* DATE/HOUR OF BIRTH FOR PRINT */}
         <div id="dobHobForPrint">
           <p>
-            {t[lang].print.dob}:{" "}
-            {new Date(dob).toLocaleDateString(lang, {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
+            {dob ? (
+              <>
+                {t[lang].print.dob}:{" "}
+                {new Date(dob).toLocaleDateString(lang, {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </>
+            ) : (
+              ""
+            )}
           </p>
           <p>
-            {t[lang].print.hob}: {hob}:00
+            {hob ? (
+              <>
+                {t[lang].print.hob}: {hob ? `${hob}:00` : "N/A"}
+              </>
+            ) : (
+              ""
+            )}
           </p>
         </div>
 
         {/* SUMMARY TABLE */}
+        <div
+          id="summary-table-header-container"
+          className="summary-table-header-container"
+        >
+          <div className="container-inputs-header no-bottom-border">
+            <div className="header-title">
+              <span className="lucide--clipboard-check patient-details-header-icon"></span>
+              <div className="header-text">
+                <h2>{t[lang].summary.header}</h2>
+                <p className="header-text">{t[lang].summary.headerInfo}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="patientDetailsSummaryTable"></div>
         <div id="biliDataSummaryTable"></div>
       </div>

@@ -347,6 +347,7 @@ footer {
   #patient-details-div,
   #submit-btn-div,
   #bili-data-div,
+  #summary-table-header-container,
   .copy-print-btns,
   .back-start-over-btns {
     display: none !important;

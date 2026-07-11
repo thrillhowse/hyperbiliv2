@@ -65,6 +65,12 @@
   transition: border-radius 0.2s ease-in-out;
 }
 
+@media screen and (max-width: 425.98px) {
+  .wizard-step {
+    font-size: 10px;
+  }
+}
+
 @media screen and (min-width: 426px) {
   .wizard-step {
     font-size: 16px;

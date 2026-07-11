@@ -138,7 +138,8 @@ export const t = {
     // Summary Section
     summary: {
       header: "Summary",
-      headerInfo: "",
+      headerInfo:
+        "Carefully review the summary and graph results to ensure accuracy and optimal patient care.",
       patientSticker: "Patient Sticker",
       patientDetails: {
         header: "Patient Details",
@@ -543,7 +544,8 @@ export const t = {
     // Summary
     summary: {
       header: "Résumé",
-      headerInfo: "",
+      headerInfo:
+        "Examinez attentivement le résumé et les résultats graphiques afin d'assurer leur exactitude et une prise en charge optimale du patient.",
       patientSticker: "Sticker du patient",
       patientDetails: {
         header: "Information sur les patients",
