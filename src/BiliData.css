@@ -1,0 +1,100 @@
+.entry-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 12px;
+  background-color: white;
+  border: 1px solid var(--color-slate-300);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
+
+.entry-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-inline: 4px;
+}
+
+.entry-header-text {
+  font-size: 14px;
+  /* text-transform: uppercase; */
+}
+
+.entry-header button {
+  display: flex;
+  padding: 4px 8px;
+  background-color: inherit;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.entry-header button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.entry-header span {
+  width: 18px;
+  height: 18px;
+  color: var(--secondary-color);
+}
+
+.entry-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.entry-input-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.entry-input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.add-entry-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4px;
+  width: 95%;
+  margin: auto;
+  margin-bottom: 24px;
+  padding: 8px 12px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: 1px solid var(--color-slate-500);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.add-entry-btn:hover {
+  background-color: var(--secondary-color-hover);
+}
+
+@media screen and (min-width: 1024px) {
+  .entry-input-group-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    width: 100%;
+  }
+}

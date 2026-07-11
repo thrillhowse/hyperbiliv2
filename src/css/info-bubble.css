@@ -1,0 +1,91 @@
+.info-bubble {
+  display: none;
+  position: absolute;
+  bottom: 25px;
+  left: -100px;
+  min-width: 300px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.info-bubble-icon {
+  position: relative;
+  color: #cf1928;
+}
+
+.info-bubble-icon:hover {
+  cursor: pointer;
+}
+
+.show-info-bubble {
+  display: block;
+}
+
+#previous-phototherapy-info {
+  min-width: 250px;
+  left: -50px;
+}
+
+#tcb-info {
+  min-width: 200px;
+  left: -132px;
+  bottom: 30px;
+}
+
+#tsb-info {
+  min-width: 200px;
+  left: -171px;
+  bottom: 30px;
+}
+
+/* Add tooltip tails */
+.info-bubble::after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 23%;
+  margin-left: -9px;
+  border-width: 9px;
+  border-style: solid;
+  border-color: var(--primary-color) transparent transparent transparent;
+}
+
+/* Specific tooltip tails */
+
+#risk-factor-info::after {
+  left: 33%;
+}
+
+#tcb-info::after {
+  left: 70%;
+}
+#tsb-info::after {
+  left: 90%;
+}
+
+.close-info-bubble {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin: 4px auto;
+}
+
+@media screen and (min-width: 375px) {
+  .info-bubble {
+    min-width: 320px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .info-bubble {
+    min-width: 400px;
+  }
+
+  #risk-factor-info::after {
+    left: 27%;
+  }
+}

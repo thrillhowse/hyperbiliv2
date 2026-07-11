@@ -1,0 +1,103 @@
+.wizard-progress-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 12px auto;
+  padding: 12px 8px;
+}
+
+.wizard-step {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  text-align: center;
+  border: none;
+  border-radius: 24px;
+  outline: none;
+  padding: 8px 16px;
+  background-color: inherit;
+  color: var(--color-slate-500);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--main-font);
+  letter-spacing: 1px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    color 0.3s ease-in-out,
+    border-radius 0.2s ease-in-out;
+}
+
+.wizard-step-active {
+  color: var(--color-white);
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wizard-step-complete {
+  color: var(--secondary-color);
+}
+
+.wizard-step:hover {
+  cursor: pointer;
+}
+
+.wizard-step span {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+.wizard-step-active span {
+  color: #fff;
+}
+
+.wizard-step-active-full {
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 0 0 0 0;
+  transition: border-radius 0.2s ease-in-out;
+}
+
+@media screen and (min-width: 426px) {
+  .wizard-step {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .wizard-step span {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .wizard-step {
+    min-width: 200px;
+    max-width: 300px;
+  }
+
+  .wizard-step-separator {
+    width: 100%;
+    height: 4px;
+    margin: 0 8px;
+  }
+
+  .wizard-step-separator hr {
+    margin: 0;
+    color: var(--secondary-color);
+    background-color: var(--secondary-color);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .wizard-progress-bar {
+    width: 80%;
+  }
+}

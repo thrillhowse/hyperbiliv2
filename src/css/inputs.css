@@ -1,0 +1,368 @@
+.input-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 6px;
+  width: 100%;
+  margin: 0 8px;
+}
+
+.input-label-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+}
+
+.input-label-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.optional-label {
+  background-color: var(--color-slate-200);
+  color: var(--color-slate-600);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+/* CONTAINER INPUTS */
+.container-inputs input {
+  padding: 12px 8px;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+
+.container-inputs input[type='text'] {
+  width: 90%;
+  height: 44px;
+  max-height: 44px;
+  margin: 6px;
+  font-family: var(--main-font);
+  background-color: white;
+}
+
+.container-inputs input[type='date'] {
+  flex-grow: 1;
+  height: 44px;
+  max-height: 44px;
+  width: 90%;
+  margin: 6px;
+  text-align: left;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: black;
+  background-color: white;
+}
+
+.container-inputs input[type='date'].date-selected {
+  font-style: normal;
+}
+
+.container-inputs input[type='number'] {
+  flex: 1;
+  height: 44px;
+  max-height: 44px;
+  width: 140px;
+  margin: 6px;
+  text-align: center;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  color: black;
+  background-color: white;
+}
+
+.container-inputs select {
+  flex: 1;
+  height: 44px;
+  max-height: 44px;
+  width: 90%;
+  margin: 6px;
+  padding: 12px 8px 12px 6px;
+  text-align: left;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: black;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: white;
+}
+
+select.selected {
+  font-style: normal;
+}
+
+.container-inputs select option {
+  font-style: normal;
+  font-size: 0.9rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.current-phototherapy,
+.previous-phototherapy {
+  flex-grow: 1;
+  align-self: flex-start;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+  height: 44px;
+  max-height: 44px;
+}
+
+.current-phototherapy-div,
+.previous-phototherapy-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.risk-factors-toggle,
+.current-phototherapy-toggle,
+.previous-phototherapy-toggle {
+  display: flex;
+  justify-self: flex-end;
+  align-self: flex-start;
+  width: 90%;
+  margin: 6px;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.risk-factor-btn,
+.current-phototherapy-btn,
+.previous-phototherapy-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 50%;
+  height: 44px;
+  max-height: 44px;
+  border: none;
+  background-color: white;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.risk-factor-btn:first-child,
+.current-phototherapy-btn:first-child,
+.previous-phototherapy-btn:first-child {
+  border-right: 1px solid var(--primary-color);
+}
+
+.risk-factor-btn--active,
+.current-phototherapy-btn--active,
+.previous-phototherapy-btn--active {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.risk-factor-btn:hover:not(.risk-factor-btn--active),
+.current-phototherapy-btn:hover:not(.current-phototherapy-btn--active),
+.previous-phototherapy-btn:hover:not(.previous-phototherapy-btn--active) {
+  background-color: #e8edf5;
+}
+
+#previous-phototherapy-sublabel {
+  margin: 0 4px;
+  padding-left: 18px;
+  width: 115px;
+}
+
+/* TABLE INPUTS */
+.bili-table input {
+  padding: 12px 8px;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: white;
+  font-size: 0.9rem;
+  color: black;
+  text-align: center;
+}
+
+.bili-table input[type='text'] {
+  width: 90%;
+  height: 44px;
+  max-height: 44px;
+  margin: 8px 5px;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  color: black;
+  background-color: white;
+}
+
+.bili-table input[type='date'] {
+  width: 125px;
+  height: 44px;
+  max-height: 44px;
+  margin: 8px 0;
+  text-align: center;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: black;
+  background-color: white;
+}
+
+.bili-table input[type='date'].date-selected {
+  font-style: normal;
+}
+
+/* Remove spinners in all modern browsers */
+input[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Chrome, Safari, Edge */
+}
+
+.bili-table input[type='number'] {
+  min-width: 3ch;
+  width: 45px;
+  height: 44px;
+  max-height: 44px;
+  margin: 8px 5px;
+  text-align: center;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  color: black;
+  background-color: white;
+}
+
+.bili-table select {
+  width: 125px;
+  height: 44px;
+  max-height: 44px;
+  margin: 8px 0;
+  text-align: center;
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: black;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background-color: white;
+}
+
+.bili-table select.selected {
+  font-style: normal;
+}
+
+/* HOVER */
+.container-inputs input[type='text']:hover,
+.container-inputs input[type='date']:hover,
+.container-inputs input[type='number']:hover,
+.bili-table input[type='text']:hover,
+.bili-table input[type='date']:hover,
+.bili-table input[type='number']:hover,
+input[type='radio'],
+select:hover {
+  cursor: pointer;
+}
+
+/* FOCUS */
+.container-inputs input[type='text']:focus,
+.container-inputs input[type='text']:focus-visible,
+.container-inputs input[type='date']:focus,
+.container-inputs input[type='date']:focus-visible,
+.container-inputs input[type='number']:focus,
+.container-inputs input[type='number']:focus-visible,
+.bili-table input[type='text']:focus,
+.bili-table input[type='text']:focus-visible,
+.bili-table input[type='date']:focus,
+.bili-table input[type='date']:focus-visible,
+.bili-table input[type='number']:focus,
+.bili-table input[type='number']:focus-visible,
+select:focus {
+  outline: 1px solid black;
+}
+
+/* Error */
+.input-error,
+.input-error:focus,
+.input-error:focus-visible {
+  outline: 1px solid red;
+}
+
+.input-error-text {
+  color: red;
+  margin: 0 auto;
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+}
+
+@media screen and (min-width: 375px) {
+  #previous-phototherapy-sublabel {
+    padding-left: 20px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #dob,
+  #hob,
+  #gestAge,
+  .dot,
+  .hot,
+  .container-inputs input[type='date'],
+  .container-inputs select {
+    width: 360px;
+  }
+
+  .risk-factors-toggle,
+  .current-phototherapy-toggle,
+  .previous-phototherapy-toggle {
+    width: unset;
+  }
+
+  .risk-factor-btn,
+  .current-phototherapy-btn,
+  .previous-phototherapy-btn {
+    width: 180px;
+  }
+
+  .current-phototherapy,
+  .previous-phototherapy {
+    justify-content: flex-end;
+  }
+
+  .bili-table input[type='date'],
+  .bili-table select {
+    width: 140px;
+  }
+
+  .bili-table input[type='number'] {
+    width: 55px;
+  }
+
+  .input-error-text {
+    margin: 0 auto 0 1rem;
+  }
+}

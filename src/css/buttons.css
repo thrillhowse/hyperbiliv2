@@ -1,0 +1,266 @@
+.consent-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  max-width: 300px;
+  margin: 8px auto;
+  padding: 12px 18px;
+  text-align: center;
+  outline: none;
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: var(--secondary-color);
+  color: var(--button-text-color);
+  font-family: var(--main-font);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.consent-btn:hover {
+  cursor: pointer;
+  background-color: var(--secondary-color-hover);
+}
+
+.advance-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.advance-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  max-width: 300px;
+  margin: 8px 0 8px auto;
+  padding: 12px 18px;
+  text-align: center;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+  color: var(--button-text-color);
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.advance-btn:hover {
+  cursor: pointer;
+  background-color: var(--secondary-color-hover);
+}
+
+.advance-btn:disabled {
+  background-color: color-mix(
+    in oklab,
+    var(--secondary-color) 50%,
+    transparent
+  );
+  color: color-mix(in oklab, var(--color-white) 100%, transparent);
+  cursor: not-allowed;
+}
+
+.back-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  max-width: 300px;
+  padding: 12px 18px;
+  text-align: center;
+  outline: none;
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: inherit;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.copy-print-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin: 16px auto;
+  width: 100%;
+}
+
+.copy-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 40%;
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: var(--secondary-color);
+  color: var(--button-text-color);
+  font-weight: 500;
+  height: 40px;
+  outline: none;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+}
+
+.print-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 40%;
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: var(--secondary-color);
+  color: var(--button-text-color);
+  font-weight: 500;
+  height: 40px;
+  outline: none;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+}
+
+.back-start-over-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 16px;
+}
+
+.start-over-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 90%;
+  max-width: 300px;
+  margin: 24px auto 12px auto;
+  padding: 12px 18px;
+  text-align: center;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+  color: var(--button-text-color);
+  font-family: var(--main-font);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover,
+.copy-btn:hover,
+.print-btn:hover,
+.start-over-btn:hover {
+  cursor: pointer;
+  background-color: var(--secondary-color-hover);
+}
+
+.std-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  max-width: 300px;
+  margin: 8px auto;
+  margin-top: 16px;
+  padding: 12px 18px;
+  text-align: center;
+  outline: none;
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: inherit;
+  color: black;
+  font-family: var(--main-font);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.add-row-btn,
+.del-row-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: 3px auto;
+  border: none;
+  border-radius: var(--button-border-radius-minor);
+  background-color: inherit;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.add-row-btn {
+  color: var(--secondary-color);
+}
+
+.add-row-btn:hover {
+  color: var(--secondary-color-hover);
+}
+
+.del-row-btn {
+  color: var(--info-text-color);
+}
+
+.del-row-btn:hover {
+  color: var(--info-text-color-hover);
+}
+
+.bili-table-action-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  white-space: nowrap;
+  margin: 8px auto;
+  padding: 12px 4px;
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1024px) {
+  .consent-btn {
+    margin: 4px auto 16px auto;
+  }
+
+  .advance-btn {
+    margin: 24px 0 24px auto;
+  }
+
+  .copy-btn,
+  .print-btn {
+    font-size: 0.8rem;
+  }
+}

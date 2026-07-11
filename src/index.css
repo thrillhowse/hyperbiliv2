@@ -1,0 +1,227 @@
+@import "./css/buttons.css";
+@import "./css/dialog.css";
+@import "./css/graphs.css";
+@import "./css/home.css";
+@import "./css/icons.css";
+@import "./css/info-bubble.css";
+@import "./css/inputs.css";
+@import "./css/links.css";
+@import "./css/lists.css";
+@import "./css/scroll-bar.css";
+@import "./css/table.css";
+@import "./css/updates.css";
+
+* {
+  box-sizing: border-box;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+}
+
+:root {
+  --primary-color: #0c1f3d;
+  --secondary-color: #1a9b6e;
+  --secondary-color-hover: #178a5e;
+  --background-color: #d8e5ef;
+  --infobar-background-color: #bbc7ce;
+  --secondary-background-color: #8797af;
+  --info-text-color: #273345;
+  --info-text-color-hover: #1e2533;
+  --consult-card-background-color: #4a607f;
+  --card-title-background: #f6f9fb;
+  --card-title-border-bottom: #e4e9ee;
+  --title-font: "Comfortaa", sans-serif;
+  --subtitle-font: "Oxygen", sans-serif;
+  --main-font: "Oxygen", sans-serif;
+  --button-border: none;
+  --button-border-radius: 25px;
+  --button-border-radius-minor: 4px;
+  --patient-summary-quickview-radius: 24px;
+  --button-padding: 1rem 2rem;
+  --button-font: "Montserrat", sans-serif;
+  --button-text-color: white;
+  --input-border-radius: 8px;
+  --icon-color: #f1f1f1;
+  --color-amber-100: oklch(98.7% 0.022 95.277);
+  --color-amber-200: oklch(92.4% 0.12 95.746);
+  --color-amber-300: oklch(85.1% 0.22 96.214);
+  --color-amber-400: oklch(77.8% 0.32 96.682);
+  --color-amber-700: oklch(55.5% 0.163 48.998);
+  --color-amber-800: oklch(47.3% 0.137 46.201);
+  --color-green-50\08: #0f9b6e14; /* ~8% green wash for fills */
+  --color-green-100\30: #0f9b6e4d; /* ~30% green for subtle borders */
+  --color-green-200: #0f9b6e;
+  --color-green-400: #1a9b6e;
+  --color-green-500: #178a5e;
+  --color-green-600: #0c6b4a;
+  --color-green-700: #0a5c3d;
+  --color-slate-100: #f1f1f1;
+  --color-slate-100\50: #f1f1f180;
+  --color-slate-200: #e1e1e1;
+  --color-slate-200\50: #e1e1e180;
+  --color-slate-300: #c1c1c1;
+  --color-slate-400: #a1a1a1;
+  --color-slate-500: #818181;
+  --color-slate-600: #616161;
+  --color-slate-700: #414141;
+  --color-slate-800: #212121;
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: initial;
+  font-weight: initial;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  text-align: left;
+}
+
+.light-bold {
+  font-weight: 500;
+}
+
+.title--xlg {
+  margin: 0 auto;
+  text-align: left;
+  font-size: 3rem;
+  font-family: var(--title-font);
+  font-weight: 700;
+}
+
+.title--lg {
+  margin: 0 auto;
+  text-align: left;
+  font-size: 2rem;
+  font-family: var(--title-font);
+  font-weight: 400;
+}
+
+.title {
+  font-family: "Comfortaa", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.subtitle--lg {
+  margin: 24px auto;
+  font-family: "Comfortaa", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--secondary-color);
+}
+
+.subtitle--med {
+  margin: 12px auto;
+  font-family: "Comfortaa", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--primary-color);
+}
+
+.module-title {
+  margin: 24px 10px;
+  font-size: 1.4rem;
+  font-family: var(--subtitle-font);
+  color: var(--module-title-color);
+}
+
+.module-text {
+  margin: 10px;
+  font-family: var(--main-font);
+}
+
+.text--lg {
+  font-size: 1.6rem;
+  color: var(--primary-color);
+}
+
+.text--med {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.text {
+  font-size: 1rem;
+}
+
+.text--sm {
+  font-size: 0.9rem;
+}
+
+.text--xs {
+  font-size: 0.8rem;
+}
+
+.text--bold {
+  font-weight: 700;
+}
+
+.text--semi-bold {
+  font-weight: 500;
+}
+
+.text--underlined {
+  text-decoration: underline;
+}
+
+.text--center {
+  text-align: center;
+}
+
+.m-8-auto {
+  margin: 8px auto;
+}
+
+.width-100 {
+  width: 100px;
+  max-width: 100px;
+}
+
+label {
+  font-size: 14px;
+  text-align: left;
+}
+
+label:hover {
+  cursor: pointer;
+}
+
+.sub-label {
+  width: 95%;
+  font-size: 12px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (min-width: 375px) {
+  label {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  label {
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  h3 {
+    font-size: 1.4rem;
+  }
+}

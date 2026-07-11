@@ -1,0 +1,13 @@
+.container-icon {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-slate-600);
+}
+
+.add-del-icon-div {
+  position: relative;
+}
+
+.add-del-icon-div:hover {
+  cursor: pointer;
+}

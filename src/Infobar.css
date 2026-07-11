@@ -1,0 +1,43 @@
+.infobar {
+  visibility: hidden;
+  height: 0;
+  background-color: var(--infobar-background-color);
+  color: var(--primary-color);
+  font-family: "Comfortaa", sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.infobar-active {
+  visibility: visible;
+  height: auto;
+  transition:
+    height 1000ms,
+    visibility 1000ms;
+  padding: 18px 24px;
+  transform: translateY(0);
+  transition: transform 500ms;
+}
+
+.list-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.infobar li {
+  padding: 8px 0px;
+}
+
+@media screen and (min-width: 1024px) {
+  .infobar {
+    display: none;
+    width: 175px;
+    height: 100%;
+    padding: 16px 24px;
+  }
+
+  .infobar-fr {
+    padding-right: 12px;
+  }
+}

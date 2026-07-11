@@ -1,0 +1,24 @@
+#biliGraph {
+  flex-grow: 1;
+  width: 100%;
+  margin: auto;
+}
+
+#bili-graph {
+  width: 100%;
+  margin-top: 24px;
+  background-color: white;
+  padding: 8px;
+  border: 1px solid var(--secondary-background-color);
+  border-radius: 8px;
+}
+
+@media screen and (min-width: 1440px) {
+  #biliGraph {
+    flex-grow: 1;
+  }
+
+  #bili-graph {
+    margin-top: 0;
+  }
+}

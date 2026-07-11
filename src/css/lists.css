@@ -1,0 +1,35 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.ul--std {
+  padding-left: 16px;
+  margin: 4px auto;
+}
+
+.li--std {
+  text-align: left;
+}
+
+.ul--info-bubble {
+  padding-left: 14px;
+  list-style-type: disc;
+}
+
+.info-container-ul {
+  padding-left: 30px;
+  list-style-type: circle;
+}
+
+.info-container-li {
+  color: var(--info-text-color);
+  text-align: left;
+}
+
+@media screen and (min-width: 1024px) {
+  .info-container-ul {
+    width: 60%;
+  }
+}
