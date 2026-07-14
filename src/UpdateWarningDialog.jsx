@@ -25,7 +25,7 @@ export default function UpdateWarningDialog({
       <p className="dialog-text">{t[lang].updateWarning.text1}</p>
       <p className="dialog-text important">{t[lang].updateWarning.text2}</p>
 
-      <p className="dialog-tip">
+      <div className="dialog-tip">
         <span className="lucide--smartphone tip-icon"></span>
         <div className="dialog-tip-container">
           <span>{t[lang].updateWarning.tip}</span>
@@ -37,7 +37,7 @@ export default function UpdateWarningDialog({
             }}
           ></a>
         </div>
-      </p>
+      </div>
       <button
         id="closeUpdateWarningDialogBtn"
         className="close-dialog-btn"

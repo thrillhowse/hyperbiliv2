@@ -48,6 +48,10 @@ export const copyDataBtn = (copyBtn, data, dob, hob) => {
     i++;
   });
 
+  // Δ isn't in the Windows-1252 codepage, so it can turn into "?" when pasted
+  // into apps that only read the legacy ANSI clipboard flavor. Spell it out instead.
+  str = str.replace(/Δ-?/g, "Delta ");
+
   const copied = copyToClipboard(str);
   if (copied) {
     // change btn text for a second
