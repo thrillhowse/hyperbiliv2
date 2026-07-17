@@ -89,6 +89,12 @@ button {
   color: black;
 }
 
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  -webkit-tap-highlight-color: transparent;
+}
+
 .light-bold {
   font-weight: 500;
 }

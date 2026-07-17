@@ -724,14 +724,14 @@ export const t = {
     clinicalDisclaimer: {
       header1: "Mise en garde concernant les données cliniques",
       text1:
-        "Les renseignements fournis par cet outil sont destinés uniquement à servir de référence. Elles ne peuvent en aucun cas remplacer l'avis d'un professionnel. Les auteurs et la Fondation Healthy Generations déclinent toute responsabilité en cas de perte ou de dommage causé par cet outil ou son contenu.",
+        "Les renseignements fournis par cet outil sont destinés uniquement à servir de référence. Elles ne peuvent en aucun cas remplacer l'avis d'un professionnel. Les auteurs et la Fondation Générations en santé déclinent toute responsabilité en cas de perte ou de dommage causé par cet outil ou son contenu.",
     },
 
     // CPS Guidelines
     cpsGuidelines: {
-      header1: "Lignes directrices CPS 2026",
+      header1: "Énoncé de Principe de la SCP 2026",
       text1:
-        "Cet outil est basé sur la déclaration de position de 2026 de la Société Canadienne de Pédiatrie intitulée Directives de détection et de prise en charge de l’hyperbilirubinémie chez les nouveau-nés à terme et peu prématurés (à compter de 35 semaines d’âge gestationnel)",
+        "Cet outil est fondé sur l’énoncé de principe de 2026 de la Société canadienne de pédiatrie intitulé « Directives de détection et de prise en charge de l’hyperbilirubinémie chez les nouveau-nés à terme et peu prématurés (à compter de 35 semaines d’âge gestationnel) »",
     },
 
     error: {
@@ -805,7 +805,7 @@ export const t = {
       support3: "de la Société canadienne de pédiatrie (SCP)",
       support4a: "de l'American Academy of Pediatrics (AAP)",
       support4b: ", qui ont fourni les données pour produire les graphiques",
-      support5: "de la Fondation Healthy Generations",
+      support5: "de la Fondation Générations en santé",
     },
 
     faq: {

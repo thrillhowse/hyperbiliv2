@@ -10,11 +10,12 @@ import { t } from './translations.js';
 export default function Home() {
   const { lang } = useLanguage();
 
-  const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [showDisclaimer, setShowDisclaimer] = useState(() => sessionStorage.getItem('consented') !== 'true');
   const [showInfobar, setShowInfobar] = useState(false);
   const [showUpdateWarning, setShowUpdateWarning] = useState(false);
 
   const handleConsent = () => {
+    sessionStorage.setItem('consented', 'true');
     setShowDisclaimer(false);
     setShowUpdateWarning(true);
   };

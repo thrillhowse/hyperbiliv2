@@ -83,6 +83,7 @@ dialog::backdrop {
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 2px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .dialog-tip a:hover {
