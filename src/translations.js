@@ -44,7 +44,7 @@ export const t = {
     disclaimer: {
       title: "Terms of use",
       header: "Disclaimer",
-      firstSection: `Healthy Generations Foundation has provided an unrestricted grant to support the development of <em>hyperbili</em>.`,
+      firstSection: `<a href="https://healthygenerations.ca/" target="_blank" rel="noopener noreferrer">Healthy Generations Foundation</a> has provided an unrestricted grant to support the development of <em>hyperbili</em>.`,
       secondSection:
         "The Board of Healthy Generations has not conducted an in-depth scientific review of <em>hyperbili</em> and acknowledges and agrees that this tool will be used only as a reference aid, and that the information contained in the product is not intended to be (nor should it be used as) a substitute for the exercise of professional judgment.",
       thirdSection:
@@ -457,7 +457,7 @@ export const t = {
     disclaimer: {
       title: "Conditions d'utilisation",
       header: "Avis de non-responsabilité",
-      firstSection: `La Fondation Générations en santé, qui fait partie de la Société canadienne de pédiatrie (SCP), a versé une bourse d’éducation sans restrictions pour financer l’élaboration d’hyperbili.`,
+      firstSection: `<a href="https://generationsensante.ca/" target="_blank" rel="noopener noreferrer">La Fondation Générations en santé</a>, qui fait partie de la Société canadienne de pédiatrie (SCP), a versé une bourse d’éducation sans restrictions pour financer l’élaboration d’hyperbili.`,
       secondSection: `Le conseil d’administration de Générations en santé n’a pas procédé à une analyse scientifique approfondie d’hyperbili. Il reconnaît et accepte que cet outil sera utilisé seulement comme référence et que l’information qu’il contient n’est pas conçue (ni ne devrait l’être) pour remplacer le jugement professionnel.`,
       thirdSection: `Étant donné la possibilité d’erreur humaine ou d’évolution de la médecine, l’utilisateur doit confirmer l’information contenue dans l’outil auprès de sources indépendantes. Ce produit est fourni sans garanties quelles qu’elles soient, explicites ou implicites, et les auteurs déclinent toute responsabilité, toutes pertes ou tous dommages dont l’outil ou son contenu serait responsable.`,
       fourthSection: `En continuant d’utiliser ce produit, vous indiquez que vous en acceptez les modalités.`,
