@@ -72,7 +72,7 @@ export default function Header({ showInfobar, setShowInfobar }) {
         </ul>
       </div>
       <button onClick={toggle} className="lang-toggle">
-        {lang === "en" ? "EN" : "FR"}
+        {lang === "en" ? "FR" : "EN"}
       </button>
     </header>
   );
