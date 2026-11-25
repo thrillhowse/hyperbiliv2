@@ -1,39 +1,52 @@
+/* Shared shell for the info pages (About, Disclaimer, Privacy, Contact,
+   FAQ, App): the wordmark, then one card in the same style as the
+   disclaimer and wizard cards */
 .main-pages-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 12px;
-  align-items: center;
+  gap: 0;
   width: 100%;
   min-height: auto;
   overflow: auto;
-  margin: 0 auto 24px auto;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+.main-pages-container #consentTitle {
+  margin: clamp(1.5rem, 5vh, 3rem) auto clamp(1rem, 3vh, 2rem);
 }
 
 .pages-container {
+  --pad: clamp(1.25rem, 4vw, 2rem);
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  align-items: center;
-  width: 90%;
-  max-width: 650px;
-  margin: 0 auto 12px auto;
-  border-radius: 8px;
-  gap: 12px;
+  align-items: stretch;
+  gap: 0.25rem;
+  width: min(100%, 42rem);
+  margin: 0 auto;
+  padding-bottom: 1.75rem;
   background: var(--color-white);
+  border: 1px solid var(--card-title-border-bottom);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgb(12 31 61 / 0.04),
+    0 8px 24px -6px rgb(12 31 61 / 0.08),
+    0 24px 56px -16px rgb(12 31 61 / 0.14);
 }
 
 .pages-row-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 8px 20px;
+  align-items: stretch;
+  gap: 1rem;
   width: 100%;
+  margin-top: 0.75rem;
+  padding: 0 var(--pad);
   font-size: 1rem;
 }
 
@@ -42,21 +55,26 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: 8px;
-  padding: 14px 24px;
+  gap: 0.625rem;
   width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 1.125rem var(--pad);
   background: var(--card-title-background);
-  border: 1px solid var(--card-title-border-bottom);
-  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid var(--card-title-border-bottom);
+  border-radius: 15px 15px 0 0;
 }
 
 .pages-title-container span {
-  width: 20px;
-  height: 20px;
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
   color: var(--secondary-color);
 }
 
 .pages-title-container h3 {
+  font-family: "Comfortaa", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: var(--secondary-color);
 }
 
@@ -67,37 +85,24 @@
   align-items: flex-start;
   gap: 8px;
   width: 100%;
-  padding: 8px 24px;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #33485c;
+  padding: 0.5rem var(--pad);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--color-slate-700);
 }
 
 .pages-text-container a {
-  color: var(--primary-color);
+  color: var(--color-green-600);
+  font-weight: 500;
   text-decoration: underline;
+  text-decoration-color: color-mix(
+    in oklab,
+    var(--color-green-600) 40%,
+    transparent
+  );
+  text-underline-offset: 3px;
 }
 
-@media screen and (min-width: 768px) {
-  .pages-container {
-    width: 80%;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .pages-container {
-    width: 70%;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .pages-container {
-    width: 60%;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .pages-container {
-    width: 50%;
-  }
+.pages-text-container a:hover {
+  text-decoration-color: currentColor;
 }

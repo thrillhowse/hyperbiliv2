@@ -42,7 +42,7 @@ export default function SummaryDialog({
 
   // Check for missing Bili data fields
   biliData.forEach((entry, index) => {
-    if (!entry.ageInHours) {
+    if (entry.ageInHours === "") {
       missingDataFields.push(
         `${t[lang].summary.missingAgeInHours} ${t[lang].dictionary.from} ${t[lang].dictionary.entry} ${index + 1}`,
       );
@@ -59,6 +59,7 @@ export default function SummaryDialog({
     <dialog
       id="summaryErrorDialog"
       ref={summaryErrorDialogRef}
+      onCancel={() => setShowSummaryErrorDialog(false)}
       onClick={(e) =>
         closeOnBackdrop(e, () => setShowSummaryErrorDialog(false))
       }

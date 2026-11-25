@@ -48,7 +48,16 @@ export default function PWA() {
               <p>Apple allows this feature through Safari</p>
               <ol className="pwa-ol">
                 <li>Open Safari</li>
-                <li>Go to https://hyperbili.com/</li>
+                <li>
+                  Go to{" "}
+                  <a
+                    href="https://hyperbili.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    https://hyperbili.com/
+                  </a>
+                </li>
                 <li>
                   Tap the menu icon (the three dots ... next to the address bar)
                 </li>
@@ -70,7 +79,16 @@ export default function PWA() {
               <p>Android allows this feature through Chrome</p>
               <ol className="pwa-ol">
                 <li>Open Chrome</li>
-                <li>Go to https://hyperbili.com/</li>
+                <li>
+                  Go to{" "}
+                  <a
+                    href="https://hyperbili.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    https://hyperbili.com/
+                  </a>
+                </li>
                 <li>Tap the Share icon (the square with an arrow ↑)</li>
                 <li>
                   Tap the More icon (the three dots ... next to the address bar)
@@ -87,14 +105,16 @@ export default function PWA() {
             </p>
             <ul className="pwa-ul">
               <li>
-                Quick Access: Launch hyperbili directly from your phone's home
-                screen without needing to open a browser first.
+                <b>Quick Access:</b> Launch hyperbili directly from your phone's
+                home screen without needing to open a browser first.
               </li>
               <li>
-                Feels like an App: enjoy a more immersive experience that looks
-                and feels like a native app.
+                <b>Feels like an App:</b> enjoy a more immersive experience that
+                looks and feels like a native app.
               </li>
-              <li>Skip the Store: No need to visit an app store.</li>
+              <li>
+                <b>Skip the Store:</b> No need to visit an app store.
+              </li>
             </ul>
           </div>
         </div>

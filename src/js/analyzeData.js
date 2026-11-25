@@ -5,14 +5,6 @@ import { assessIfPrePhoto } from "./assess-if-pre-photo.js";
 import { assessDeltaTSB } from "./assess-delta-tsb.js";
 // import { checkIfLatestBili } from "./check-if-latest-bili.js";
 
-// Define some colours for the table text/background
-// const tableTextColor = '#efefef';
-const tableTextColor = "#f0f8ff";
-const routineBackgroundColor = "#007d58ee";
-const warningBackgroundColor = "#51294c";
-const phototherapyBackgroundColor = "#003478";
-const xcBackgroundColor = "#cf1928fb";
-
 // Function to analyze the data when the user hits sumbit (or clicks the Summary at the top of the page)
 export const analyzeData = (
   gestAge,
@@ -81,6 +73,11 @@ export const analyzeData = (
     ...biliDataEntries.map((entry) => parseInt(entry.ageInHours)),
   );
 
+  // NEW
+  // Set a property holding the latest age in hours
+  // in Sumarry.jsx can evaluated later if this exceed the threshold (336 hours)
+  dataAnalysis.latestAgeInHours = latestAgeInHours;
+
   // Iterate over the rows, gathering the necessary data
   // while also comparing the bili values to the xc/photo levels
   const numberOfEntries = biliDataEntries.length;
@@ -93,8 +90,7 @@ export const analyzeData = (
       tcb: "",
       tsb: "",
       result: "",
-      textColor: "",
-      rowColor: "",
+      category: "",
     };
 
     biliDataForThisRow.row = i;
@@ -125,7 +121,7 @@ export const analyzeData = (
     //  - preXC: check if bili is in pre-XC levels (delta within 30), else
     //  - photo: check if bili for given age is above photo levels, else
     //  - prePhoto: check if bili is in pre-photo levels (delta within 30) for those with risk factors, else
-    //  - deltaTSB: calculate deltaTSB in babies 12h or older with no previous phototherapy who do not fulfill any of the above
+    //  - deltaTSB: calculate deltaTSB in babies 12h or older and who do not fulfill any of the above
 
     // XC levels
     // returns true/false if above XC levels
@@ -144,9 +140,8 @@ export const analyzeData = (
         dataAnalysis.xc = true;
       }
 
-      // Set the row colours
-      biliDataForThisRow.textColor = tableTextColor;
-      biliDataForThisRow.rowColor = xcBackgroundColor;
+      // Set the row category
+      biliDataForThisRow.category = "exchange";
 
       // Then skip to next bili but add this bili info to the biliData arr
       biliData.push(biliDataForThisRow);
@@ -170,9 +165,8 @@ export const analyzeData = (
         dataAnalysis.preXC = true;
       }
 
-      // Set the row colours
-      biliDataForThisRow.textColor = tableTextColor;
-      biliDataForThisRow.rowColor = xcBackgroundColor;
+      // Set the row category
+      biliDataForThisRow.category = "preExchange";
 
       // Then skip to next bili but add this bili info to the biliData arr
       biliData.push(biliDataForThisRow);
@@ -181,6 +175,7 @@ export const analyzeData = (
 
     // Photo levels
     // returns true/false if above photo levels
+    // returns true anytime patient is on photo
     // and updates the dataAnalysis object with data (i.e., photo levels, photo boolean, result for summary, etc)
     const photoLevel = assessIfPhoto(
       patient,
@@ -189,6 +184,8 @@ export const analyzeData = (
       dataAnalysis,
       lang,
     );
+    // If photoLevel is true, it means the patient is on phototherapy and either at/above or below photo threshold
+    // or they are not on photo but they are at/above the phototherapy threshold
     if (photoLevel) {
       // Check if this is the latest bili
       if (latestBili) {
@@ -199,9 +196,26 @@ export const analyzeData = (
         }
       }
 
-      // Set the row colours
-      biliDataForThisRow.textColor = tableTextColor;
-      biliDataForThisRow.rowColor = phototherapyBackgroundColor;
+      // Set the row category
+      // first define if we have TSB
+      const hasTSB =
+        biliDataForThisRow.tsb !== "" &&
+        biliDataForThisRow.tsb !== null &&
+        biliDataForThisRow.tsb !== undefined;
+
+      // if the patient is currently on phototherapy but below the phototherapy threshold
+      if (latestBili && patient.phototherapy.currentPhototherapy) {
+        if (!hasTSB) {
+          biliDataForThisRow.category = "phototherapyTSBRequired";
+        } else if (dataAnalysis.photo === false) {
+          biliDataForThisRow.category = "phototherapyBelowThreshold";
+        } else {
+          biliDataForThisRow.category = "phototherapy";
+        }
+      } else {
+        // for all other cases
+        biliDataForThisRow.category = "phototherapy";
+      }
 
       // Then skip to next bili but add this bili info to the biliData arr
       biliData.push(biliDataForThisRow);
@@ -225,9 +239,13 @@ export const analyzeData = (
         dataAnalysis.prePhoto = true;
       }
 
-      // Set the row colours
-      biliDataForThisRow.textColor = tableTextColor;
-      biliDataForThisRow.rowColor = phototherapyBackgroundColor;
+      // Set the row category
+      biliDataForThisRow.category = "prePhototherapy";
+
+      // Adjust category if we are dealing with a TcB that is within cutoff levels
+      if (!biliDataForThisRow.tsb && biliDataForThisRow.tcb) {
+        biliDataForThisRow.category = "tcbCutoff";
+      }
 
       // Then skip to next bili but add this bili info to the biliData arr
       biliData.push(biliDataForThisRow);
@@ -245,20 +263,22 @@ export const analyzeData = (
       lang,
     );
 
-    // Set the row colours
+    // Set the row category
     if (!deltaTSB) {
-      biliDataForThisRow.textColor = tableTextColor;
-      biliDataForThisRow.rowColor = warningBackgroundColor;
+      // If delta TSB could not be assessed, set category to notApplicable
+      biliDataForThisRow.category = "notApplicable";
     } else {
+      // If delta TSB calculated but previous phototherapy
+      if (patient.phototherapy.previousPhototherapy) {
+        biliDataForThisRow.category = "deltaTSBPreviousPhoto";
+      }
       // If delta TSB is <= 90 then set to warning
-      if (dataAnalysis.deltaTSBValue <= 90) {
-        biliDataForThisRow.textColor = tableTextColor;
-        biliDataForThisRow.rowColor = warningBackgroundColor;
+      else if (biliDataForThisRow.deltaTSB <= 90) {
+        biliDataForThisRow.category = "warning";
       }
       // If delta TSB is > 90 then set to routine
-      else if (dataAnalysis.deltaTSBValue > 90) {
-        biliDataForThisRow.textColor = tableTextColor;
-        biliDataForThisRow.rowColor = routineBackgroundColor;
+      else if (biliDataForThisRow.deltaTSB > 90) {
+        biliDataForThisRow.category = "routine";
       }
     }
 

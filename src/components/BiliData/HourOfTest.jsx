@@ -70,9 +70,7 @@ export default function HourOfTest({ index, dot, hot, dob, hob, setBiliData }) {
     setBiliData((prevData) => {
       return prevData.map((entry, i) => {
         if (i !== index) return entry;
-        const ageInHours = calculateAgeInHours(dob, hob, [{ ...entry }])[0]
-          .ageInHours;
-        return { ...entry, ageInHours };
+        return calculateAgeInHours(dob, hob, [entry])[0];
       });
     });
   };

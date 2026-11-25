@@ -19,6 +19,8 @@ export const t = {
       close: "Close",
       yes: "Yes",
       no: "No",
+      deleteEntry: "Delete Entry",
+      copied: "Copied!",
       enterBiliData: "Enter Bili Data",
       copyData: "Copy Data",
       copyGraph: "Copy Graph",
@@ -108,7 +110,7 @@ export const t = {
       previousPhototherapyDialogText2:
         "Select 'Yes' if the patient has been treated with phototherapy at any point in the past.",
       previousPhototherapyDialogText3:
-        "ΔTSB cannot be used for patient's who have previously required phototherapy.",
+        "Measuring △TSB for screening purposes applies only to newborns who are at least 12 hours of age who have not received phototherapy.",
     },
 
     // Bili Data Section
@@ -133,6 +135,13 @@ export const t = {
       tsbDialogTitle: "TSB",
       tsbDialogText: "Total serum bilirubin",
       addEntryButton: "Add a New Entry",
+      entryStatus: {
+        hasError: "Fix any errors",
+        needsBoth: "Needs age + TcB or TSB",
+        needsAge: "Needs age in hours",
+        needsBili: "Needs TcB or TSB",
+        ready: "Ready",
+      },
       todayButton: "Today",
     },
 
@@ -164,6 +173,20 @@ export const t = {
         belowCutoff: "Below Cutoff",
         aboveCutoff: "Above Cutoff",
         comment: "Comment",
+        categories: {
+          exchange: "At or above exchange transfusion threshold",
+          preExchange: "At or above pre-exchange transfusion threshold",
+          phototherapyBelowThreshold:
+            "Below phototherapy threshold - on treatment",
+          phototherapyTSBRequired: "TSB required for assessment",
+          phototherapy: "At or above phototherapy threshold",
+          prePhototherapy: "Approaching phototherapy",
+          tcbCutoff: "Confirm with TSB",
+          deltaTSBPreviousPhoto: "Clinical judgment required",
+          warning: "Follow-up required",
+          routine: "Routine follow-up",
+          notApplicable: "ΔTSB follow-up guidance not applicable",
+        },
       },
       summaryErrorDialogTitle: "Missing Data",
       summaryErrorDialogText:
@@ -222,8 +245,9 @@ export const t = {
           "<b>TcB is within 50 μmol/L of Phototherapy Thresholds (see <a href='https://cps.ca/en/documents/position/hyperbilirubinemia-newborns' target='_blank' class='comment-link'>Recommendation 10</a>)</b><br><br>Recommendation 10: When TcB testing is used to monitor infants with hyperbilirubinemia, obtain confirmatory testing with TSB if the TcB level is within 50 µmol/L of the hour-specific phototherapy threshold OR if the TcB is above 250 µmol/L.</b>",
       },
       deltaTSBComments: {
-        ageUnder12h: "ΔTSB cannot be calculated for age < 12 hours",
-        previousPhoto: "ΔTSB cannot be calculated if previous phototherapy",
+        ageUnder12h: "ΔTSB cannot be used for ages < 12 hours",
+        previousPhoto:
+          "Given patient previously had phototherapy, the timing and frequency of further sampling should be based on clinician judgment, taking into consideration factors such as infant age and clinical condition, the TSB’s rate of rise, and the presence or absence of hemolysis (see Addendum in position statement).",
         lessThan30: {
           ageUnder24h:
             "µmol/L and Age < 24 hours <br><br><a href='https://cps.ca/en/documents/position/hyperbilirubinemia-newborns' target='_blank' class='comment-link'>Recommendation 4</a> & <a href='https://cps.ca/uploads/documents/Figure_1_-_English.pdf' target='_blank' class='comment-link'>Fig 1:</a><br><br>Delay discharge and consider starting phototherapy",
@@ -300,6 +324,14 @@ export const t = {
         "Consider selecting 'Yes' for Risk Factors as this may indicate a hemolytic condition. Please review the patient's details and bili data to ensure accuracy.",
     },
 
+    // Age Exceeds Threshold Warning Dialog
+    ageExceedsThresholdWarning: {
+      title: "Warning",
+      text1: "The patient's age is greater than or equal to 336 hours",
+      text2:
+        "Measurements at or beyond 336 hours may be partially or entirely outside the visible graph. Please review the patient details, bili data and graph carefully to ensure accuracy.",
+    },
+
     // Clinical Disclaimer
     clinicalDisclaimer: {
       header1: "Clinical Disclaimer",
@@ -318,6 +350,8 @@ export const t = {
     error: {
       patientDOBErrorMsg: "Please enter a valid date of birth",
       patientFutureDOBErrorMsg: "Date of birth cannot be in the future",
+      patientFutureBirthDateTimeErrorMsg:
+        "Date and/or hour of birth are set to a future date/time. Please correct them before proceeding.",
       patientDOBAfterDOTErrorMsg: "Date of birth cannot be after date of test",
       patientHOBErrorMsg: "Please enter a valid hour of birth",
       patientFutureHOBErrorMsg:
@@ -338,7 +372,8 @@ export const t = {
       dotBeforeDOB: "Date/time of test cannot be before date of birth",
       hourOfTestErrorMsg: "Please enter a valid test hour",
       hotBeforeDOB: "Date/hour of test cannot be before date of birth",
-      ageInHoursErrorMsg: "Age in hours must be greater than or equal to 0",
+      ageInHoursErrorMsg:
+        "Age in hours must be an integer greater than or equal to 0",
       tcbErrorMsg: "Please enter a valid transcutaneous bilirubin value",
       tsbErrorMsg: "Please enter a valid total serum bilirubin value",
     },
@@ -385,7 +420,7 @@ export const t = {
     faq: {
       header: "Frequently Asked Questions",
       q1: "Is there a phone app?",
-      a1: "No. <em>hyperbili</em> is a web application. As such, you can access it on your phone from any browser. It can also be accessed on your computer. This was intentional so that clinician's can access the information they need from anywhere.",
+      a1: "Not exactly. <em>hyperbili</em> is a web application. As such, you can access it on your phone from any browser. It can also be accessed on your computer. This was intentional so that clinician's can access the information they need from anywhere. However, you can add it to your phone as a shortcut to your home screen. Go to App in the menu to learn how!",
       q2: "Can I save the data I enter?",
       a2: "Unfortunately, no. The data is erased once you leave the page. This too is intentional, to avoid any personal health information being sent over the internet.",
       q3: "Does the app automatically calculate the age in hours?",
@@ -431,6 +466,8 @@ export const t = {
       close: "Fermer",
       yes: "Oui",
       no: "Non",
+      deleteEntry: "Supprimer l'entrée",
+      copied: "Copié!",
       enterBiliData: "Saisir les données de bilirubine",
       copyData: "Copier les données",
       copyGraph: "Copier le graphique",
@@ -445,8 +482,8 @@ export const t = {
     // Infobar
     infobar: {
       home: "Accueil",
-      about: "A propos",
-      disclaimer: "Avis de non responsabilité",
+      about: "À propos",
+      disclaimer: "Avis de non-responsabilité",
       privacy: "Confidentialité",
       contact: "Coordonnées",
       faq: "FAQ",
@@ -524,7 +561,7 @@ export const t = {
       previousPhototherapyDialogText2:
         "Sélectionnez « Oui » si le patient a reçu un traitement de photothérapie en tout temps par le passé.",
       previousPhototherapyDialogText3:
-        "La Δ-BST ne peut pas être utilisée pour le patient qui a déjà dû recevoir une photothérapie.",
+        "La mesure du Δ-BST à des fins de dépistage ne s'applique qu'aux nouveau-nés âgés d'au moins 12 heures qui n'ont pas reçu de photothérapie.",
     },
 
     // Bili Data Section
@@ -550,6 +587,13 @@ export const t = {
       tsbDialogTitle: "BST",
       tsbDialogText: "Bilirubine sérique totale",
       addEntryButton: "Ajouter une nouvelle entrée",
+      entryStatus: {
+        hasError: "Corriger les erreurs",
+        needsBoth: "Âge requis + BTc ou BST",
+        needsAge: "Âge en heures requis",
+        needsBili: "BTc ou BST requise",
+        ready: "Prête",
+      },
       todayButton: "Aujourd'hui",
     },
 
@@ -577,10 +621,25 @@ export const t = {
         interpretation: "Interprétation",
         phototherapy: "Photothérapie",
         preExchange: "Préexsanguinotransfusion",
-        exchange: "Seuil d’exsanguinotransfusion",
+        exchange: "Exsanguinotransfusion",
         belowCutoff: "Sous le seuil",
         aboveCutoff: "Au-dessus du seuil",
         comment: "Commentaire",
+        categories: {
+          exchange: "Seuil d’exsanguinotransfusion atteint ou dépassé",
+          preExchange: "Seuil de pré-exsanguinotransfusion atteint ou dépassé",
+          phototherapyBelowThreshold:
+            "Sous le seuil de photothérapie – traitement en cours",
+          phototherapyTSBRequired: "Dosage de la BST requis pour l’évaluation",
+          phototherapy: "Seuil de photothérapie atteint ou dépassé",
+          prePhototherapy: "Proche du seuil de photothérapie",
+          tcbCutoff: "Confirmer par un dosage de la BST",
+          deltaTSBPreviousPhoto: "Jugement clinique requis",
+          warning: "Suivi requis",
+          routine: "Suivi de routine",
+          notApplicable:
+            "Recommandations de suivi selon le ΔBST non applicables",
+        },
       },
       summaryErrorDialogTitle: "Données manquantes",
       summaryErrorDialogText:
@@ -640,12 +699,12 @@ export const t = {
       },
       deltaTSBComments: {
         ageUnder12h:
-          "La Δ-BST ne peut pas être calculée à moins de 12 heures de vie.",
+          "La Δ-BST ne peut pas être utilisé pour les enfants de moins de 12 heures",
         previousPhoto:
-          "La Δ-BST ne peut pas être calculée en cas de photothérapie antérieure.",
+          "Étant donné que le patient a déjà subi une photothérapie, le moment et la fréquence des prélèvements supplémentaires doivent être déterminés par le clinicien, en tenant compte de facteurs tels que l’âge et l’état clinique du nourrisson, le taux d’augmentation de la TSB et la présence ou l’absence d’hémolyse (voir l’addendum dans la déclaration de position).",
         lessThan30: {
           ageUnder24h:
-            "µmol/L et Moins de 24 heures de vie conformément à la <a href='https://cps.ca/fr/documents/position/hyperbilirubinemie-neonatale' target='_blank' class='comment-link'>recommandation 4</a> et à la <a href='https://cps.ca/uploads/documents/Hyperbili_-_Figure_1_-_French_-_Jan_2026.pdf' target='_blank' class='comment-link'>figure 1</a>: Reporter le congé et envisager d’entreprendre la photothérapie.",
+            "µmol/L et moins de 24 heures de vie conformément à la <a href='https://cps.ca/fr/documents/position/hyperbilirubinemie-neonatale' target='_blank' class='comment-link'>recommandation 4</a> et à la <a href='https://cps.ca/uploads/documents/Hyperbili_-_Figure_1_-_French_-_Jan_2026.pdf' target='_blank' class='comment-link'>figure 1</a>: Reporter le congé et envisager d’entreprendre la photothérapie.",
           ageOver24h:
             "µmol/L et au moins 24 heures de vie conformément à la <a href='https://cps.ca/fr/documents/position/hyperbilirubinemie-neonatale' target='_blank' class='comment-link'>recommandation 4</a> et à la <a href='https://cps.ca/uploads/documents/Hyperbili_-_Figure_1_-_French_-_Jan_2026.pdf' target='_blank' class='comment-link'>figure 1</a>: Reporter le congé. Reprendre la BST dans les quatre à 12 heures et envisager d’entreprendre la photothérapie si la BST augmente.",
         },
@@ -720,6 +779,14 @@ export const t = {
         "Il est conseillé de choisir « Oui » pour les facteurs de risque, car cela pourrait indiquer une affection hémolytique. Veuillez vérifier l'exactitude des renseignements concernant le patient et ses données biliaires.",
     },
 
+    // Age Exceeds Threshold Warning Dialog
+    ageExceedsThresholdWarning: {
+      title: "Avertissement",
+      text1: "L'âge du patient est supérieur ou égal à 336 heures.",
+      text2:
+        "Les mesures effectuées à 336 heures ou plus peuvent se situer partiellement ou totalement en dehors de la zone visible du graphique. Veuillez examiner attentivement les renseignements concernant le patient, les données biliaires et le graphique afin d'en garantir l'exactitude.",
+    },
+
     // Clinical Disclaimer
     clinicalDisclaimer: {
       header1: "Mise en garde concernant les données cliniques",
@@ -738,6 +805,8 @@ export const t = {
       patientDOBErrorMsg: "Veuillez inscrire une date de naissance valide",
       patientFutureDOBErrorMsg:
         "La date de naissance ne peut pas être dans le futur",
+      patientFutureBirthDateTimeErrorMsg:
+        "La date et/ou l’heure de naissance indiquées sont dans le futur. Veuillez les corriger avant de poursuivre.",
       patientDOBAfterDOTErrorMsg:
         "La date de naissance ne peut pas être postérieure à la date du test",
       patientHOBErrorMsg: "Veuillez inscrire une heure de naissance valide",
@@ -763,7 +832,8 @@ export const t = {
       hourOfTestErrorMsg: "Veuillez saisir une heure de test valide",
       hotBeforeDOB:
         "La date/l'heure du test ne peut pas être antérieure à la date de naissance.",
-      ageInHoursErrorMsg: "L'âge en heures doit être supérieur ou égal à 0",
+      ageInHoursErrorMsg:
+        "L’âge en heures doit être un nombre entier supérieur ou égal à 0",
       tcbErrorMsg:
         "Veuillez saisir une valeur valide de bilirubine transcutanée",
       tsbErrorMsg:

@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useDialogModal } from '../../dialog/useDialogModal.js';
-import { useLanguage } from '../../context/LanguageContext.jsx';
-import { t } from '../../translations.js';
+import { useState } from "react";
+import { useDialogModal } from "../../dialog/useDialogModal.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import { t } from "../../translations.js";
 
 // helpers
-import { closeOnBackdrop } from '../../dialog/closeOnBackdrop.js';
+import { closeOnBackdrop } from "../../dialog/closeOnBackdrop.js";
 
 export default function PreviousPhototherapy({
   previousPhototherapy,
@@ -30,40 +30,43 @@ export default function PreviousPhototherapy({
       <div className="input-label">
         <label htmlFor="previous-phototherapy-sublabel" className="sub-label">
           {t[lang].patientDetails.phototherapySublabel2}
-          <span
-            id="infoBubblePreviousPhoto"
-            onClick={() => setShowPreviousPhotoDialog(true)}
-          >
-            <span
-              className="lucide--info info-dialog-btn"
-              style={{ marginLeft: '4px' }}
-            ></span>
-          </span>
-          <dialog
-            id="previousPhotoDialog"
-            ref={previousPhotoDialogRef}
-            onClick={(e) =>
-              closeOnBackdrop(e, () => setShowPreviousPhotoDialog(false))
-            }
-          >
-            <p className="dialog-title">
-              {t[lang].patientDetails.previousPhototherapyDialogText1}
-            </p>
-            <p className="dialog-text">
-              {t[lang].patientDetails.previousPhototherapyDialogText2}
-            </p>
-            <p className="dialog-text">
-              {t[lang].patientDetails.previousPhototherapyDialogText3}
-            </p>
-            <button
-              id="closePreviousPhotoDialogBtn"
-              className="close-dialog-btn"
-              onClick={() => setShowPreviousPhotoDialog(false)}
-            >
-              {t[lang].buttons.close}
-            </button>
-          </dialog>
         </label>
+        <button
+          type="button"
+          id="infoBubblePreviousPhoto"
+          className="info-trigger"
+          aria-label={t[lang].patientDetails.previousPhototherapyDialogText1}
+          aria-haspopup="dialog"
+          aria-controls="previousPhotoDialog"
+          onClick={() => setShowPreviousPhotoDialog(true)}
+        >
+          <span className="lucide--info info-dialog-btn" aria-hidden="true" />
+        </button>
+        <dialog
+          id="previousPhotoDialog"
+          ref={previousPhotoDialogRef}
+          onCancel={() => setShowPreviousPhotoDialog(false)}
+          onClick={(e) =>
+            closeOnBackdrop(e, () => setShowPreviousPhotoDialog(false))
+          }
+        >
+          <p className="dialog-title">
+            {t[lang].patientDetails.previousPhototherapyDialogText1}
+          </p>
+          <p className="dialog-text">
+            {t[lang].patientDetails.previousPhototherapyDialogText2}
+          </p>
+          <p className="dialog-text">
+            {t[lang].patientDetails.previousPhototherapyDialogText3}
+          </p>
+          <button
+            id="closePreviousPhotoDialogBtn"
+            className="close-dialog-btn"
+            onClick={() => setShowPreviousPhotoDialog(false)}
+          >
+            {t[lang].buttons.close}
+          </button>
+        </dialog>
       </div>
       <div className="previous-phototherapy-toggle">
         <button
@@ -71,7 +74,8 @@ export default function PreviousPhototherapy({
           name="previousPhototherapy"
           value="Yes"
           type="button"
-          className={`previous-phototherapy-btn ${previousPhototherapy === 'Yes' ? ' previous-phototherapy-btn--active' : ''}`}
+          aria-pressed={previousPhototherapy === "Yes"}
+          className={`previous-phototherapy-btn ${previousPhototherapy === "Yes" ? " previous-phototherapy-btn--active" : ""}`}
           onClick={(e) => handlePreviousPhotoChange(e.target)}
         >
           {t[lang].buttons.yes}
@@ -81,7 +85,8 @@ export default function PreviousPhototherapy({
           name="previousPhototherapy"
           value="No"
           type="button"
-          className={`previous-phototherapy-btn ${previousPhototherapy === 'No' ? ' previous-phototherapy-btn--active' : ''}`}
+          aria-pressed={previousPhototherapy === "No"}
+          className={`previous-phototherapy-btn ${previousPhototherapy === "No" ? " previous-phototherapy-btn--active" : ""}`}
           onClick={(e) => handlePreviousPhotoChange(e.target)}
         >
           {t[lang].buttons.no}

@@ -1,7 +1,13 @@
-import { photoLevels, xcLevels } from './bili-data.js';
-import { t } from '../translations.js';
+import { photoLevels, xcLevels } from "./bili-data.js";
+import { t } from "../translations.js";
 
 export const graphBili = (data, lang) => {
+  // Match the app: system font, slate text, hairline grid
+  Chart.defaults.font.family =
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+  Chart.defaults.color = "#616161"; // --color-slate-600: tick labels, axis titles, legend
+  Chart.defaults.borderColor = "#e4e9ee"; // --card-title-border-bottom: gridlines
+
   // Create a canvas to hold the graph
   let html = `
       <div id='bili-graph-div' class='graph-container'>
@@ -10,9 +16,13 @@ export const graphBili = (data, lang) => {
   `;
 
   // Clear any previous graph, then insert the new canvas
-  const biliGraphEl = document.querySelector('#biliGraph');
-  biliGraphEl.innerHTML = '';
-  biliGraphEl.insertAdjacentHTML('beforeend', html);
+  const biliGraphEl = document.querySelector("#biliGraph");
+  const existingCanvas = biliGraphEl.querySelector("#bili-graph");
+  if (existingCanvas) {
+    Chart.getChart(existingCanvas)?.destroy();
+  }
+  biliGraphEl.innerHTML = "";
+  biliGraphEl.insertAdjacentHTML("beforeend", html);
 
   // Define variables for the labels and the datapoints
   let labels = null;
@@ -44,10 +54,10 @@ export const graphBili = (data, lang) => {
   if (data.xc || data.preXC) {
     // Note: graph only handles gestAge up to 38 so just need to correct for this
     let corrGA = null;
-    let corrGAstr = '';
+    let corrGAstr = "";
     if (data.patient.ga >= 38) {
       corrGA = 38;
-      corrGAstr = '38+';
+      corrGAstr = "38+";
     } else {
       corrGA = data.patient.ga;
       corrGAstr = data.patient.ga;
@@ -57,8 +67,11 @@ export const graphBili = (data, lang) => {
     if (!data.patient.riskFactors) {
       let chartInfo = {
         label: corrGAstr + ` wk ${t[lang].graphs.exchangeLine}`,
-        annotation: [`${t[lang].graphs.exchangeLine}`, corrGAstr + ' weeks'],
-        backgroundColor: '#cf1928fb',
+        annotation: [
+          `${t[lang].graphs.exchangeLine}`,
+          corrGAstr + " " + t[lang].dictionary.weeks,
+        ],
+        backgroundColor: "#cf1928fb",
         titleText: t[lang].graphs.exchangeTitleNoRF,
         maxY: getMaxY(data, tcbDataPoints, tsbDataPoints), // Define a maxY value
         minY: getMinY(data, tcbDataPoints, tsbDataPoints), // Define a minY value
@@ -76,7 +89,6 @@ export const graphBili = (data, lang) => {
       dataPoints = Object.values(
         xcLevels[corrGA][data.patient.presenceOfRiskFactors].data,
       );
-      // console.log(labels, dataPoints);
 
       plotXCGraph(
         chartInfo,
@@ -89,8 +101,11 @@ export const graphBili = (data, lang) => {
     } else if (data.patient.riskFactors) {
       let chartInfo = {
         label: corrGAstr + ` wk ${t[lang].graphs.exchangeLine}`,
-        annotation: [`${t[lang].graphs.exchangeLine}`, corrGAstr + ' weeks'],
-        backgroundColor: '#cf1928fb',
+        annotation: [
+          `${t[lang].graphs.exchangeLine}`,
+          corrGAstr + " " + t[lang].dictionary.weeks,
+        ],
+        backgroundColor: "#cf1928fb",
         titleText: t[lang].graphs.exchangeTitleWithRF,
         maxY: getMaxY(data, tcbDataPoints, tsbDataPoints), // Define a maxY value
         minY: getMinY(data, tcbDataPoints, tsbDataPoints), // Define a minY value
@@ -125,12 +140,24 @@ export const graphBili = (data, lang) => {
   ////////////////////////////////////// PHOTO //////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////
   // Default to photo graph in any case where data.xc or data.preXC are false
+  // Note: graph only handles gestAge up to 40 so just need to correct for this
+  let correctGAstr = "";
+  if (Number(data.patient.ga) === 40) {
+    correctGAstr = "40+";
+  } else {
+    correctGAstr = data.patient.ga;
+  }
+
   // Retrieve data based on risk factors or not
   if (!data.patient.riskFactors) {
     let chartInfo = {
-      label: data.patient.ga + ` wk ${t[lang].graphs.photoLine}`,
-      annotation: [`${t[lang].graphs.photoLine}`, data.patient.ga + ' weeks'],
-      backgroundColor: '#2400ff',
+      label: correctGAstr + ` wk ${t[lang].graphs.photoLine}`,
+      // label: data.patient.ga + ` wk ${t[lang].graphs.photoLine}`,
+      annotation: [
+        `${t[lang].graphs.photoLine}`,
+        correctGAstr + " " + t[lang].dictionary.weeks,
+      ],
+      backgroundColor: "#2400ff",
       titleText: t[lang].graphs.photoTitleNoRF,
       maxY: getMaxY(data, tcbDataPoints, tsbDataPoints), // Define a maxY value based
       minY: getMinY(data, tcbDataPoints, tsbDataPoints), // Define a minY value
@@ -163,10 +190,10 @@ export const graphBili = (data, lang) => {
   } else if (data.patient.riskFactors) {
     // Note: graph only handles gestAge up to 38 so just need to correct for this
     let corrGA = null;
-    let corrGAstr = '';
+    let corrGAstr = "";
     if (data.patient.ga >= 38) {
       corrGA = 38;
-      corrGAstr = '38+';
+      corrGAstr = "38+";
     } else {
       corrGA = data.patient.ga;
       corrGAstr = data.patient.ga;
@@ -174,8 +201,11 @@ export const graphBili = (data, lang) => {
 
     let chartInfo = {
       label: corrGAstr + ` wk ${t[lang].graphs.photoLine}`,
-      annotation: [`${t[lang].graphs.photoLine}`, corrGAstr + ' weeks'],
-      backgroundColor: '#2400ff',
+      annotation: [
+        `${t[lang].graphs.photoLine}`,
+        corrGAstr + " " + t[lang].dictionary.weeks,
+      ],
+      backgroundColor: "#2400ff",
       titleText: t[lang].graphs.photoTitleWithRF,
       maxY: getMaxY(data, tcbDataPoints, tsbDataPoints), // Define a maxY value based
       minY: getMinY(data, tcbDataPoints, tsbDataPoints), // Define a minY value
@@ -193,7 +223,6 @@ export const graphBili = (data, lang) => {
     dataPoints = Object.values(
       photoLevels[corrGA][data.patient.presenceOfRiskFactors].data,
     );
-    // console.log(chartInfo, labels, dataPoints);
 
     plotPhotoGraph(
       chartInfo,
@@ -300,12 +329,12 @@ const plotXCGraph = (
   tsbDataPoints,
   lang,
 ) => {
-  const ctx = document.querySelector('#bili-graph');
+  const ctx = document.querySelector("#bili-graph");
 
   // console.log(chartInfo);
 
   new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
       labels: labels,
       datasets: [
@@ -316,23 +345,23 @@ const plotXCGraph = (
           order: 3, // draw the reference line behind the TcB/TSB data points
         },
         {
-          type: 'scatter',
+          type: "scatter",
           label: t[lang].graphs.tcb,
           data: tcbDataPoints,
-          backgroundColor: '#ffa500',
-          borderColor: '#ffa500',
-          pointStyle: 'crossRot',
+          backgroundColor: "#ffa500",
+          borderColor: "#ffa500",
+          pointStyle: "crossRot",
           pointRadius: 6,
           pointHoverRadius: 12,
           order: 2, // draw the TcB over the reference line but behind TSB
         },
         {
-          type: 'scatter',
+          type: "scatter",
           label: t[lang].graphs.tsb,
           data: tsbDataPoints,
-          backgroundColor: '#007d58',
-          borderColor: '#007d58',
-          pointStyle: 'circle',
+          backgroundColor: "#007d58",
+          borderColor: "#007d58",
+          pointStyle: "circle",
           pointRadius: 4,
           pointHoverRadius: 8,
           order: 1, // draw the TSB over the reference line and the TcB
@@ -344,34 +373,36 @@ const plotXCGraph = (
         annotation: {
           annotations: {
             label1: {
-              type: 'label',
+              type: "label",
               display: true,
               xValue: chartInfo.xValueForAnnotation,
               yValue: chartInfo.yValueForAnnotation,
               content: [chartInfo.annotation[0], chartInfo.annotation[1]],
               font: {
                 size: 12,
-                family: 'sans-serif',
+                // family: 'sans-serif',
               },
             },
           },
         },
-        type: 'line',
+        type: "line",
         title: {
           display: true,
           text: chartInfo.titleText,
           padding: 6,
+          color: "#0c1f3d",
           font: {
-            size: 16,
+            weight: "600",
+            size: 15,
           },
         },
         legend: {
-          position: 'bottom',
+          position: "bottom",
           labels: {
             boxWidth: 6,
             boxHeight: 6,
             font: {
-              size: 10,
+              size: 11,
             },
             usePointStyle: true,
           },
@@ -383,7 +414,7 @@ const plotXCGraph = (
             display: true,
             text: t[lang].graphs.ageInHours,
             font: {
-              size: 10,
+              size: 11,
             },
           },
           max: 338,
@@ -393,7 +424,7 @@ const plotXCGraph = (
             stepSize: 24,
             maxTicksLimit: 14.5,
             font: {
-              size: 8,
+              size: 11,
             },
           },
         },
@@ -403,7 +434,7 @@ const plotXCGraph = (
             padding: 2,
             text: `${t[lang].graphs.tsb} (µmol/L)`,
             font: {
-              size: 10,
+              size: 11,
             },
           },
           max: chartInfo.maxY,
@@ -413,7 +444,7 @@ const plotXCGraph = (
             stepSize: 50,
             maxTicksLimit: 7,
             font: {
-              size: 8,
+              size: 11,
             },
           },
         },
@@ -426,7 +457,7 @@ const plotXCGraph = (
         },
         point: {
           radius: 0.5,
-          pointStyle: 'circle',
+          pointStyle: "circle",
           borderColor: chartInfo.backgroundColor,
           backgroundColor: chartInfo.backgroundColor,
         },
@@ -444,12 +475,10 @@ const plotPhotoGraph = (
   tsbDataPoints,
   lang,
 ) => {
-  const ctx = document.querySelector('#bili-graph');
-
-  // console.log(chartInfo);
+  const ctx = document.querySelector("#bili-graph");
 
   new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
       labels: labels,
       datasets: [
@@ -460,24 +489,24 @@ const plotPhotoGraph = (
           order: 3, // draw the reference line behind the TcB/TSB data points
         },
         {
-          type: 'scatter',
+          type: "scatter",
           label: t[lang].graphs.tcb,
           data: tcbDataPoints,
-          backgroundColor: '#ffa500',
-          borderColor: '#ffa500',
+          backgroundColor: "#ffa500",
+          borderColor: "#ffa500",
           borderWidth: 2,
-          pointStyle: 'crossRot',
+          pointStyle: "crossRot",
           pointRadius: 6,
           pointHoverRadius: 12,
           order: 2, // draw the TcB over the reference line but behind TSB
         },
         {
-          type: 'scatter',
+          type: "scatter",
           label: t[lang].graphs.tsb,
           data: tsbDataPoints,
-          backgroundColor: '#007d58',
-          borderColor: '#007d58',
-          pointStyle: 'circle',
+          backgroundColor: "#007d58",
+          borderColor: "#007d58",
+          pointStyle: "circle",
           pointRadius: 4,
           pointHoverRadius: 8,
           order: 1, // draw the TSB over the reference line and the TcB
@@ -489,14 +518,14 @@ const plotPhotoGraph = (
         annotation: {
           annotations: {
             label1: {
-              type: 'label',
+              type: "label",
               display: true,
               xValue: chartInfo.xValueForAnnotation,
               yValue: chartInfo.yValueForAnnotation,
               content: [chartInfo.annotation[0], chartInfo.annotation[1]],
               font: {
                 size: 12,
-                family: 'sans-serif',
+                // family: 'sans-serif',
               },
             },
           },
@@ -505,17 +534,19 @@ const plotPhotoGraph = (
           display: true,
           text: chartInfo.titleText,
           padding: 6,
+          color: "#0c1f3d",
           font: {
-            size: 16,
+            weight: "600",
+            size: 15,
           },
         },
         legend: {
-          position: 'bottom',
+          position: "bottom",
           labels: {
             boxWidth: 6,
             boxHeight: 6,
             font: {
-              size: 10,
+              size: 11,
             },
             usePointStyle: true,
           },
@@ -527,7 +558,7 @@ const plotPhotoGraph = (
             display: true,
             text: t[lang].graphs.ageInHours,
             font: {
-              size: 10,
+              size: 11,
             },
           },
           max: 338,
@@ -537,7 +568,7 @@ const plotPhotoGraph = (
             stepSize: 24,
             maxTicksLimit: 14.5,
             font: {
-              size: 8,
+              size: 11,
             },
           },
         },
@@ -547,7 +578,7 @@ const plotPhotoGraph = (
             padding: 2,
             text: `${t[lang].graphs.tsb} (µmol/L)`,
             font: {
-              size: 10,
+              size: 11,
             },
           },
           max: chartInfo.maxY,
@@ -557,7 +588,7 @@ const plotPhotoGraph = (
             stepSize: 50,
             maxTicksLimit: 8,
             font: {
-              size: 8,
+              size: 11,
             },
           },
         },
@@ -570,7 +601,7 @@ const plotPhotoGraph = (
         },
         point: {
           radius: 0.5,
-          pointStyle: 'circle',
+          pointStyle: "circle",
           borderColor: chartInfo.backgroundColor,
           backgroundColor: chartInfo.backgroundColor,
         },
@@ -583,16 +614,16 @@ const plotPhotoGraph = (
 const getBGforXC = (ga) => {
   let gestAge = parseInt(ga);
   if (gestAge === 35) {
-    return '#8CCF43';
+    return "#8CCF43";
   }
   if (gestAge === 36) {
-    return '#722EA5';
+    return "#722EA5";
   }
   if (gestAge === 37) {
-    return '#4276C6';
+    return "#4276C6";
   }
   if (gestAge === 38) {
-    return '#EE0300';
+    return "#EE0300";
   }
 };
 
@@ -600,21 +631,21 @@ const getBGforXC = (ga) => {
 const getBGforPhotoNoRF = (ga) => {
   let gestAge = parseInt(ga);
   if (gestAge === 35) {
-    return '#000000';
+    return "#000000";
   }
   if (gestAge === 36) {
-    return '#FFBC01';
+    return "#FFBC01";
   }
   if (gestAge === 37) {
-    return '#98D650';
+    return "#98D650";
   }
   if (gestAge === 38) {
-    return '#712F9F';
+    return "#712F9F";
   }
   if (gestAge === 39) {
-    return '#3E75CC';
+    return "#3E75CC";
   }
   if (gestAge === 40) {
-    return '#F6050C';
+    return "#F6050C";
   }
 };

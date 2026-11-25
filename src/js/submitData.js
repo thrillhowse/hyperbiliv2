@@ -1,13 +1,7 @@
-import { hideSummaryAndGraph } from './hide-summary-and-graph.js';
-import { checkForRequiredData } from './validation-functions/check-for-required-data.js';
-import { analyzeData } from './analyzeData.js';
-import { createSummaryTable } from './createSummaryTable.js';
-import { calculateRateOfRise } from './calculate-rate-of-rise.js';
-
-const patientDataSummaryDiv = document.querySelector(
-  '#patientDetailsSummaryTable',
-);
-const biliDataTableDiv = document.querySelector('#biliDataSummaryTable');
+import { hideSummaryAndGraph } from "./hide-summary-and-graph.js";
+import { analyzeData } from "./analyzeData.js";
+import { createSummaryTable } from "./createSummaryTable.js";
+import { calculateRateOfRise } from "./calculate-rate-of-rise.js";
 
 // Submit data
 // when user clicks the Submit button (or clicks on the Summary at the top of the page)
@@ -39,7 +33,7 @@ export const submitData = async (
   try {
     await createSummaryTable(dataAnalysis, lang);
   } catch (error) {
-    console.log('error creating summary table', error);
+    console.log("error creating summary table", error);
     return false;
   }
 

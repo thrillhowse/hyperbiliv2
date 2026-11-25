@@ -8,9 +8,12 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+scratchpad
 dist
 dist-ssr
 *.local
+testing
+validator.js
 
 # Editor directories and files
 .vscode/*

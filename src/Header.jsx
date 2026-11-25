@@ -1,6 +1,6 @@
 import "./Header.css";
 import { useLanguage } from "./context/LanguageContext.jsx";
-import { useState } from "react";
+
 import { t } from "./translations.js";
 
 export default function Header({ showInfobar, setShowInfobar }) {

@@ -1,5 +1,5 @@
 import "./Summary.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDialogModal } from "./dialog/useDialogModal.js";
 import { useLanguage } from "./context/LanguageContext.jsx";
 import { t } from "./translations.js";
@@ -14,11 +14,7 @@ export default function Summary({
   setShowBiliData,
   dob,
   hob,
-  gestAge,
   riskFactors,
-  currentPhototherapy,
-  previousPhototherapy,
-  biliData,
   summaryGenerated, // dataAnalysis object
 }) {
   const { lang } = useLanguage();
@@ -27,26 +23,54 @@ export default function Summary({
   const startOverDialogRef = useDialogModal(showStartOverDialog);
   const [showRoRWarningDialog, setShowRoRWarningDialog] = useState(false);
   const roRWarningDialogRef = useDialogModal(showRoRWarningDialog);
+  const [
+    showAgeExceedsThresholdWarningDialog,
+    setShowAgeExceedsThresholdWarningDialog,
+  ] = useState(false);
+  const ageExceedsThresholdWarningDialogRef = useDialogModal(
+    showAgeExceedsThresholdWarningDialog,
+  );
 
-  const handleCopyDataBtnClick = (e) => {
-    e.preventDefault();
-    copyDataBtn(e.target, summaryGenerated, dob, hob);
+  // Check RoR
+  useEffect(() => {
+    if (summaryGenerated?.rorHigh && riskFactors === "No") {
+      setShowRoRWarningDialog(true);
+    }
+  }, [summaryGenerated]);
+
+  // Show warning if age 336 hours or greater
+  useEffect(() => {
+    setShowAgeExceedsThresholdWarningDialog(
+      summaryGenerated?.latestAgeInHours >= 336,
+    );
+  }, [summaryGenerated]);
+
+  const [dataCopied, setDataCopied] = useState(false);
+  const [graphCopied, setGraphCopied] = useState(false);
+
+  const handleCopyDataBtnClick = () => {
+    if (copyDataBtn(summaryGenerated, dob, hob)) {
+      setDataCopied(true);
+      setTimeout(() => setDataCopied(false), 1500);
+    }
   };
 
-  const handleCopyGraphBtnClick = (e) => {
-    e.preventDefault();
-    const biliGraph = document.querySelector("#biliGraph");
-    const biliGraphCanvas = biliGraph.querySelector("canvas");
-    const biliGraphImage = biliGraphCanvas.toDataURL("image/png");
-    navigator.clipboard.write([
-      new ClipboardItem({
-        "image/png": fetch(biliGraphImage).then((res) => res.blob()),
-      }),
-    ]);
-    e.target.textContent = "Copied!";
-    setTimeout(() => {
-      e.target.textContent = "Copy Graph";
-    }, 1500);
+  const handleCopyGraphBtnClick = async () => {
+    const canvas = document.querySelector("#bili-graph");
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          // toBlob avoids the data-URL → fetch round trip
+          "image/png": new Promise((resolve) =>
+            canvas.toBlob(resolve, "image/png"),
+          ),
+        }),
+      ]);
+      setGraphCopied(true);
+      setTimeout(() => setGraphCopied(false), 1500);
+    } catch (err) {
+      console.error("Copy graph failed", err);
+    }
   };
 
   const handlePrintBtnClick = (e) => {
@@ -59,27 +83,43 @@ export default function Summary({
     setShowBiliData(true);
   };
 
-  // Check RoR
+  // Chart.js sets the canvas size via inline style, and beforeprint fires
+  // before the print layout exists, so a plain resize() would just measure
+  // the screen. Instead draw at a fixed size that fits a landscape Letter/A4
+  // page (12mm margins, see @page in home.css), at a higher pixel ratio so
+  // it isn't blurry on paper. afterprint restores the on-screen size.
   useEffect(() => {
-    if (summaryGenerated?.rorHigh && riskFactors === "No") {
-      setShowRoRWarningDialog(true);
-    }
-  }, [summaryGenerated]);
+    const PRINT_WIDTH = 960;
+    const PRINT_HEIGHT = 640;
+    const PRINT_PIXEL_RATIO = 3;
 
-  // Chart.js sets the canvas size via inline style, which print CSS can't
-  // override. Force a resize against the print layout so the graph fits the
-  // printed page instead of keeping its on-screen dimensions.
-  useEffect(() => {
-    const biliGraphCanvas = document.querySelector("#bili-graph");
-    const resizeChart = () => {
-      const chart = biliGraphCanvas && Chart.getChart(biliGraphCanvas);
-      chart?.resize();
+    const getChart = () => {
+      const biliGraphCanvas = document.querySelector("#bili-graph");
+      return biliGraphCanvas && Chart.getChart(biliGraphCanvas);
     };
-    window.addEventListener("beforeprint", resizeChart);
-    window.addEventListener("afterprint", resizeChart);
+    // Chart.js keeps its aspect ratio over the height passed to resize(),
+    // so the print ratio is swapped in too and put back afterwards
+    let screenAspectRatio;
+    const resizeForPrint = () => {
+      const chart = getChart();
+      if (!chart) return;
+      screenAspectRatio = chart.options.aspectRatio;
+      chart.options.aspectRatio = PRINT_WIDTH / PRINT_HEIGHT;
+      chart.options.devicePixelRatio = PRINT_PIXEL_RATIO;
+      chart.resize(PRINT_WIDTH, PRINT_HEIGHT);
+    };
+    const resizeForScreen = () => {
+      const chart = getChart();
+      if (!chart) return;
+      chart.options.aspectRatio = screenAspectRatio;
+      chart.options.devicePixelRatio = undefined;
+      chart.resize();
+    };
+    window.addEventListener("beforeprint", resizeForPrint);
+    window.addEventListener("afterprint", resizeForScreen);
     return () => {
-      window.removeEventListener("beforeprint", resizeChart);
-      window.removeEventListener("afterprint", resizeChart);
+      window.removeEventListener("beforeprint", resizeForPrint);
+      window.removeEventListener("afterprint", resizeForScreen);
     };
   }, [summaryGenerated]);
 
@@ -98,12 +138,7 @@ export default function Summary({
           <p>
             {dob ? (
               <>
-                {t[lang].print.dob}:{" "}
-                {new Date(dob).toLocaleDateString(lang, {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {t[lang].print.dob}: {dob}
               </>
             ) : (
               ""
@@ -149,18 +184,24 @@ export default function Summary({
             <button
               type="button"
               className="copy-btn"
-              onClick={(e) => handleCopyDataBtnClick(e)}
+              onClick={handleCopyDataBtnClick}
             >
-              <span className="lucide--copy"></span>
-              {t[lang].buttons.copyData}
+              <span
+                className={dataCopied ? "lucide--check" : "lucide--copy"}
+              ></span>
+              {dataCopied ? t[lang].buttons.copied : t[lang].buttons.copyData}
             </button>
             <button
               type="button"
               className="copy-btn"
-              onClick={(e) => handleCopyGraphBtnClick(e)}
+              onClick={handleCopyGraphBtnClick}
             >
-              <span className="lucide--file-chart-line"></span>
-              {t[lang].buttons.copyGraph}
+              <span
+                className={
+                  graphCopied ? "lucide--check" : "lucide--file-chart-line"
+                }
+              ></span>
+              {graphCopied ? t[lang].buttons.copied : t[lang].buttons.copyGraph}
             </button>
             <button
               type="button"
@@ -181,11 +222,6 @@ export default function Summary({
             className="back-btn"
             onClick={handleGoBackToBiliData}
           >
-            <iconify-icon
-              icon="solar:alt-arrow-left-line-duotone"
-              width="24"
-              height="24"
-            ></iconify-icon>
             <span className="lucide--chevron-left"></span>
             {t[lang].buttons.back}
           </button>
@@ -197,17 +233,13 @@ export default function Summary({
           >
             <span className="solar--repeat-bold"></span>
             {t[lang].buttons.startOver}
-            <iconify-icon
-              icon="solar:repeat-linear"
-              width="24"
-              height="24"
-            ></iconify-icon>
           </button>
 
           {/* RoR Warning Dialog */}
           <dialog
             id="rorWarningDialog"
             ref={roRWarningDialogRef}
+            onCancel={() => setShowRoRWarningDialog(false)}
             onClick={(e) =>
               closeOnBackdrop(e, () => setShowRoRWarningDialog(false))
             }
@@ -231,10 +263,45 @@ export default function Summary({
             </div>
           </dialog>
 
+          {/* Age Exceeds Threshold Warning Dialog */}
+          <dialog
+            id="ageExceedsThresholdWarningDialog"
+            ref={ageExceedsThresholdWarningDialogRef}
+            onCancel={() => setShowAgeExceedsThresholdWarningDialog(false)}
+            onClick={(e) =>
+              closeOnBackdrop(e, () =>
+                setShowAgeExceedsThresholdWarningDialog(false),
+              )
+            }
+          >
+            <div className="dialog-warning-title">
+              <div className="warning-icon-container">
+                <span className="lucide--triangle-alert"></span>
+              </div>
+              <p>{t[lang].ageExceedsThresholdWarning.title}</p>
+            </div>
+            <p className="dialog-text">
+              {t[lang].ageExceedsThresholdWarning.text1}
+            </p>
+            <p className="dialog-text">
+              {t[lang].ageExceedsThresholdWarning.text2}
+            </p>
+            <div>
+              <button
+                id="closeAgeExceedsThresholdWarningDialogBtn"
+                className="start-over-btn"
+                onClick={() => setShowAgeExceedsThresholdWarningDialog(false)}
+              >
+                {t[lang].buttons.close}
+              </button>
+            </div>
+          </dialog>
+
           {/* Start Over Dialog */}
           <dialog
             id="startOverDialog"
             ref={startOverDialogRef}
+            onCancel={() => setShowStartOverDialog(false)}
             onClick={(e) =>
               closeOnBackdrop(e, () => setShowStartOverDialog(false))
             }
@@ -246,12 +313,12 @@ export default function Summary({
               <p>{t[lang].buttons.startOverQuestion}</p>
             </div>
             <p className="dialog-text">{t[lang].buttons.startOverWarning}</p>
-            <div>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <button
                 id="startOverDialogBtn"
                 className="start-over-btn"
                 onClick={() => {
-                  navigation.reload();
+                  window.location.reload();
                 }}
               >
                 {t[lang].buttons.startOverYes}

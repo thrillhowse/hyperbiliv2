@@ -1,4 +1,10 @@
-import { t } from '../translations.js';
+import { t } from "../translations.js";
+
+// "—" when there is no value; otherwise the value with its unit
+const withUnit = (value, unit = "µmol/L") =>
+  value === "" || value === null || value === undefined
+    ? "—"
+    : `${value} ${unit}`;
 
 // Create a summary of the data
 export const createSummaryTable = async (data, lang) => {
@@ -32,7 +38,7 @@ ${t[lang].summary.patientDetails.header}
     </p>
     <div class='summary-table-row'>
       <p class='summary-table-row-label'>${t[lang].summary.patientDetails.gestAge}</p>
-      <p class='summary-table-row-value'>${data.patient.ga} ${t[lang].dictionary.weeks}</p>
+      <p class='summary-table-row-value'>${Number(data.patient.ga) === 40 ? "40+" : data.patient.ga} ${t[lang].dictionary.weeks}</p>
     </div>
     <div class='summary-table-row'>
       <p class='summary-table-row-label'>${t[lang].summary.patientDetails.neurotoxRF}</p>
@@ -59,10 +65,10 @@ ${t[lang].summary.patientDetails.header}
   const latestBili = orderedBiliData[orderedBiliData.length - 1];
 
   // Define latest bili test time (if it exists)
-  let latestBiliTestDate = '';
+  let latestBiliTestDate = "";
   if (latestBili.testDate) {
     latestBiliTestDate =
-      latestBili.testDate + ' ' + latestBili.testTime + ':00';
+      latestBili.testDate + " " + latestBili.testTime + ":00";
   }
 
   // Define booleans relative to cutoffs
@@ -72,45 +78,45 @@ ${t[lang].summary.patientDetails.header}
 
   if (latestBili.tsb || latestBili.tsb === 0) {
     if (latestBili.tsb >= data.xcLevel) {
-      xcCutoff += `(${parseInt(data.xcLevel)} µmol/L)`;
+      xcCutoff += `(${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
     } else if (latestBili.tsb >= data.preXcLevel) {
-      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(data.xcLevel)} µmol/L)`;
-      preXcCutoff += `(${parseInt(data.preXcLevel)} µmol/L)`;
+      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
+      preXcCutoff += `(${parseFloat(data.preXcLevel).toFixed(2)} µmol/L)`;
     } else if (latestBili.tsb >= data.photoLevel) {
-      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(data.xcLevel)} µmol/L)`;
-      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(
+      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
+      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(
         data.preXcLevel,
-      )} µmol/L)`;
-      photoCutoff += `(${parseInt(data.photoLevel)} µmol/L)`;
+      ).toFixed(2)} µmol/L)`;
+      photoCutoff += `(${parseFloat(data.photoLevel).toFixed(2)} µmol/L)`;
     } else {
-      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(data.xcLevel)} µmol/L)`;
-      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(
+      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
+      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(
         data.preXcLevel,
-      )} µmol/L)`;
-      photoCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(
+      ).toFixed(2)} µmol/L)`;
+      photoCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(
         data.photoLevel,
-      )} µmol/L)`;
+      ).toFixed(2)} µmol/L)`;
     }
   } else if (latestBili.tcb || latestBili.tcb === 0) {
     if (latestBili.tcb >= data.xcLevel) {
-      xcCutoff += `(${parseInt(data.xcLevel)} µmol/L)`;
+      xcCutoff += `(${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
     } else if (latestBili.tcb >= data.preXcLevel) {
-      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(data.xcLevel)} µmol/L)`;
-      preXcCutoff += `(${parseInt(data.preXcLevel)} µmol/L)`;
+      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
+      preXcCutoff += `(${parseFloat(data.preXcLevel).toFixed(2)} µmol/L)`;
     } else if (latestBili.tcb >= data.photoLevel) {
-      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(data.xcLevel)} µmol/L)`;
-      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(
+      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
+      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(
         data.preXcLevel,
-      )} µmol/L)`;
-      photoCutoff += `(${parseInt(data.photoLevel)} µmol/L)`;
+      ).toFixed(2)} µmol/L)`;
+      photoCutoff += `(${parseFloat(data.photoLevel).toFixed(2)} µmol/L)`;
     } else {
-      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(data.xcLevel)} µmol/L)`;
-      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(
+      xcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(data.xcLevel).toFixed(2)} µmol/L)`;
+      preXcCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(
         data.preXcLevel,
-      )} µmol/L)`;
-      photoCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseInt(
+      ).toFixed(2)} µmol/L)`;
+      photoCutoff = `<span>${t[lang].summary.biliData.belowCutoff} (${parseFloat(
         data.photoLevel,
-      )} µmol/L)`;
+      ).toFixed(2)} µmol/L)`;
     }
   }
 
@@ -131,15 +137,19 @@ ${t[lang].summary.patientDetails.header}
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.tcb}</p>
-        <p class="bilirubin-data-value">${latestBili.tcb ?? '-'} µmol/L</p>
+        <p class="bilirubin-data-value">${withUnit(latestBili.tcb)}</p>
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.tsb}</p>
-        <p class="bilirubin-data-value">${latestBili.tsb ?? '-'} µmol/L</p>
+        <p class="bilirubin-data-value">${withUnit(latestBili.tsb)}</p>
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.ror}</p>
-        <p class="bilirubin-data-value">${data.ror?.join(' ➜ ') ?? '-'}</p>
+        <p class="bilirubin-data-value">${
+          data.ror?.length
+            ? `${data.ror.map((rate) => Number(rate).toFixed(1)).join(" ➜ ")} µmol/L/h`
+            : "—"
+        }
       </div>
 
       <div class="bilirubin-data-header">
@@ -147,7 +157,7 @@ ${t[lang].summary.patientDetails.header}
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.deltaTSB}</p>
-        <p class="bilirubin-data-value">${data.deltaTSBValue ?? '-'} µmol/L</p>
+        <p class="bilirubin-data-value">${withUnit(data.deltaTSBValue)}</p>
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.phototherapy}</p>
@@ -165,19 +175,19 @@ ${t[lang].summary.patientDetails.header}
       <div class="bilirubin-data-header">
         <p>${t[lang].summary.biliData.comment}</p>
       </div>
-      <div class="bilirubin-data-row  bilirubin-data-last-row" style="padding: 16px 12px; color: white; background-color: ${
-        latestBili.rowColor
-      }">
+      <div class="bilirubin-data-row bilirubin-data-last-row comment comment-${latestBili.category}">
+        <p class="comment-title">${t[lang].summary.biliData.categories[latestBili.category]}</p>
         <p class="bilirubin-data-label">${latestBili.result}</p>
+      </div>
     </div>
   </div>  
   `;
 
   // Add to the page
-  const patientDetails = document.querySelector('#patientDetailsSummaryTable');
-  patientDetails.insertAdjacentHTML('beforeend', patientDetailsHTML);
-  const biliData = document.querySelector('#biliDataSummaryTable');
-  biliData.insertAdjacentHTML('beforeend', biliDataHTML);
+  const patientDetails = document.querySelector("#patientDetailsSummaryTable");
+  patientDetails.insertAdjacentHTML("beforeend", patientDetailsHTML);
+  const biliData = document.querySelector("#biliDataSummaryTable");
+  biliData.insertAdjacentHTML("beforeend", biliDataHTML);
 
   return true;
 };

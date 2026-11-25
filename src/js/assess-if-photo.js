@@ -1,5 +1,5 @@
-import { photoLevels } from './bili-data.js';
-import { t } from '../translations.js';
+import { photoLevels } from "./bili-data.js";
+import { t } from "../translations.js";
 
 export const assessIfPhoto = (
   patient,
@@ -51,14 +51,20 @@ export const assessIfPhoto = (
       } else {
         // And if not above photo threshold then need to calculate a delta TSB between photo level and current tsb
         // note: this is slightly different from delta TSB calculated when not on phototherapy which is dealt with in assess-delta-tsb.js
+        // also set that this bili is below the photo threshold (despite being on phototherapy)
         dataAnalysis.photo = false;
         deltaTSB = photoLevel - biliDataForThisRow.tsb;
 
+        // Nov 2026: update to show delta TSB while on photo
+        deltaTSB = Math.trunc(deltaTSB); // round down to nearest integer (more conservative, v1 used parseInt which is also fine)
+        // Set delta TSB value (as this is confirmed already to be the latest bili)
+        dataAnalysis.deltaTSBValue = deltaTSB;
+
         // DeltaTSB depends on GA but not going to differentiate response as don't want to give explicit advice (just to say below threshold)
-        biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${parseInt(
-          deltaTSB,
-        )} ${t[lang].comments.onPhototherapy.tsbBelowPhoto.whileOnPhoto}
-        ${t[lang].comments.onPhototherapy.tsbBelowPhoto.tsbBelowPhotoSubtext}`;
+        biliDataForThisRow.result =
+          `${t[lang].comments.deltaTSB} ${deltaTSB} µmol/L ` +
+          `${t[lang].comments.onPhototherapy.tsbBelowPhoto.whileOnPhoto}` +
+          `${t[lang].comments.onPhototherapy.tsbBelowPhoto.tsbBelowPhotoSubtext}`;
         return true;
       }
     }
@@ -85,7 +91,8 @@ export const assessIfPhoto = (
     biliDataForThisRow.result =
       t[lang].comments.notOnPhototherapy.tcbAbovePhoto;
     return true;
-  } else {
-    return false;
   }
+
+  // If none of the above conditions are met, it means the patient is below the phototherapy threshold
+  return false;
 };

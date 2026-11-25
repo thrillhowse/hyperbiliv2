@@ -1,21 +1,24 @@
 .input-label {
   display: flex;
   flex-direction: row;
+  /* flex-wrap: wrap; */
   justify-content: flex-start;
-  align-items: flex-end;
-  gap: 6px;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
-  margin: 0 8px;
+  margin: 0;
 }
 
 .input-label-text {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.5rem;
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 .input-label-text-container {
@@ -24,28 +27,34 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0.25rem;
-  font-size: 0.9rem;
+  font-size: inherit;
 }
 
 .optional-label {
-  background-color: var(--color-slate-200);
+  padding: 0.0625rem 0.5rem;
+  border: 1px solid var(--color-slate-200);
+  border-radius: 999px;
+  background-color: var(--color-slate-100);
   color: var(--color-slate-600);
-  border-radius: 4px;
-  padding: 2px 6px;
-  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 /* CONTAINER INPUTS */
 .container-inputs input {
   padding: 12px 8px;
-  border: 1px solid var(--primary-color);
-  border-radius: 8px;
-  background-color: white;
-  color: black;
+  border: 1px solid var(--secondary-background-color);
+  border-radius: 10px;
+  background-color: var(--color-white);
+  color: var(--primary-color);
   text-align: center;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
-.container-inputs input[type='text'] {
+.container-inputs input[type="text"] {
   width: 90%;
   height: 44px;
   max-height: 44px;
@@ -56,7 +65,7 @@
   background-color: white;
 }
 
-.container-inputs input[type='date'] {
+.container-inputs input[type="date"] {
   flex-grow: 1;
   height: 44px;
   max-height: 44px;
@@ -69,23 +78,22 @@
      vertically on their own without it. Right padding is trimmed to make
      room for the calendar icon inside the box (see below) instead of the
      icon adding extra width past the declared border-box width. */
-  padding: 0 4px 0 8px;
+  padding: 0 4px 0 12px;
   text-align: left;
   font-family: var(--main-font);
   font-size: 16px;
-  font-style: italic;
-  color: black;
-  background-color: white;
+  color: var(--color-slate-600);
+  background-color: var(--color-white);
 }
 
-.container-inputs input[type='date'].date-selected {
-  font-style: normal;
+.container-inputs input[type="date"].date-selected {
+  color: var(--primary-color);
 }
 
 /* iOS Safari renders a selected date value inside a pseudo-element that is
    hardcoded to text-align: center. Override it directly so the value stays
    left-aligned to match the empty-state placeholder. */
-.container-inputs input[type='date']::-webkit-date-and-time-value {
+.container-inputs input[type="date"]::-webkit-date-and-time-value {
   text-align: left;
   margin: 0;
 }
@@ -93,12 +101,12 @@
 /* The calendar icon button carries its own default margin/padding that can
    push the control wider than its declared border-box width. Zero it out
    so the icon fits inside the box instead of extending past it. */
-.container-inputs input[type='date']::-webkit-calendar-picker-indicator {
+.container-inputs input[type="date"]::-webkit-calendar-picker-indicator {
   margin: 0;
   padding: 2px;
 }
 
-.container-inputs input[type='number'] {
+.container-inputs input[type="number"] {
   flex: 1;
   height: 44px;
   max-height: 44px;
@@ -107,34 +115,43 @@
   text-align: center;
   font-family: var(--main-font);
   font-size: 16px;
-  color: black;
-  background-color: white;
+  color: var(--primary-color);
+  background-color: var(--color-white);
 }
 
 .container-inputs select {
-  flex: 1;
+  /* auto basis: with appearance: none a 0 basis collapses the height
+     in column layouts */
+  flex: 1 1 auto;
   height: 44px;
+  min-height: 44px;
   max-height: 44px;
   width: 90%;
   margin: 6px;
-  padding: 12px 8px 12px 6px;
+  padding: 0 2.5rem 0 12px;
   text-align: left;
   font-family: var(--main-font);
   font-size: 16px;
-  font-style: italic;
-  color: black;
-  border: 1px solid var(--primary-color);
-  border-radius: 8px;
-  background-color: white;
+  color: var(--color-slate-600);
+  border: 1px solid var(--secondary-background-color);
+  border-radius: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-white)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%234a607f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9l6 6l6-6'/%3E%3C/svg%3E")
+    no-repeat right 0.75rem center / 1.125rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
-select.selected {
-  font-style: normal;
+.container-inputs select.selected {
+  color: var(--primary-color);
 }
 
 .container-inputs select option {
-  font-style: normal;
   font-size: 16px;
+  color: var(--primary-color);
 }
 
 input::-webkit-outer-spin-button,
@@ -163,17 +180,29 @@ input::-webkit-inner-spin-button {
   gap: 4px;
 }
 
+/* Yes / No segmented controls: a recessed track with two pill segments */
 .risk-factors-toggle,
 .current-phototherapy-toggle,
 .previous-phototherapy-toggle {
-  display: flex;
-  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
   align-self: flex-start;
   width: 90%;
   margin: 6px;
-  border: 1px solid var(--primary-color);
-  border-radius: 8px;
-  overflow: hidden;
+  padding: 0.25rem;
+  border: 1px solid
+    color-mix(
+      in oklab,
+      var(--secondary-background-color) 32%,
+      var(--color-white)
+    );
+  border-radius: 12px;
+  background-color: color-mix(
+    in oklab,
+    var(--secondary-background-color) 7%,
+    var(--color-white)
+  );
 }
 
 .risk-factor-btn,
@@ -182,35 +211,45 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
-  width: 50%;
-  height: 44px;
-  max-height: 44px;
+  height: 2.25rem;
+  padding: 0 1rem;
   border: none;
-  background-color: white;
+  border-radius: 9px;
+  background-color: transparent;
+  color: var(--info-text-color);
   font-family: var(--main-font);
-  font-size: 0.9rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   cursor: pointer;
-}
-
-.risk-factor-btn:first-child,
-.current-phototherapy-btn:first-child,
-.previous-phototherapy-btn:first-child {
-  border-right: 1px solid var(--primary-color);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .risk-factor-btn--active,
 .current-phototherapy-btn--active,
 .previous-phototherapy-btn--active {
   background-color: var(--secondary-color);
-  color: white;
+  color: var(--color-white);
+  font-weight: 600;
+  box-shadow:
+    0 1px 2px rgb(10 92 61 / 0.25),
+    0 2px 6px -1px rgb(26 155 110 / 0.35);
 }
 
 .risk-factor-btn:hover:not(.risk-factor-btn--active),
 .current-phototherapy-btn:hover:not(.current-phototherapy-btn--active),
 .previous-phototherapy-btn:hover:not(.previous-phototherapy-btn--active) {
-  background-color: #e8edf5;
+  background-color: var(--color-white);
+  box-shadow: 0 1px 2px rgb(12 31 61 / 0.08);
+}
+
+.risk-factor-btn:focus-visible,
+.current-phototherapy-btn:focus-visible,
+.previous-phototherapy-btn:focus-visible {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
 }
 
 #previous-phototherapy-sublabel {
@@ -230,7 +269,7 @@ input::-webkit-inner-spin-button {
   text-align: center;
 }
 
-.bili-table input[type='text'] {
+.bili-table input[type="text"] {
   width: 90%;
   height: 44px;
   max-height: 44px;
@@ -241,7 +280,7 @@ input::-webkit-inner-spin-button {
   background-color: white;
 }
 
-.bili-table input[type='date'] {
+.bili-table input[type="date"] {
   width: 125px;
   height: 44px;
   max-height: 44px;
@@ -256,32 +295,32 @@ input::-webkit-inner-spin-button {
   background-color: white;
 }
 
-.bili-table input[type='date'].date-selected {
+.bili-table input[type="date"].date-selected {
   font-style: normal;
 }
 
-.bili-table input[type='date']::-webkit-calendar-picker-indicator {
+.bili-table input[type="date"]::-webkit-calendar-picker-indicator {
   margin: 0;
   padding: 2px;
 }
 
-.bili-table input[type='date']::-webkit-date-and-time-value {
+.bili-table input[type="date"]::-webkit-date-and-time-value {
   text-align: center;
   margin: 0;
 }
 
 /* Remove spinners in all modern browsers */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
 }
 
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0; /* Chrome, Safari, Edge */
 }
 
-.bili-table input[type='number'] {
+.bili-table input[type="number"] {
   min-width: 3ch;
   width: 45px;
   height: 44px;
@@ -314,30 +353,37 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* HOVER */
-.container-inputs input[type='text']:hover,
-.container-inputs input[type='date']:hover,
-.container-inputs input[type='number']:hover,
-.bili-table input[type='text']:hover,
-.bili-table input[type='date']:hover,
-.bili-table input[type='number']:hover,
-input[type='radio'],
+.container-inputs input[type="text"]:hover,
+.container-inputs input[type="date"]:hover,
+.container-inputs input[type="number"]:hover,
+.bili-table input[type="text"]:hover,
+.bili-table input[type="date"]:hover,
+.bili-table input[type="number"]:hover,
+input[type="radio"],
 select:hover {
   cursor: pointer;
 }
 
-/* FOCUS */
-.container-inputs input[type='text']:focus,
-.container-inputs input[type='text']:focus-visible,
-.container-inputs input[type='date']:focus,
-.container-inputs input[type='date']:focus-visible,
-.container-inputs input[type='number']:focus,
-.container-inputs input[type='number']:focus-visible,
-.bili-table input[type='text']:focus,
-.bili-table input[type='text']:focus-visible,
-.bili-table input[type='date']:focus,
-.bili-table input[type='date']:focus-visible,
-.bili-table input[type='number']:focus,
-.bili-table input[type='number']:focus-visible,
+.container-inputs input:hover,
+.container-inputs select:hover {
+  border-color: var(--consult-card-background-color);
+}
+
+/* FOCUS: green border + soft ring instead of a hard black outline */
+.container-inputs input:focus,
+.container-inputs select:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--secondary-color) 22%, transparent);
+}
+
+.bili-table input[type="text"]:focus,
+.bili-table input[type="text"]:focus-visible,
+.bili-table input[type="date"]:focus,
+.bili-table input[type="date"]:focus-visible,
+.bili-table input[type="number"]:focus,
+.bili-table input[type="number"]:focus-visible,
 select:focus {
   outline: 1px solid black;
 }
@@ -346,15 +392,47 @@ select:focus {
 .input-error,
 .input-error:focus,
 .input-error:focus-visible {
-  outline: 1px solid red;
+  outline: 1px solid var(--color-red-600);
+}
+
+/* Inside the cards the error state uses the border + ring like focus does */
+.container-inputs .input-error,
+.container-inputs .input-error:hover,
+.container-inputs .input-error:focus {
+  outline: none;
+  border-color: var(--color-red-600);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--color-red-600) 16%, transparent);
 }
 
 .input-error-text {
-  color: red;
-  margin: 0 auto;
-  font-size: 0.8rem;
-  font-style: italic;
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin: 0;
+  color: var(--color-red-600);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.input-error-text::before {
+  content: "";
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.05rem;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 8v4m0 4h.01'/%3E%3C/g%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 8v4m0 4h.01'/%3E%3C/g%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+/* Error paragraphs are always rendered; collapse them when empty */
+.input-error-text:empty {
+  display: none;
 }
 
 @media screen and (min-width: 375px) {
@@ -364,26 +442,11 @@ select:focus {
 }
 
 @media screen and (min-width: 1024px) {
-  #dob,
-  #hob,
-  #gestAge,
   .dot,
   .hot,
-  .container-inputs input[type='date'],
+  .container-inputs input[type="date"],
   .container-inputs select {
     width: 360px;
-  }
-
-  .risk-factors-toggle,
-  .current-phototherapy-toggle,
-  .previous-phototherapy-toggle {
-    width: unset;
-  }
-
-  .risk-factor-btn,
-  .current-phototherapy-btn,
-  .previous-phototherapy-btn {
-    width: 180px;
   }
 
   .current-phototherapy,
@@ -391,16 +454,89 @@ select:focus {
     justify-content: flex-end;
   }
 
-  .bili-table input[type='date'],
+  .bili-table input[type="date"],
   .bili-table select {
     width: 140px;
   }
 
-  .bili-table input[type='number'] {
+  .bili-table input[type="number"] {
     width: 55px;
   }
+}
 
-  .input-error-text {
-    margin: 0 auto 0 1rem;
+/* ------------------------------------------------------------------
+   Patient details layout
+   Scoped by id so the shared field styles above (also used on the
+   Bili Data page) keep their own widths.
+   ------------------------------------------------------------------ */
+#patient-details-container .container-input {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0 0 1.5rem;
+}
+
+#patient-details-container .container-input > input,
+#patient-details-container .container-input > select,
+#patient-details-container .container-input > [class$="-toggle"] {
+  flex: none;
+  width: 100%;
+  margin: 0;
+}
+
+/* Group headings (Risk Factors, Phototherapy) sit tight to their question.
+   Padding, not margin: the Phototherapy heading has inline margins. */
+#patient-details-container
+  .container-input:not(:has(> input, > select, > [class$="-toggle"])) {
+  margin-bottom: 0;
+  padding-bottom: 0.875rem;
+}
+
+/* The questions under a group heading */
+#patient-details-container .sub-label {
+  color: var(--color-slate-700);
+}
+
+/* The Phototherapy heading uses a <p> + bare icon rather than the label
+   markup, so match it to the other field labels */
+#patient-details-container .input-label > p {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+#patient-details-container .input-label > [class*="lucide--"]:first-child {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-slate-500);
+}
+
+/* Risk factors and phototherapy each get their own section */
+#patient-details-container .container-inputs > div:not([class]) {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--card-title-border-bottom);
+}
+
+@media screen and (min-width: 768px) {
+  /* Date and hour of birth side by side; everything else one column wide */
+  #patient-details-container .container-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.25rem;
+    align-items: start;
+  }
+
+  #patient-details-container .container-inputs > * {
+    grid-column: 1 / -1;
+  }
+
+  #patient-details-container .container-inputs > .container-input {
+    grid-column: auto;
+  }
+
+  #patient-details-container .container-input > [class$="-toggle"] {
+    max-width: calc((100% - 1.25rem) / 2);
   }
 }

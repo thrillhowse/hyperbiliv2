@@ -37,107 +37,247 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 0.5rem;
   max-width: 300px;
-  margin: 8px 0 8px auto;
-  padding: 12px 18px;
+  min-height: 3rem;
+  margin: 0 0 0 auto;
+  padding: 0.875rem 2rem;
   text-align: center;
   outline: none;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--button-border-radius);
   background-color: var(--secondary-color);
   color: var(--button-text-color);
   font-family: var(--main-font);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 1px 2px rgb(10 92 61 / 0.2),
+    0 6px 16px -4px rgb(26 155 110 / 0.45);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
-.advance-btn:hover {
+.advance-btn > span {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform 160ms ease;
+}
+
+.advance-btn:hover:not(:disabled) {
   cursor: pointer;
   background-color: var(--secondary-color-hover);
+  transform: translateY(-1px);
+  box-shadow:
+    0 2px 4px rgb(10 92 61 / 0.2),
+    0 10px 24px -6px rgb(26 155 110 / 0.55);
 }
 
+.advance-btn:hover:not(:disabled) > span {
+  transform: translateX(3px);
+}
+
+.advance-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgb(10 92 61 / 0.25);
+}
+
+.advance-btn:focus-visible {
+  outline: 3px solid
+    color-mix(in oklab, var(--secondary-color) 45%, transparent);
+  outline-offset: 3px;
+}
+
+/* Neutral grey reads as "not yet" more clearly than a faded green */
 .advance-btn:disabled {
   background-color: color-mix(
     in oklab,
-    var(--secondary-color) 50%,
-    transparent
+    var(--secondary-background-color) 22%,
+    var(--color-white)
   );
-  color: color-mix(in oklab, var(--color-white) 100%, transparent);
+  color: var(--consult-card-background-color);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
+.info-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.info-trigger:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .advance-btn,
+  .advance-btn > span,
+  .back-btn,
+  .back-btn > span,
+  .start-over-btn,
+  .std-btn,
+  .copy-btn,
+  .print-btn {
+    transition: none;
+  }
+
+  .advance-btn:hover:not(:disabled),
+  .advance-btn:hover:not(:disabled) > span,
+  .back-btn:hover > span,
+  .start-over-btn:hover {
+    transform: none;
+  }
+}
+
+/* Secondary action: a quiet ghost pill beside the green primary */
 .back-btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
   max-width: 300px;
-  padding: 12px 18px;
+  min-height: 3rem;
+  padding: 0.875rem 1.25rem 0.875rem 1rem;
   text-align: center;
   outline: none;
   border: none;
   border-radius: var(--button-border-radius);
-  background-color: inherit;
+  background-color: transparent;
   color: var(--primary-color);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-family: var(--main-font);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   cursor: pointer;
+  transition: background-color 160ms ease;
 }
 
+.back-btn > span {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform 160ms ease;
+}
+
+.back-btn:hover {
+  background-color: color-mix(
+    in oklab,
+    var(--secondary-background-color) 14%,
+    var(--color-white)
+  );
+}
+
+.back-btn:hover > span {
+  transform: translateX(-3px);
+}
+
+.back-btn:focus-visible {
+  outline: 3px solid
+    color-mix(in oklab, var(--secondary-color) 45%, transparent);
+  outline-offset: 3px;
+}
+
+/* Leftover <iconify-icon> tags: the library isn't loaded, so they render
+   nothing but still take up a flex gap and push the label off-centre */
+.back-btn iconify-icon,
+.advance-btn iconify-icon {
+  display: none;
+}
+
+/* Copy / Copy Graph / Print: secondary "tool" buttons so the page's one
+   green primary (Start Over) isn't competing with three more */
 .copy-print-btns {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
-  gap: 6px;
-  margin: 16px auto;
+  align-items: stretch;
+  gap: 0.5rem;
+  margin: 1rem auto 0;
   width: 100%;
 }
 
-.copy-btn {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  width: 40%;
-  max-width: 300px;
-  margin: auto;
-  text-align: center;
-  border: none;
-  border-radius: var(--button-border-radius);
-  background-color: var(--secondary-color);
-  color: var(--button-text-color);
-  font-weight: 500;
-  height: 40px;
-  outline: none;
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-}
-
+.copy-btn,
 .print-btn {
   display: flex;
   flex-direction: row;
+  flex: 1 1 6.5rem;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  width: 40%;
-  max-width: 300px;
-  margin: auto;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.5rem 0.875rem;
   text-align: center;
-  border: none;
-  border-radius: var(--button-border-radius);
-  background-color: var(--secondary-color);
-  color: var(--button-text-color);
-  font-weight: 500;
-  height: 40px;
   outline: none;
-  font-size: 0.7rem;
-  letter-spacing: 2px;
+  border: 1px solid
+    color-mix(
+      in oklab,
+      var(--secondary-background-color) 45%,
+      var(--color-white)
+    );
+  border-radius: var(--button-border-radius);
+  background-color: var(--color-white);
+  color: var(--primary-color);
+  font-family: var(--main-font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgb(12 31 61 / 0.06);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.copy-btn > span,
+.print-btn > span {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--secondary-color);
+}
+
+.copy-btn:hover,
+.print-btn:hover {
+  background-color: color-mix(
+    in oklab,
+    var(--secondary-color) 6%,
+    var(--color-white)
+  );
+  border-color: color-mix(in oklab, var(--secondary-color) 45%, transparent);
+}
+
+.copy-btn:focus-visible,
+.print-btn:focus-visible {
+  outline: 3px solid
+    color-mix(in oklab, var(--secondary-color) 45%, transparent);
+  outline-offset: 3px;
+}
+
+/* Phones: icon above label so each label stays on one line */
+@media screen and (max-width: 479.98px) {
+  .copy-btn,
+  .print-btn {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.625rem 0.5rem;
+    border-radius: 14px;
+    font-size: 0.8125rem;
+  }
 }
 
 .back-start-over-btns {
@@ -145,60 +285,111 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
-  margin: 16px;
+  width: 100%;
+  margin: 1.5rem 0 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--card-title-border-bottom);
 }
 
+/* Dialog actions (RoR warning Close, Start Over confirm) */
 .start-over-btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 6px;
-  width: 90%;
-  max-width: 300px;
-  margin: 24px auto 12px auto;
-  padding: 12px 18px;
+  gap: 0.5rem;
+  width: fit-content;
+  min-height: 3rem;
+  margin: 0;
+  padding: 0.875rem 2rem;
   text-align: center;
   outline: none;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--button-border-radius);
   background-color: var(--secondary-color);
   color: var(--button-text-color);
   font-family: var(--main-font);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow:
+    0 1px 2px rgb(10 92 61 / 0.2),
+    0 6px 16px -4px rgb(26 155 110 / 0.45);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 
 .submit-btn:hover,
-.copy-btn:hover,
-.print-btn:hover,
 .start-over-btn:hover {
   cursor: pointer;
   background-color: var(--secondary-color-hover);
 }
 
+.start-over-btn:hover {
+  transform: translateY(-1px);
+}
+
+.start-over-btn:focus-visible {
+  outline: 3px solid
+    color-mix(in oklab, var(--secondary-color) 45%, transparent);
+  outline-offset: 3px;
+}
+
+/* "Yes, Start Over" wipes everything entered, so it reads as destructive */
+#startOverDialogBtn {
+  background-color: var(--color-red-600);
+  box-shadow:
+    0 1px 2px rgb(120 20 20 / 0.25),
+    0 6px 16px -4px rgb(198 40 40 / 0.4);
+}
+
+#startOverDialogBtn:hover {
+  background-color: color-mix(in oklab, var(--color-red-600) 88%, black);
+}
+
+#startOverDialogBtn:focus-visible {
+  outline-color: color-mix(in oklab, var(--color-red-600) 45%, transparent);
+}
+
+/* Quiet ghost button (the dialog's "Close" beside a primary) */
 .std-btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  max-width: 300px;
-  margin: 8px auto;
-  margin-top: 16px;
-  padding: 12px 18px;
+  min-height: 3rem;
+  margin: 0;
+  padding: 0.875rem 1.5rem;
   text-align: center;
   outline: none;
   border: none;
   border-radius: var(--button-border-radius);
-  background-color: inherit;
-  color: black;
+  background-color: transparent;
+  color: var(--primary-color);
   font-family: var(--main-font);
   font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.std-btn:hover {
+  background-color: color-mix(
+    in oklab,
+    var(--secondary-background-color) 14%,
+    var(--color-white)
+  );
+}
+
+.std-btn:focus-visible {
+  outline: 3px solid
+    color-mix(in oklab, var(--secondary-color) 45%, transparent);
+  outline-offset: 3px;
 }
 
 .add-row-btn,
@@ -253,14 +444,5 @@
 @media screen and (min-width: 1024px) {
   .consent-btn {
     margin: 4px auto 16px auto;
-  }
-
-  .advance-btn {
-    margin: 24px 0 24px auto;
-  }
-
-  .copy-btn,
-  .print-btn {
-    font-size: 0.8rem;
   }
 }

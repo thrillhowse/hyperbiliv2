@@ -31,14 +31,19 @@
   --card-title-background: #f6f9fb;
   --card-title-border-bottom: #e4e9ee;
   --title-font: "Comfortaa", sans-serif;
-  --subtitle-font: "Oxygen", sans-serif;
-  --main-font: "Oxygen", sans-serif;
+  /* Oxygen and Montserrat are never loaded, so these fell back to Arial while
+     everything else used the system font. One system stack keeps it uniform. */
+  --system-font:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  --subtitle-font: var(--system-font);
+  --main-font: var(--system-font);
   --button-border: none;
   --button-border-radius: 25px;
   --button-border-radius-minor: 4px;
   --patient-summary-quickview-radius: 24px;
   --button-padding: 1rem 2rem;
-  --button-font: "Montserrat", sans-serif;
+  --button-font: var(--system-font);
   --button-text-color: white;
   --input-border-radius: 8px;
   --icon-color: #f1f1f1;
@@ -55,6 +60,7 @@
   --color-green-500: #178a5e;
   --color-green-600: #0c6b4a;
   --color-green-700: #0a5c3d;
+  --color-red-600: #c62828;
   --color-slate-100: #f1f1f1;
   --color-slate-100\50: #f1f1f180;
   --color-slate-200: #e1e1e1;
@@ -210,8 +216,8 @@ label:hover {
 }
 
 .sub-label {
-  width: 95%;
-  font-size: 12px;
+  font-size: 0.9375rem;
+  line-height: 1.45;
 }
 
 .hidden {

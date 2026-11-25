@@ -8,15 +8,16 @@ export const assessDeltaTSB = (
   dataAnalysis,
   lang,
 ) => {
-  // Delta TSB is only applicable to patients 12h or older who have not received phototherapy
+  // Delta TSB is only applicable to patients 12h or older or who have not received previous phototherapy
+  // Nov 2026: Dr. Ng noted that calculating delta TSB with previous phototherapy can be done but a warning should be added
   if (biliDataForThisRow.ageInHours < 12) {
     dataAnalysis.deltaTSB = false;
     biliDataForThisRow.result = t[lang].comments.deltaTSBComments.ageUnder12h;
     return false;
-  } else if (patient.phototherapy.previousPhototherapy) {
-    dataAnalysis.deltaTSB = false;
-    biliDataForThisRow.result = t[lang].comments.deltaTSBComments.previousPhoto;
-    return false;
+    // } else if (patient.phototherapy.previousPhototherapy) {
+    //   dataAnalysis.deltaTSB = false;
+    //   biliDataForThisRow.result = t[lang].comments.deltaTSBComments.previousPhoto;
+    //   return false;
   }
 
   // If safe to proceed
@@ -47,45 +48,59 @@ export const assessDeltaTSB = (
     deltaTSB = photoLevel - biliDataForThisRow.tcb;
   }
 
-  deltaTSB = parseInt(deltaTSB);
+  // deltaTSB = parseInt(deltaTSB);
+  deltaTSB = Math.trunc(deltaTSB); // round down to nearest integer (more conservative, v1 used parseInt which is also fine)
 
   // Set delta TSB value if this is the latest bili
+  // Only set the deltaTSBValue in the dataAnalysis object if this is the latest bili
+  // This value will be used as the delta TSB showed in the summary or analysis for the latest bili
   if (latestBili) {
     dataAnalysis.deltaTSBValue = deltaTSB;
+  }
+
+  // Nov 2026: If the patient has received previous phototherapy, add a warning to the result
+  if (patient.phototherapy.previousPhototherapy) {
+    dataAnalysis.deltaTSB = true;
+    biliDataForThisRow.deltaTSB = deltaTSB;
+    biliDataForThisRow.result =
+      `${t[lang].comments.deltaTSB} ${deltaTSB} µmol/L<br><br>` +
+      t[lang].comments.deltaTSBComments.previousPhoto;
+    return true;
   }
 
   // Then return result based on delta TSB using table in figure 1 and the first rule of 30's from CPS statement
   if (deltaTSB <= 30) {
     if (biliDataForThisRow.ageInHours < 24) {
       dataAnalysis.deltaTSB = true;
-      biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${parseInt(
-        deltaTSB,
-      )} ${t[lang].comments.deltaTSBComments.lessThan30.ageUnder24h}`;
+      biliDataForThisRow.deltaTSB = deltaTSB;
+      biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${deltaTSB} ${t[lang].comments.deltaTSBComments.lessThan30.ageUnder24h}`;
       return true;
     } else if (biliDataForThisRow.ageInHours >= 24) {
       dataAnalysis.deltaTSB = true;
-      biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${parseInt(
-        deltaTSB,
-      )} ${t[lang].comments.deltaTSBComments.lessThan30.ageOver24h}`;
+      biliDataForThisRow.deltaTSB = deltaTSB;
+      biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${deltaTSB} ${t[lang].comments.deltaTSBComments.lessThan30.ageOver24h}`;
       return true;
     }
   }
 
   if (deltaTSB > 30 && deltaTSB <= 60) {
     dataAnalysis.deltaTSB = true;
-    biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${parseInt(deltaTSB)} ${t[lang].comments.deltaTSBComments.lessThan60}`;
+    biliDataForThisRow.deltaTSB = deltaTSB;
+    biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${deltaTSB} ${t[lang].comments.deltaTSBComments.lessThan60}`;
     return true;
   }
 
   if (deltaTSB > 60 && deltaTSB <= 90) {
     dataAnalysis.deltaTSB = true;
-    biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${parseInt(deltaTSB)} ${t[lang].comments.deltaTSBComments.lessThan90}`;
+    biliDataForThisRow.deltaTSB = deltaTSB;
+    biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${deltaTSB} ${t[lang].comments.deltaTSBComments.lessThan90}`;
     return true;
   }
 
   if (deltaTSB > 90) {
     dataAnalysis.deltaTSB = true;
-    biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${parseInt(deltaTSB)} ${t[lang].comments.deltaTSBComments.greaterThan90}`;
+    biliDataForThisRow.deltaTSB = deltaTSB;
+    biliDataForThisRow.result = `${t[lang].comments.deltaTSB} ${deltaTSB} ${t[lang].comments.deltaTSBComments.greaterThan90}`;
     return true;
   }
 };

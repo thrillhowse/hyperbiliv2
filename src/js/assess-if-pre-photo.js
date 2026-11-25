@@ -1,5 +1,5 @@
-import { photoLevels } from './bili-data.js';
-import { t } from '../translations.js';
+import { photoLevels } from "./bili-data.js";
+import { t } from "../translations.js";
 
 export const assessIfPrePhoto = (
   patient,
@@ -33,7 +33,7 @@ export const assessIfPrePhoto = (
   // Check if this is the latest/most recent data point (by age in hours)
   // and if so set the dataAnalysis.prePhotoLevel to this data point's pre photo level
   if (latestBili) {
-    dataAnalysis.prePhotoLevel = prePhotoLevel.toFixed(2);
+    dataAnalysis.prePhotoLevel = prePhotoLevel.toFixed(2); // to 2 decimal places, consistent with bili-data.js
   }
 
   // TSB //
@@ -67,7 +67,8 @@ export const assessIfPrePhoto = (
       biliDataForThisRow.result = t[lang].comments.prePhoto.tcbNearPhoto;
       return true;
     }
-  } else {
-    return false;
   }
+
+  // If none of the above conditions are met, return false
+  return false;
 };

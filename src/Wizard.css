@@ -22,42 +22,56 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
-  padding-top: 18px;
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--infobar-background-color);
-  font-size: large;
+  padding: 1.5rem 0 1.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--card-title-border-bottom);
 }
 
+/* Icon on a green tile (drawn by ::before), title + description beside it */
 .header-title {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 8px;
+  --tile: 2.75rem;
+  display: grid;
+  grid-template-columns: var(--tile) minmax(0, 1fr);
+  column-gap: 0.875rem;
+  align-items: center;
 }
 
-.header-title span {
-  width: 30px;
-  height: 30px;
+.header-title::before {
+  content: "";
+  grid-area: 1 / 1;
+  width: var(--tile);
+  height: var(--tile);
+  border-radius: 12px;
+  background: color-mix(in oklab, var(--secondary-color) 11%, transparent);
+}
+
+.header-title > span {
+  grid-area: 1 / 1;
+  place-self: center;
+  width: 1.5rem;
+  height: 1.5rem;
   color: var(--secondary-color);
 }
 
 .header-text {
+  grid-area: 1 / 2;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  gap: 0.125rem;
 }
 
 .header-text h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--secondary-color);
 }
 
 .header-text p {
-  margin-top: 2px;
-  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.45;
   color: var(--color-slate-600);
 }
 
@@ -84,6 +98,17 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* Keep the reference cards in view while scrolling a long form, but only
+   when the screen is tall enough to show the whole column */
+@media screen and (min-width: 1024px) and (min-height: 800px) {
+  .extra-info-column {
+    position: sticky;
+    /* matches the card's offset so the two tops line up before scrolling */
+    top: 0.5rem;
   }
 }
 

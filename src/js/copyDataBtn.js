@@ -1,4 +1,4 @@
-export const copyDataBtn = (copyBtn, data, dob, hob) => {
+export const copyDataBtn = (data, dob, hob) => {
   // Data will contain the necessary data just need to format it
 
   // First sort the biliData array based on 'ageInHours'
@@ -7,7 +7,7 @@ export const copyDataBtn = (copyBtn, data, dob, hob) => {
 
   let str = ``;
   if (dob) {
-    str += `Date of Birth: ${new Date(dob).toDateString()}<br>`;
+    str += `Date of Birth: ${dob}<br>`;
   }
   if (hob) {
     str += `Hour of Birth: ${hob}:00<br>`;
@@ -40,9 +40,14 @@ export const copyDataBtn = (copyBtn, data, dob, hob) => {
         str += `TSB: ${bili.tsb} &#181;mol/L`;
       }
     }
+    if (i > 1 && data.ror.length > 0) {
+      str += `, Rate of Rise: ${Number(data.ror[i - 2]).toFixed(1)} µmol/L/h<br>`;
+    } else {
+      str += `<br>`;
+    }
     if (bili.result) {
       const plainText = stripHtmlTags(bili.result);
-      str += `, ${plainText}`;
+      str += `${plainText}`;
     }
     str += `<br><br>`;
     i++;
@@ -50,22 +55,12 @@ export const copyDataBtn = (copyBtn, data, dob, hob) => {
 
   // Δ isn't in the Windows-1252 codepage, so it can turn into "?" when pasted
   // into apps that only read the legacy ANSI clipboard flavor. Spell it out instead.
-  str = str.replace(/Δ-?/g, "Delta ");
+  str = str
+    .replace(/Δ-?/g, "Delta ")
+    .replace(/\u03BC/g, "\u00B5") // Greek μ → micro sign µ
+    .replace(/≥/g, ">=");
 
-  const copied = copyToClipboard(str);
-  if (copied) {
-    // change btn text for a second
-    copyBtn.textContent = "Copied!";
-    setTimeout(() => {
-      copyBtn.textContent = "Copy Data";
-    }, 1500);
-  } else {
-    console.error("Failed to copy");
-    copyBtn.textContent = "Error!";
-    setTimeout(() => {
-      copyBtn.textContent = "Copy Data";
-    }, 1500);
-  }
+  return copyToClipboard(str);
 };
 
 /**
@@ -92,16 +87,19 @@ const copyToClipboard = (str) => {
   var range = document.createRange();
   range.selectNode(container);
   window.getSelection().addRange(range);
-  document.execCommand("copy");
-
+  const success = document.execCommand("copy");
   // Remove the container
   document.body.removeChild(container);
-
-  return true;
+  return success;
 };
 
 function stripHtmlTags(htmlString) {
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = htmlString;
-  return tempDiv.textContent || tempDiv.innerText || "";
+
+  tempDiv.querySelectorAll("br").forEach((br) => {
+    br.replaceWith(document.createTextNode(" "));
+  });
+
+  return (tempDiv.textContent || "").replace(/\s+/g, " ").trim();
 }

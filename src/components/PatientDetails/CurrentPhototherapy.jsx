@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useDialogModal } from '../../dialog/useDialogModal.js';
-import { useLanguage } from '../../context/LanguageContext.jsx';
-import { t } from '../../translations.js';
+import { useState } from "react";
+import { useDialogModal } from "../../dialog/useDialogModal.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import { t } from "../../translations.js";
 
 export default function CurrentPhototherapy({
   currentPhototherapy,
@@ -32,7 +32,8 @@ export default function CurrentPhototherapy({
           name="currentPhototherapy"
           value="Yes"
           type="button"
-          className={`current-phototherapy-btn ${currentPhototherapy === 'Yes' ? ' current-phototherapy-btn--active' : ''}`}
+          aria-pressed={currentPhototherapy === "Yes"}
+          className={`current-phototherapy-btn ${currentPhototherapy === "Yes" ? " current-phototherapy-btn--active" : ""}`}
           onClick={(e) => handleCurrentPhototherapyChange(e.target)}
         >
           {t[lang].buttons.yes}
@@ -42,7 +43,8 @@ export default function CurrentPhototherapy({
           name="currentPhototherapy"
           value="No"
           type="button"
-          className={`current-phototherapy-btn ${currentPhototherapy === 'No' ? ' current-phototherapy-btn--active' : ''}`}
+          aria-pressed={currentPhototherapy === "No"}
+          className={`current-phototherapy-btn ${currentPhototherapy === "No" ? " current-phototherapy-btn--active" : ""}`}
           onClick={(e) => handleCurrentPhototherapyChange(e.target)}
         >
           {t[lang].buttons.no}

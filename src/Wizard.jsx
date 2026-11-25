@@ -12,9 +12,22 @@ import { graphBili } from "./js/graphBili.js";
 
 export default function Wizard({ showDisclaimer }) {
   const { lang } = useLanguage();
+  const [currentLanguage, setCurrentLanguage] = useState(lang);
   const [showPatientDetails, setShowPatientDetails] = useState(true);
   const [showBiliData, setShowBiliData] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+
+  // TODO
+  // When language toggled, if Summary is shown,
+  // the summary content should be re-rendered to reflect the new language.
+  useEffect(() => {
+    if (lang !== currentLanguage) {
+      setCurrentLanguage(lang);
+      if (showSummary) {
+        goToSummary();
+      }
+    }
+  }, [lang, currentLanguage, showSummary]);
 
   const containerRef = useRef(null);
   const currentStep = showPatientDetails ? 0 : showBiliData ? 1 : 2;
@@ -72,13 +85,19 @@ export default function Wizard({ showDisclaimer }) {
   const previousPhototherapyRef = useRef(null);
 
   // Bili Data
-  const [biliData, setBiliData] = useState([
+  const [biliData, setBiliData] = useState(() => [
     {
+      id: crypto.randomUUID(),
       dot: "",
       hot: "",
       ageInHours: "",
       tcb: "",
       tsb: "",
+      errors: {
+        ageInHours: null,
+        tcb: null,
+        tsb: null,
+      },
     },
   ]);
 
@@ -134,6 +153,18 @@ export default function Wizard({ showDisclaimer }) {
     // Note: DOB & HOB are optional fields so don't need to validate them
     // Note: DOT & HOT are optional fields so don't need to validate them
     // If any missing data, show a dialog that tells the user what they are missing and to go back and add!
+    if (!dob && hob) {
+      setShowPatientDetails(true);
+      setShowDOBSubmitErrorMsg(true);
+      scrollFieldIntoView(dobRef);
+      return;
+    }
+    if (dob && !hob) {
+      setShowPatientDetails(true);
+      setShowHOBSubmitErrorMsg(true);
+      scrollFieldIntoView(hobRef);
+      return;
+    }
     if (
       !gestAge ||
       !riskFactors ||
@@ -148,11 +179,14 @@ export default function Wizard({ showDisclaimer }) {
     const ageInHoursSet = new Set();
     for (let i = 0; i < biliData.length; i++) {
       const entry = biliData[i];
-      if (ageInHoursSet.has(entry.ageInHours)) {
+
+      const age = parseInt(entry.ageInHours, 10);
+
+      if (ageInHoursSet.has(age)) {
         setShowSummaryErrorDialog(true);
         return;
       }
-      ageInHoursSet.add(entry.ageInHours);
+      ageInHoursSet.add(age);
     }
 
     // Validate that all the bili data is present and valid before allowing user to proceed to summary
@@ -162,6 +196,15 @@ export default function Wizard({ showDisclaimer }) {
         setShowSummaryErrorDialog(true);
         return;
       }
+    }
+
+    // Check that no error messages exist for any of the bili data entries
+    const hasBiliErrors = biliData.some((entry) =>
+      Object.values(entry.errors ?? {}).some(Boolean),
+    );
+    if (hasBiliErrors) {
+      setShowSummaryErrorDialog(true);
+      return;
     }
 
     // Validation passed

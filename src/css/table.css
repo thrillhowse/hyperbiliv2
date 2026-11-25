@@ -4,86 +4,252 @@
 
 #patientDetailsSummaryTable {
   width: 100%;
-  margin-top: 12px;
 }
 
 #biliDataSummaryTable {
   width: 100%;
-  margin-top: 24px;
+  margin-top: 1.25rem;
+}
+
+/* ------------------------------------------------------------------
+   Summary result cards (markup generated in js/createSummaryTable.js)
+   Light cards that match the rest of the wizard: tinted title band,
+   hairline-divided rows, labels left and values right.
+   ------------------------------------------------------------------ */
+#patient-details-summary-div,
+#summary-table-div {
+  overflow: hidden;
+  background-color: var(--color-white);
+  border: 1px solid var(--card-title-border-bottom);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgb(12 31 61 / 0.04),
+    0 8px 24px -6px rgb(12 31 61 / 0.08),
+    0 24px 56px -16px rgb(12 31 61 / 0.1);
 }
 
 .summary-table-title {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
-  gap: 6px;
-  border-radius: 8px 8px 0 0;
-  padding: 12px;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.25rem;
+  background-color: var(--card-title-background);
+  border-bottom: 1px solid var(--card-title-border-bottom);
+  text-align: left;
+  color: var(--secondary-color);
   font-family: var(--main-font);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-.patient-summary-table-title {
-  background-color: var(--info-text-color);
-  text-align: left;
-  color: white;
+.summary-table-title > span {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
-.bili-summary-table-title {
-  background-color: var(--info-text-color);
-  text-align: left;
-  color: white;
-}
-
-.summary-table-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background-color: var(--secondary-background-color);
-  font-size: 0.9rem;
-}
-
-.summary-table-last-row {
-  border-radius: 0 0 8px 8px;
-}
-
-.summary-table-row-label {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 6px;
-}
-
-.bilirubin-data-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 4px 8px;
-  background-color: var(--consult-card-background-color);
-  text-align: left;
-  color: white;
-  font-size: 0.9rem;
-}
-
+.summary-table-row,
 .bilirubin-data-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background-color: var(--secondary-background-color);
-  font-size: 0.9rem;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9375rem;
 }
 
-.bilirubin-data-last-row {
-  border-radius: 0 0 8px 8px;
+.summary-table-row + .summary-table-row,
+.bilirubin-data-row + .bilirubin-data-row {
+  border-top: 1px solid var(--card-title-border-bottom);
+}
+
+.summary-table-row-label,
+.bilirubin-data-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-slate-600);
+}
+
+.summary-table-row-value,
+.bilirubin-data-value {
+  text-align: right;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Section eyebrows: Latest result / Interpretation / Comment */
+.bilirubin-data-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  background-color: var(--card-title-background);
+  border-block: 1px solid var(--card-title-border-bottom);
+  text-align: left;
+  color: var(--color-slate-600);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bilirubin-data-container > .bilirubin-data-header:first-child {
+  border-top: 0;
+}
+
+/* The test date on the right of the Latest Result eyebrow */
+.bilirubin-data-header > p + p {
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* "Above cutoff" values: the script colours them inline, so pick them out
+   by that colour and give them a tinted pill so they can't be missed */
+.bilirubin-data-value > span[style*="#cf1928"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  background-color: color-mix(
+    in oklab,
+    var(--color-red-600) 9%,
+    var(--color-white)
+  );
+  color: var(--color-red-600) !important;
+}
+
+.bilirubin-data-value .lucide--triangle-alert {
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+
+/* ------------------------------------------------------------------
+   Comment callout: the clinical outcome for the latest bili.
+   analyzeData.js sets the category; each one picks an accent colour
+   and icon. Tinted background, accent bar on the left, icon + title,
+   then the comment text in the normal body colour.
+   ------------------------------------------------------------------ */
+.comment {
+  /* defaults = routine */
+  --comment-accent: var(--secondary-color);
+  --comment-ink: var(--color-green-700);
+  --comment-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m9 12l2 2l4-4'/%3E%3C/g%3E%3C/svg%3E");
+
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.375rem;
+  margin: 0.875rem 1rem 1rem;
+  padding: 0.875rem 1rem 0.875rem 1.125rem;
+  background-color: color-mix(
+    in oklab,
+    var(--comment-accent) 7%,
+    var(--color-white)
+  );
+  border: 1px solid color-mix(in oklab, var(--comment-accent) 22%, transparent);
+  border-left: 4px solid var(--comment-accent);
+  border-radius: 12px;
+}
+
+.comment-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--comment-ink);
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.comment-title::before {
+  content: "";
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  background-color: currentColor;
+  -webkit-mask: var(--comment-icon) center / contain no-repeat;
+  mask: var(--comment-icon) center / contain no-repeat;
+}
+
+.comment .bilirubin-data-label {
+  display: block;
+  color: var(--info-text-color);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.comment a {
+  color: var(--comment-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
+  text-underline-offset: 3px;
+}
+
+.comment a:hover {
+  text-decoration-color: currentColor;
+}
+
+.comment a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Warning: the gold caution colour used elsewhere in the app */
+.comment-tcbCutoff,
+.comment-deltaTSBPreviousPhoto,
+.comment-warning,
+.comment-notApplicable {
+  --comment-accent: oklch(64% 0.15 82);
+  --comment-ink: var(--color-amber-800);
+  --comment-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 8v4m0 4h.01'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Phototherapy: blue light; sun icon, sunrise when approaching */
+.comment-phototherapy,
+.comment-phototherapyBelowThreshold,
+.comment-phototherapyTSBRequired,
+.comment-prePhototherapy {
+  --comment-accent: #2563c9;
+  --comment-ink: #1d4b9a;
+  --comment-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.comment-prePhototherapy {
+  --comment-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M12 2v8m-7.07.93l1.41 1.41M2 18h2m16 0h2m-2.93-7.07l-1.41 1.41M22 22H2M8 6l4-4l4 4m0 12a4 4 0 0 0-8 0'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Exchange: red; warning triangle at threshold (matches the "Above Cutoff"
+   pills), rising trend when approaching. Each category has its own icon
+   shape so the meaning doesn't rely on colour alone. */
+.comment-exchange,
+.comment-preExchange {
+  --comment-accent: var(--color-red-600);
+  --comment-ink: var(--color-red-600);
+  --comment-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m21.73 18l-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4m0 4h.01'/%3E%3C/svg%3E");
+}
+
+.comment-preExchange {
+  --comment-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M16 7h6v6'/%3E%3Cpath d='m22 7l-8.5 8.5l-5-5L2 17'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Keep the accent bar and tint on paper */
+@media print {
+  .comment {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
 }
 
 .bili-data-table-container {
@@ -221,7 +387,9 @@ td {
 
 @media screen and (min-width: 1440px) {
   .summary-tables-container {
-    overflow: auto;
+    /* visible, not auto: the height isn't constrained so it never scrolled,
+       it only clipped the cards' shadows */
+    overflow: visible;
     width: 50%;
     max-width: unset;
     height: 100%;
@@ -245,5 +413,56 @@ td {
   .summary-table th.value-header,
   .summary-table td.value-td {
     max-width: 10px;
+  }
+}
+
+/* Tighter cards on paper so Patient Details + Bilirubin Data fit on one page */
+@media print {
+  #patient-details-summary-div,
+  #summary-table-div {
+    box-shadow: none;
+    border-radius: 8px;
+    border-color: #c9d1da;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #biliDataSummaryTable {
+    margin-top: 0.75rem;
+  }
+
+  .summary-table-title {
+    padding: 0.4rem 0.875rem;
+    font-size: 11pt;
+  }
+
+  .summary-table-row,
+  .bilirubin-data-row {
+    padding: 0.3rem 0.875rem;
+    font-size: 10pt;
+  }
+
+  .summary-table-row + .summary-table-row,
+  .bilirubin-data-row + .bilirubin-data-row,
+  .bilirubin-data-header {
+    border-color: #c9d1da;
+  }
+
+  .bilirubin-data-header {
+    padding: 0.25rem 0.875rem;
+    font-size: 8pt;
+  }
+
+  .comment {
+    margin: 0.5rem 0.75rem 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .comment-title {
+    font-size: 10pt;
+  }
+
+  .comment .bilirubin-data-label {
+    line-height: 1.4;
   }
 }

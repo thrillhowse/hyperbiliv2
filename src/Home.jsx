@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import Header from './Header.jsx';
-import Infobar from './Infobar.jsx';
-import Disclaimer from './Disclaimer.jsx';
-import Wizard from './Wizard.jsx';
-import UpdateWarningDialog from './UpdateWarningDialog.jsx';
-import { useLanguage } from './context/LanguageContext.jsx';
-import { t } from './translations.js';
+import { useState } from "react";
+import Header from "./Header.jsx";
+import Infobar from "./Infobar.jsx";
+import Disclaimer from "./Disclaimer.jsx";
+import Wizard from "./Wizard.jsx";
+import UpdateWarningDialog from "./UpdateWarningDialog.jsx";
+import { useLanguage } from "./context/LanguageContext.jsx";
 
 export default function Home() {
   const { lang } = useLanguage();
 
-  const [showDisclaimer, setShowDisclaimer] = useState(() => sessionStorage.getItem('consented') !== 'true');
+  const [showDisclaimer, setShowDisclaimer] = useState(
+    () => sessionStorage.getItem("consented") !== "true",
+  );
   const [showInfobar, setShowInfobar] = useState(false);
   const [showUpdateWarning, setShowUpdateWarning] = useState(false);
 
   const handleConsent = () => {
-    sessionStorage.setItem('consented', 'true');
+    sessionStorage.setItem("consented", "true");
     setShowDisclaimer(false);
     setShowUpdateWarning(true);
   };

@@ -1,3 +1,8 @@
+/* ------------------------------------------------------------------
+   Install-as-app page. The note becomes a caution callout, each
+   platform becomes its own card with numbered steps, and the
+   benefits get check marks.
+   ------------------------------------------------------------------ */
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -9,25 +14,212 @@
 }
 
 .pwa-icon {
-  width: 16px;
-  height: 16px;
-  margin-inline: 4px;
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .pwa-icon-amber {
-  color: var(--color-amber-400);
+  color: oklch(64% 0.15 82);
 }
 
 .pwa-icon-red {
-  color: var(--color-amber-700);
+  color: var(--primary-color);
 }
 
+.pwa-icon-green {
+  color: var(--secondary-color);
+}
+
+/* "A quick note…": caution callout with the yellow tile, as in the
+   update dialog */
+.pages-text-container:has(.pwa-icon-amber) {
+  padding-block: 0.75rem;
+}
+
+.pages-text-container > p:has(> .pwa-icon-amber) {
+  --tile: 2rem;
+
+  display: grid;
+  grid-template-columns: var(--tile) minmax(0, 1fr);
+  column-gap: 0.875rem;
+  align-items: start;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: var(--card-title-background);
+  border: 1px solid var(--card-title-border-bottom);
+  border-radius: 12px;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.pages-text-container > p:has(> .pwa-icon-amber)::before {
+  content: "";
+  grid-area: 1 / 1;
+  width: var(--tile);
+  height: var(--tile);
+  border-radius: 9px;
+  background: color-mix(in oklab, var(--color-amber-300) 18%, var(--color-white));
+}
+
+.pages-text-container > p > .pwa-icon-amber {
+  grid-area: 1 / 1;
+  justify-self: center;
+  margin-top: calc((var(--tile) - 1.125rem) / 2);
+}
+
+.pages-text-container > p:has(> .pwa-icon-amber) > span + span {
+  grid-area: 1 / 2;
+  /* first line sits level with the tile's centre */
+  padding-top: 0.3rem;
+}
+
+/* Platform cards (iPhone, Android) */
+.pages-text-container.flex-col:has(> .pwa-section-container) {
+  width: auto;
+  margin: 0.75rem var(--pad) 0;
+  padding: 1.25rem;
+  border: 1px solid var(--card-title-border-bottom);
+  border-radius: 14px;
+  gap: 0;
+}
+
+/* Section headings */
+.pwa-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+/* Platform headings: icon on a tinted tile (::before) beside the title */
+.pwa-section-header:has(> .pwa-icon) {
+  --tile: 2.25rem;
+
+  display: grid;
+  grid-template-columns: var(--tile) minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.pwa-section-header:has(> .pwa-icon)::before {
+  content: "";
+  grid-area: 1 / 1;
+  width: var(--tile);
+  height: var(--tile);
+  border-radius: 10px;
+  background-color: var(--card-title-background);
+  border: 1px solid var(--card-title-border-bottom);
+}
+
+.pwa-section-header:has(> .pwa-icon-green)::before {
+  background-color: color-mix(in oklab, var(--secondary-color) 10%, var(--color-white));
+  border-color: transparent;
+}
+
+.pwa-section-header > .pwa-icon {
+  grid-area: 1 / 1;
+  place-self: center;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.pwa-section-header > .pwa-icon + span {
+  grid-area: 1 / 2;
+}
+
+.pwa-section-container > p {
+  margin-bottom: 1rem;
+  padding-left: 0;
+  font-size: 0.875rem;
+  color: var(--color-slate-600);
+}
+
+/* Numbered steps: green number circles joined by a faint rail */
 .pwa-ol {
-  margin-bottom: 0;
+  counter-reset: pwa-step;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pwa-ol li {
+  position: relative;
+  counter-increment: pwa-step;
+  min-height: 1.75rem;
+  padding: 0.125rem 0 0.875rem 2.5rem;
+  line-height: 1.5;
+}
+
+.pwa-ol li:last-child {
+  padding-bottom: 0;
+}
+
+.pwa-ol li::before {
+  content: counter(pwa-step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background-color: color-mix(in oklab, var(--secondary-color) 12%, var(--color-white));
+  color: var(--color-green-700);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.pwa-ol li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 1.875rem;
+  bottom: 0.125rem;
+  left: calc(0.875rem - 1px);
+  width: 2px;
+  border-radius: 1px;
+  background-color: color-mix(in oklab, var(--secondary-color) 18%, var(--color-white));
+}
+
+/* Why do this?: its own section with check marks */
+.pages-text-container.flex-col:has(> .pwa-ul) {
+  width: auto;
+  margin: 1.5rem var(--pad) 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--card-title-border-bottom);
+}
+
+.pages-text-container.flex-col:has(> .pwa-ul) .pwa-section-header {
+  margin-bottom: 0.75rem;
 }
 
 .pwa-ul {
-  list-style-type: disc;
-  padding-inline-start: 20px;
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pwa-ul li {
+  position: relative;
+  padding-left: 1.875rem;
+  line-height: 1.55;
+}
+
+.pwa-ul li::before {
+  content: "";
+  position: absolute;
+  top: 0.125rem;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--secondary-color);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m9 12l2 2l4-4'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='m9 12l2 2l4-4'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
 }

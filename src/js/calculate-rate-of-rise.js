@@ -61,8 +61,8 @@ export const calculateRateOfRise = (dataAnalysis) => {
     }
 
     // Rate of rise
-    rateOfRise = biliDiff / ageDiff;
-    rateOfRise = rateOfRise.toFixed(1);
+    // Round to the nearest tenth before assessing warning thresholds.
+    rateOfRise = Number((biliDiff / ageDiff).toFixed(1));
 
     // Insert the rate of rise into the ror array at the start
     ror.unshift(rateOfRise);

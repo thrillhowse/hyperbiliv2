@@ -1,21 +1,19 @@
-import { useLanguage } from './context/LanguageContext.jsx';
-import { useState, useRef, useEffect } from 'react';
-import { useDialogModal } from './dialog/useDialogModal.js';
-import { t } from './translations.js';
+import { useLanguage } from "./context/LanguageContext.jsx";
+import { t } from "./translations.js";
 
 // helpers
-import { calculateAgeInHours } from './js/calculateAgeInHours.js';
+// import { calculateAgeInHours } from "./js/calculateAgeInHours.js";
 
 // components
-import DateOfBirth from './components/PatientDetails/DateOfBirth.jsx';
-import HourOfBirth from './components/PatientDetails/HourOfBirth.jsx';
-import GestationalAge from './components/PatientDetails/GestationalAge.jsx';
-import RiskFactors from './components/PatientDetails/RiskFactors.jsx';
-import CurrentPhototherapy from './components/PatientDetails/CurrentPhototherapy.jsx';
-import PreviousPhototherapy from './components/PatientDetails/PreviousPhototherapy.jsx';
-import Updates from './Updates.jsx';
-import ClinicalDisclaimer from './ClinicalDisclaimer.jsx';
-import CPSGuidelines from './CPSGuidelines.jsx';
+import DateOfBirth from "./components/PatientDetails/DateOfBirth.jsx";
+import HourOfBirth from "./components/PatientDetails/HourOfBirth.jsx";
+import GestationalAge from "./components/PatientDetails/GestationalAge.jsx";
+import RiskFactors from "./components/PatientDetails/RiskFactors.jsx";
+import CurrentPhototherapy from "./components/PatientDetails/CurrentPhototherapy.jsx";
+import PreviousPhototherapy from "./components/PatientDetails/PreviousPhototherapy.jsx";
+import Updates from "./Updates.jsx";
+import ClinicalDisclaimer from "./ClinicalDisclaimer.jsx";
+import CPSGuidelines from "./CPSGuidelines.jsx";
 
 export default function PatientDetails({
   showPatientDetails,
@@ -60,7 +58,7 @@ export default function PatientDetails({
   return (
     <div
       id="patient-details-container"
-      className={`container patient-details-container${showPatientDetails ? '' : ' hidden'}`}
+      className={`container patient-details-container${showPatientDetails ? "" : " hidden"}`}
     >
       <div className="container-inputs">
         <div className="container-inputs-header">
@@ -70,7 +68,7 @@ export default function PatientDetails({
               <h2>{t[lang].patientDetails.header}</h2>
               <p>{t[lang].patientDetails.headerInfo}</p>
             </div>
-          </div>{' '}
+          </div>{" "}
         </div>
 
         <DateOfBirth
@@ -116,7 +114,7 @@ export default function PatientDetails({
         <div>
           <div
             className="container-input"
-            style={{ marginTop: '0px', marginBottom: 0 }}
+            style={{ marginTop: "0px", marginBottom: 0 }}
           >
             <div className="input-label">
               <span className="lucide--sun"></span>
@@ -164,7 +162,7 @@ export default function PatientDetails({
             </button>
           </div>
         </div>
-      </div>{' '}
+      </div>{" "}
       <div className="extra-info-column">
         <Updates />
         <ClinicalDisclaimer />

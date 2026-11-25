@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useDialogModal } from '../../dialog/useDialogModal.js';
-import { useLanguage } from '../../context/LanguageContext.jsx';
-import { t } from '../../translations.js';
+import { useState } from "react";
+import { useDialogModal } from "../../dialog/useDialogModal.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import { t } from "../../translations.js";
 
 // helpers
-import { closeOnBackdrop } from '../../dialog/closeOnBackdrop.js';
-import { calculateAgeInHours } from '../../js/calculateAgeInHours.js';
+import { closeOnBackdrop } from "../../dialog/closeOnBackdrop.js";
+import { calculateAgeInHours } from "../../js/calculateAgeInHours.js";
 
 export default function HourOfBirth({
   hob,
@@ -29,15 +29,19 @@ export default function HourOfBirth({
     setHourSelected(false);
     setHobErrorKey(null);
     setShowHOBSubmitErrorMsg(false);
-    setHob('');
-    setBiliData((prev) => prev.map((entry) => ({ ...entry, ageInHours: '' })));
+    setHob("");
+    setBiliData((prev) => prev.map((entry) => ({ ...entry, ageInHours: "" })));
 
     // Validate the hour of birth
     const hour = parseInt(hobInput.value, 10);
 
     if (!hobInput.value || isNaN(hour)) return;
     if (hour < 0 || hour > 23) {
-      setHobErrorKey('patientHOBErrorMsg');
+      setHobErrorKey("patientHOBErrorMsg");
+      return;
+    }
+    if (dob && new Date(`${dob}T${hobInput.value}:00`).getTime() > Date.now()) {
+      setHobErrorKey("patientFutureBirthDateTimeErrorMsg");
       return;
     }
 
@@ -62,7 +66,7 @@ export default function HourOfBirth({
       }
     }
     if (dobAfterDot) {
-      setHobErrorKey('patientFutureHOBErrorMsg');
+      setHobErrorKey("patientFutureHOBErrorMsg");
       return;
     }
 
@@ -86,12 +90,21 @@ export default function HourOfBirth({
             {t[lang].patientDetails.hobOptional}
           </span>
         </label>
-        <span id="infoBubbleHourOfBirth" onClick={() => setShowHobDialog(true)}>
-          <span className="lucide--info info-dialog-btn"></span>
-        </span>
+        <button
+          type="button"
+          id="infoBubbleHourOfBirth"
+          className="info-trigger"
+          aria-label={t[lang].patientDetails.hob}
+          aria-haspopup="dialog"
+          aria-controls="hobDialog"
+          onClick={() => setShowHobDialog(true)}
+        >
+          <span className="lucide--info info-dialog-btn" aria-hidden="true" />
+        </button>
         <dialog
           id="hobDialog"
           ref={hobDialogRef}
+          onCancel={() => setShowHobDialog(false)}
           onClick={(e) => closeOnBackdrop(e, () => setShowHobDialog(false))}
         >
           <p className="dialog-title">{t[lang].patientDetails.hob}</p>
@@ -110,11 +123,11 @@ export default function HourOfBirth({
         name="hob"
         id="hob"
         className={[
-          hobErrorKey || showHOBSubmitErrorMsg ? 'input-error' : '',
-          hourSelected ? 'selected' : '',
+          hobErrorKey || showHOBSubmitErrorMsg ? "input-error" : "",
+          hourSelected ? "selected" : "",
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
         aria-placeholder={t[lang].patientDetails.hob}
         value={hob}
         onChange={(e) => handleHobChange(e.currentTarget)}

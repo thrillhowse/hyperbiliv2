@@ -4,13 +4,18 @@
   margin: auto;
 }
 
+/* Chart.js sizes the canvas inline; this only frames it as a card */
 #bili-graph {
   width: 100%;
-  margin-top: 24px;
-  background-color: white;
-  padding: 8px;
-  border: 1px solid var(--secondary-background-color);
-  border-radius: 8px;
+  margin-top: 1.25rem;
+  padding: 0.75rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--card-title-border-bottom);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgb(12 31 61 / 0.04),
+    0 8px 24px -6px rgb(12 31 61 / 0.08),
+    0 24px 56px -16px rgb(12 31 61 / 0.1);
 }
 
 @media screen and (min-width: 1440px) {
@@ -20,5 +25,15 @@
 
   #bili-graph {
     margin-top: 0;
+  }
+}
+
+@media print {
+  #bili-graph {
+    margin-top: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
   }
 }

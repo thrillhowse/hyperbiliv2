@@ -1,7 +1,8 @@
 .container-icon {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--color-slate-600);
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-slate-500);
 }
 
 .add-del-icon-div {

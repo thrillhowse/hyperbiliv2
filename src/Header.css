@@ -25,16 +25,42 @@ header {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 0.25rem;
 }
 
 .nav-list-item {
-  color: color-mix(in oklab, var(--color-white) 65%, transparent);
-  font-size: 0.9rem;
+  color: color-mix(in oklab, var(--color-white) 72%, transparent);
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
-.nav-list-item:hover {
+/* The global `a { color: var(--primary-color) }` in index.css made these
+   links navy on the navy header, i.e. invisible. Take the item's colour. */
+.nav-list-item .list-link {
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 999px;
+  color: inherit;
+  white-space: nowrap;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.nav-list-item .list-link > span {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.nav-list-item .list-link:hover {
+  background-color: rgb(255 255 255 / 0.1);
   color: var(--color-white);
+}
+
+.nav-list-item .list-link:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--color-white) 70%, transparent);
+  outline-offset: 2px;
 }
 
 .title-link {
@@ -87,6 +113,22 @@ header {
   }
 
   .header-icon {
+    display: none;
+  }
+}
+
+/* Small laptops: drop the nav icons so the longer French labels
+   ("Avis de non responsabilité") still fit beside the language button */
+@media screen and (min-width: 1024px) and (max-width: 1279.98px) {
+  .nav-container {
+    margin-right: 0.75rem;
+  }
+
+  .nav-list-item .list-link {
+    padding-inline: 0.5rem;
+  }
+
+  .nav-list-item .list-link > span {
     display: none;
   }
 }

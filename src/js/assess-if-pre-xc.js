@@ -30,17 +30,19 @@ export const assessIfPreXC = (
   // Check if this is the latest/most recent data point (by age in hours)
   // and if so set the dataAnalysis.preXcLevel to this data point's pre xc level
   if (latestBili) {
-    dataAnalysis.preXcLevel = parseFloat(preXcLevel.toFixed(2));
+    dataAnalysis.preXcLevel = parseFloat(preXcLevel.toFixed(2)); // to 2 decimal places, consistent with bili-data.js
   }
 
   // In case of neurotoxicity risk factors, BET can be initiated when TSB reaches the pre-exchange transfusion
   // threshold (≤30 μmol/L of the exchange transfusion threshold) - Recommendation 26
   if (patient.riskFactors) {
+    // Check if TSB is available and at/above the pre-XC level
     if (biliDataForThisRow.tsb && biliDataForThisRow.tsb >= preXcLevel) {
       biliDataForThisRow.result = t[lang].comments.preXC.tsbWithRF;
       return true;
     }
-    // Do the same for TcB
+    // If TSB is not available (i.e., we only have TcB for this data point)
+    // then check if TcB is available and at/above the pre-XC level
     if (
       !biliDataForThisRow.tsb &&
       biliDataForThisRow.tcb &&
@@ -52,7 +54,7 @@ export const assessIfPreXC = (
   }
 
   // If no neurotoxicity risk factors
-  // can then compare the pre-xc level with the bili data for the given age starting by checking tsb (then tcb if tsb n/a)
+  // can then compare the pre-xc level with the bili data for the given age starting by checking TSB (then TcB if TSB n/a)
   if (biliDataForThisRow.tsb && biliDataForThisRow.tsb >= preXcLevel) {
     biliDataForThisRow.result = t[lang].comments.preXC.tsbWithoutRF;
     return true;
@@ -63,7 +65,8 @@ export const assessIfPreXC = (
   ) {
     biliDataForThisRow.result = t[lang].comments.preXC.tcbWithoutRF;
     return true;
-  } else {
-    return false;
   }
+
+  // If the selected measurement is not at/above the pre-XC level, return false
+  return false;
 };

@@ -43,16 +43,22 @@ export default function GestationalAge({
           <p className="input-label-text-container">
             {t[lang].patientDetails.gestAge}
           </p>
-          <span
-            id="infoBubbleGestAgeAtBirth"
-            onClick={() => setShowGestAgeDialog(true)}
-          >
-            <span className="lucide--info info-dialog-btn"></span>
-          </span>
         </label>
+        <button
+          type="button"
+          id="infoBubbleGestAgeAtBirth"
+          className="info-trigger"
+          aria-label={t[lang].patientDetails.gestAge}
+          aria-haspopup="dialog"
+          aria-controls="gestAgeAtBirthDialog"
+          onClick={() => setShowGestAgeDialog(true)}
+        >
+          <span className="lucide--info info-dialog-btn" aria-hidden="true" />
+        </button>
         <dialog
           id="gestAgeAtBirthDialog"
           ref={gestAgeDialogRef}
+          onCancel={() => setShowGestAgeDialog(false)}
           onClick={(e) => closeOnBackdrop(e, () => setShowGestAgeDialog(false))}
         >
           <p className="dialog-title">{t[lang].patientDetails.gestAgeLong}</p>

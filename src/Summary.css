@@ -3,17 +3,16 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
   width: 100%;
-  margin: 0 auto;
-  padding: 8px;
-  padding-top: 18px;
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-  font-size: large;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto 1.25rem;
+  padding: 1.25rem clamp(1rem, 4vw, 1.5rem);
+  background-color: var(--color-white);
+  border: 1px solid var(--card-title-border-bottom);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 2px rgb(12 31 61 / 0.04),
+    0 8px 24px -6px rgb(12 31 61 / 0.08),
+    0 24px 56px -16px rgb(12 31 61 / 0.1);
 }
 
 .no-bottom-border {

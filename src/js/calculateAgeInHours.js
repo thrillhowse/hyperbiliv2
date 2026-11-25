@@ -28,7 +28,11 @@ export function calculateAgeInHours(dob, hob, biliData) {
 
       // Calculate age in hours
       const ageInHours = Math.round(delta / 1000 / 60 / 60);
-      return { ...entry, ageInHours };
+      return {
+        ...entry,
+        ageInHours,
+        errors: { ...entry.errors, ageInHours: null },
+      };
     } else {
       return { ...entry };
     }

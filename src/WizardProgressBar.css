@@ -1,133 +1,142 @@
+/* ------------------------------------------------------------------
+   Wizard step bar: Patient Details — Bili Data — Summary
+   Steps are pills; the connectors fill green as each step is completed.
+   When the bar is too narrow for every label (phones, and French on
+   tablets), only the current step keeps its label and the others
+   collapse to their icon.
+   ------------------------------------------------------------------ */
 .wizard-progress-bar {
+  container-type: inline-size;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   width: 90%;
-  margin: 12px auto;
-  padding: 12px 8px;
+  margin: 0.75rem auto;
+  padding: 0.5rem 0;
 }
 
 .wizard-step {
   display: flex;
+  flex: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 6px;
-  position: relative;
-  text-align: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.125rem 0.5rem 0.75rem;
   border: none;
-  border-radius: 18px;
+  border-radius: 999px;
   outline: none;
-  padding: 8px 12px;
-  background-color: inherit;
-  color: var(--color-slate-500);
-  font-size: 12px;
-  font-weight: 500;
+  background-color: transparent;
+  color: var(--color-slate-600);
   font-family: var(--main-font);
-  letter-spacing: 1px;
-  overflow: hidden;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-align: center;
+  white-space: nowrap;
   cursor: pointer;
   transition:
-    color 0.3s ease-in-out,
-    border-radius 0.2s ease-in-out;
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
 }
 
-.wizard-step-active {
-  color: var(--color-white);
-  background-color: var(--secondary-color);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+/* Sized in rem, not em, so they survive the compact mode's font-size: 0 */
+.wizard-step span {
+  display: block;
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.wizard-step:hover:not(.wizard-step-active) {
+  background-color: color-mix(in oklab, var(--secondary-background-color) 14%, var(--color-white));
+}
+
+.wizard-step:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--secondary-color) 45%, transparent);
+  outline-offset: 2px;
 }
 
 .wizard-step-complete {
+  color: var(--color-green-600);
+}
+
+.wizard-step-complete span {
   color: var(--secondary-color);
 }
 
-.wizard-step:hover {
-  cursor: pointer;
+.wizard-step-complete:hover:not(.wizard-step-active) {
+  background-color: color-mix(in oklab, var(--secondary-color) 9%, var(--color-white));
 }
 
-.wizard-step span {
-  display: none;
-  position: relative;
-  z-index: 1;
+.wizard-step-active {
+  background-color: var(--secondary-color);
+  color: var(--color-white);
+  box-shadow:
+    0 1px 2px rgb(10 92 61 / 0.2),
+    0 6px 16px -4px rgb(26 155 110 / 0.45);
 }
 
 .wizard-step-active span {
-  color: #fff;
+  color: var(--color-white);
 }
 
-.wizard-step-active-full {
-  background-color: var(--secondary-color);
-  color: #fff;
+/* Connectors: grey until the step before them is done, then green */
+.wizard-step-separator {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 1rem;
+}
+
+.wizard-step-separator hr {
+  width: 100%;
+  height: 2px;
+  margin: 0;
   border: none;
-  border-radius: 0 0 0 0;
-  transition: border-radius 0.2s ease-in-out;
+  border-radius: 1px;
+  background-color: color-mix(in oklab, var(--secondary-background-color) 40%, var(--color-white));
+  transition: background-color 300ms ease;
 }
 
-@media screen and (max-width: 425.98px) {
-  .wizard-step {
-    font-size: 10px;
-  }
+.wizard-step-separator-active hr {
+  background-color: var(--secondary-color);
 }
 
-@media screen and (min-width: 426px) {
-  .wizard-step {
-    font-size: 16px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .wizard-step span {
-    display: block;
-  }
-}
-
-@media screen and (max-width: 1023.98px) {
-  .wizard-step-separator {
-    display: flex;
-    align-items: center;
-    flex: 0 1 32px;
-    min-width: 16px;
-    margin: 0 2px;
+/* Compact: not enough room for all three labels. font-size: 0 hides the
+   label text visually but keeps it as the button's accessible name. */
+@container (max-width: 44rem) {
+  .wizard-step:not(.wizard-step-active) {
+    padding: 0.5rem;
+    font-size: 0;
   }
 
-  .wizard-step-separator hr {
-    width: 100%;
-    height: 2px;
-    margin: 0;
-    border: none;
-    border-radius: 1px;
-    background-color: var(--color-slate-300);
-    transition: background-color 0.3s ease-in-out;
-  }
-
-  .wizard-step-separator-active hr {
-    background-color: var(--secondary-color);
+  .wizard-step-active {
+    flex: 0 1 auto;
+    min-width: 0;
+    padding: 0.5rem 1rem 0.5rem 0.625rem;
+    font-size: 0.875rem;
+    /* very narrow phones: let a long (French) label wrap rather than overflow */
+    white-space: normal;
+    text-align: left;
   }
 }
 
-@media screen and (min-width: 1024px) {
-  .wizard-step {
-    min-width: 200px;
-    max-width: 300px;
-  }
-
-  .wizard-step-separator {
-    width: 100%;
-    height: 4px;
-    margin: 0 8px;
-  }
-
-  .wizard-step-separator hr {
-    margin: 0;
-    color: var(--secondary-color);
-    background-color: var(--secondary-color);
-  }
-}
-
+/* Desktop: line up with the cards below */
 @media screen and (min-width: 1024px) {
   .wizard-progress-bar {
     width: 80%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wizard-step,
+  .wizard-step-separator hr {
+    transition: none;
   }
 }

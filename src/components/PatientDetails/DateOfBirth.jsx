@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useDialogModal } from '../../dialog/useDialogModal.js';
-import { useLanguage } from '../../context/LanguageContext.jsx';
-import { t } from '../../translations.js';
+import { useState } from "react";
+import { useDialogModal } from "../../dialog/useDialogModal.js";
+import { useLanguage } from "../../context/LanguageContext.jsx";
+import { t } from "../../translations.js";
 
 // helpers
-import { closeOnBackdrop } from '../../dialog/closeOnBackdrop.js';
-import { calculateAgeInHours } from '../../js/calculateAgeInHours.js';
+import { closeOnBackdrop } from "../../dialog/closeOnBackdrop.js";
+import { calculateAgeInHours } from "../../js/calculateAgeInHours.js";
 
 export default function DateOfBirth({
   dob,
@@ -27,18 +27,18 @@ export default function DateOfBirth({
 
   const localToday = () => {
     const d = new Date();
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   };
 
   const handleDobChange = (dobInput) => {
     setDateSelected(false);
     setDobErrorKey(null);
     setShowDOBSubmitErrorMsg(false);
-    setDob('');
+    setDob("");
     setBiliData((prev) =>
       prev.map((entry) => ({
         ...entry,
-        ageInHours: '',
+        ageInHours: "",
       })),
     );
 
@@ -49,14 +49,19 @@ export default function DateOfBirth({
     let validDatePattern =
       /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/;
     if (dobInput.value.match(validDatePattern) === null) {
-      setDobErrorKey('patientDOBErrorMsg');
+      setDobErrorKey("patientDOBErrorMsg");
       return;
     }
 
     // Validate that the date is not in the future
     const today = localToday();
     if (dobInput.value > today) {
-      setDobErrorKey('patientFutureDOBErrorMsg');
+      setDobErrorKey("patientFutureDOBErrorMsg");
+      return;
+    }
+    // Validate that the day of birth and hour of birth (if both present) do not land in the future
+    if (hob && new Date(`${dobInput.value}T${hob}:00`).getTime() > Date.now()) {
+      setDobErrorKey("patientFutureBirthDateTimeErrorMsg");
       return;
     }
 
@@ -95,7 +100,7 @@ export default function DateOfBirth({
       }
     }
     if (dobAfterDot) {
-      setDobErrorKey('patientDOBAfterDOTErrorMsg');
+      setDobErrorKey("patientDOBAfterDOTErrorMsg");
       return;
     }
 
@@ -119,12 +124,21 @@ export default function DateOfBirth({
             {t[lang].patientDetails.dobOptional}
           </span>
         </label>
-        <span id="infoBubbleDateOfBirth" onClick={() => setShowDobDialog(true)}>
-          <span className="lucide--info info-dialog-btn"></span>
-        </span>
+        <button
+          type="button"
+          id="infoBubbleDateOfBirth"
+          className="info-trigger"
+          aria-label={t[lang].patientDetails.dob}
+          aria-haspopup="dialog"
+          aria-controls="dobDialog"
+          onClick={() => setShowDobDialog(true)}
+        >
+          <span className="lucide--info info-dialog-btn" aria-hidden="true" />
+        </button>
         <dialog
           id="dobDialog"
           ref={dobDialogRef}
+          onCancel={() => setShowDobDialog(false)}
           onClick={(e) => closeOnBackdrop(e, () => setShowDobDialog(false))}
         >
           <p className="dialog-title">{t[lang].patientDetails.dob}</p>
@@ -145,11 +159,11 @@ export default function DateOfBirth({
         name="dob"
         value={dob}
         className={[
-          dobErrorKey || showDOBSubmitErrorMsg ? 'input-error' : '',
-          dateSelected ? 'date-selected' : '',
+          dobErrorKey || showDOBSubmitErrorMsg ? "input-error" : "",
+          dateSelected ? "date-selected" : "",
         ]
           .filter(Boolean)
-          .join(' ')}
+          .join(" ")}
         // set max attribute to today's date (local time) to prevent selecting future dates
         max={localToday()}
         onChange={(e) => handleDobChange(e.currentTarget)}
