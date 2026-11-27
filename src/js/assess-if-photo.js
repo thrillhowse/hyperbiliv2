@@ -17,11 +17,7 @@ export const assessIfPhoto = (
     }
   }
 
-  // Second, just make sure to handle the case where patient age in hours is > 336 (last data point in the array)
   let ageInHours = biliDataForThisRow.ageInHours;
-  if (biliDataForThisRow.ageInHours > 336) {
-    ageInHours = 336;
-  }
 
   // Get the photo level based on the GA, risk factors and age for this bili
   const photoLevel =

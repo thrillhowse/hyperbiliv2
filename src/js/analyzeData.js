@@ -116,6 +116,19 @@ export const analyzeData = (
     // and to calculate the rate of rise
     let latestBili = biliDataForThisRow.ageInHours === latestAgeInHours;
 
+    // Nov 2026
+    // Check if the age exceeds the threshold for the latest bili
+    // If the age in hours exceeds 336, mark it as exceeding the threshold for the latest bili
+    if (biliDataForThisRow.ageInHours > 336) {
+      if (latestBili) {
+        dataAnalysis.ageExceedsThreshold = true;
+      }
+
+      biliDataForThisRow.category = "ageExceedsThreshold";
+      biliData.push(biliDataForThisRow);
+      continue;
+    }
+
     // Compare the bili for the given age in hours to the various XC/photo cutoffs
     //  - XC: check if bili for given age is above XC levels, else
     //  - preXC: check if bili is in pre-XC levels (delta within 30), else

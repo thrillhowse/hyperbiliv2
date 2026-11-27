@@ -7,12 +7,16 @@ export const calculateRateOfRise = (dataAnalysis) => {
   if (dataAnalysis.biliData.length < 2) {
     // console.log('only 1 data point so no ror to calc');
     dataAnalysis.ror = [];
+    dataAnalysis.rorMixed = [];
     return dataAnalysis;
   }
 
   // Otherwise, calculate the rate of rise between the bili data points
   const ror = [];
   let latestRow, secondLatestRow, ageDiff, biliDiff, rateOfRise;
+
+  // Also keep track of whether the rate of rise is based on mixed TcB/TSB values
+  const rorMixed = [];
 
   // Order the bili data by age in hours
   const sortedBiliData = dataAnalysis.biliData.sort(
@@ -66,9 +70,11 @@ export const calculateRateOfRise = (dataAnalysis) => {
 
     // Insert the rate of rise into the ror array at the start
     ror.unshift(rateOfRise);
+    rorMixed.unshift(!latestRow.tsb || !secondLatestRow.tsb); // true if the rate of rise is based on mixed TcB/TSB values
   }
 
   dataAnalysis.ror = ror;
+  dataAnalysis.rorMixed = rorMixed;
 
   // Add a check for whether RoR is high for given age
   dataAnalysis.rorHigh = false;

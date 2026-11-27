@@ -44,7 +44,7 @@ export default function About() {
             </div>
             <div className="about-info-card">
               <p className="about-info-card-title">{t[lang].about.release}</p>
-              <p className="about-info-card-text">October 2026</p>
+              <p className="about-info-card-text">December 2026</p>
             </div>
           </div>
           <div className="version-notes-container">
@@ -59,7 +59,7 @@ export default function About() {
                   <div className="vh-meta">
                     <span className="vh-version">Version 2.0.0</span>
                     <span className="vh-badge">Latest</span>
-                    <span className="vh-date">October 2026</span>
+                    <span className="vh-date">December 2026</span>
                   </div>
                   <p className="vh-notes">hyperbili now in French</p>
                   <p className="vh-notes">Updated look & feel</p>
@@ -70,6 +70,10 @@ export default function About() {
                     High rate of rise now triggers a warning dialog to consider
                     selecting "Yes" for risk factors and to review patient
                     details and bili data
+                  </p>
+                  <p className="vh-notes">
+                    Mixing TcB and TSB when calculating rate of rise now
+                    triggers a warning dialog to alert the user
                   </p>
                 </li>
 

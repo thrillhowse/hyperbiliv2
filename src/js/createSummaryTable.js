@@ -145,11 +145,12 @@ ${t[lang].summary.patientDetails.header}
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.ror}</p>
-        <p class="bilirubin-data-value">${
+        <p class="bilirubin-data-value rate-of-rise-value">${
           data.ror?.length
             ? `${data.ror.map((rate) => Number(rate).toFixed(1)).join(" ➜ ")} µmol/L/h`
             : "—"
-        }
+        } 
+        ${data.rorMixed?.length && data.rorMixed.some((rorMixed) => rorMixed) ? `<span>${t[lang].rorWarning.mixed}</span>` : ""}
       </div>
 
       <div class="bilirubin-data-header">
@@ -161,15 +162,15 @@ ${t[lang].summary.patientDetails.header}
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.phototherapy}</p>
-        <p class="bilirubin-data-value">${photoCutoff}</span></p>
+        <p class="bilirubin-data-value">${data.ageExceedsThreshold ? `<span>N/A</span>` : `${photoCutoff}</span>`}</p>
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.preExchange}</p>
-        <p class="bilirubin-data-value">${preXcCutoff}</span></p>
+        <p class="bilirubin-data-value">${data.ageExceedsThreshold ? `<span>N/A</span>` : `${preXcCutoff}</span>`}</p>
       </div>
       <div class="bilirubin-data-row">
         <p class="bilirubin-data-label">${t[lang].summary.biliData.exchange}</p>
-        <p class="bilirubin-data-value">${xcCutoff}</span></p>
+        <p class="bilirubin-data-value">${data.ageExceedsThreshold ? `<span>N/A</span>` : `${xcCutoff}</span>`}</p>
       </div>
 
       <div class="bilirubin-data-header">

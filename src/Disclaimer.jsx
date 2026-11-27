@@ -39,7 +39,12 @@ export default function Disclaimer({ showDisclaimer, setShowDisclaimer }) {
 
           <div className="consent-text-container">
             <span className="lucide--triangle-alert caution"></span>
-            <p className="consent-text">{t[lang].disclaimer.thirdSection}</p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t[lang].disclaimer.thirdSection,
+              }}
+              className="consent-text"
+            ></p>
           </div>
 
           <div className="affirm-consent-text-container">

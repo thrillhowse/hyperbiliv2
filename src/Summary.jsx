@@ -41,7 +41,7 @@ export default function Summary({
   // Show warning if age 336 hours or greater
   useEffect(() => {
     setShowAgeExceedsThresholdWarningDialog(
-      summaryGenerated?.latestAgeInHours >= 336,
+      summaryGenerated?.latestAgeInHours > 336,
     );
   }, [summaryGenerated]);
 
@@ -252,6 +252,10 @@ export default function Summary({
             </div>
             <p className="dialog-text">{t[lang].rorWarning.text1}</p>
             <p className="dialog-text">{t[lang].rorWarning.text2}</p>
+            {summaryGenerated?.rorMixed &&
+              summaryGenerated.rorMixed.some((rorMixed) => rorMixed) && (
+                <p className="dialog-text">{t[lang].rorWarning.mixed}</p>
+              )}
             <div>
               <button
                 id="closeRoRWarningDialogBtn"

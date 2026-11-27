@@ -49,8 +49,7 @@ export const t = {
       firstSection: `<a href="https://healthygenerations.ca/" target="_blank" rel="noopener noreferrer">Healthy Generations Foundation</a> has provided an unrestricted grant to support the development of <em>hyperbili</em>.`,
       secondSection:
         "The Board of Healthy Generations has not conducted an in-depth scientific review of <em>hyperbili</em> and acknowledges and agrees that this tool will be used only as a reference aid, and that the information contained in the product is not intended to be (nor should it be used as) a substitute for the exercise of professional judgment.",
-      thirdSection:
-        "In view of the possibility of human error or changes in medical science, the User should confirm the information in the product through independent sources. This product is provided without warranties of any kind, express or implied, and the authors disclaim any liability, loss, or damage caused by it or its content.",
+      thirdSection: `<em>hyperbili</em> is intended for use by healthcare professionals and is not designed for use by patients or families. In view of the possibility of human error or changes in medical science, the User should confirm the information in the product through independent sources. This product is provided without warranties of any kind, express or implied, and the authors disclaim any liability, loss, or damage caused by it or its content.`,
       fourthSection:
         "By continuing to use this product, you have indicated your acceptance of these terms.",
       consentBtn: "Consent & Continue",
@@ -174,17 +173,20 @@ export const t = {
         aboveCutoff: "Above Cutoff",
         comment: "Comment",
         categories: {
+          ageExceedsThreshold: "Measurement taken after 336 hours (14 days)",
           exchange: "At or above exchange transfusion threshold",
           preExchange: "At or above pre-exchange transfusion threshold",
           phototherapyBelowThreshold:
-            "Below phototherapy threshold - on treatment",
-          phototherapyTSBRequired: "TSB required for assessment",
+            "Below phototherapy threshold while on treatment",
+          phototherapyTSBRequired:
+            "TcB entered; TSB-based comparison unavailable",
           phototherapy: "At or above phototherapy threshold",
           prePhototherapy: "Approaching phototherapy",
-          tcbCutoff: "Confirm with TSB",
-          deltaTSBPreviousPhoto: "Clinical judgment required",
-          warning: "Follow-up required",
-          routine: "Routine follow-up",
+          tcbCutoff: "TcB meets serum-confirmation criteria",
+          deltaTSBPreviousPhoto:
+            "Prior phototherapy; screening ΔTSB category does not apply",
+          warning: "Within 90 µmol/L of phototherapy threshold",
+          routine: "Greater than 90 µmol/L from phototherapy threshold",
           notApplicable: "ΔTSB follow-up guidance not applicable",
         },
       },
@@ -322,6 +324,8 @@ export const t = {
       text1: "The rate of rise (RoR) is high for the patient's age!",
       text2:
         "Consider selecting 'Yes' for Risk Factors as this may indicate a hemolytic condition. Please review the patient's details and bili data to ensure accuracy.",
+      mixed: "Note: the rate of rise is based on mixed TcB/TSB values.",
+      mixedValues: "Comparing TcB/TSB values",
     },
 
     // Age Exceeds Threshold Warning Dialog
@@ -329,7 +333,7 @@ export const t = {
       title: "Warning",
       text1: "The patient's age is greater than or equal to 336 hours",
       text2:
-        "Measurements at or beyond 336 hours may be partially or entirely outside the visible graph. Please review the patient details, bili data and graph carefully to ensure accuracy.",
+        "The CPS threshold curves end at 336 hours (14 days). Measurements taken after 336 hours are outside the range of these curves. Such measurements may be partially or entirely outside the visible graph and are not supported by the statement. Please review the patient details, bili data and graph carefully and take caution when interpreting the results.",
     },
 
     // Clinical Disclaimer
@@ -496,7 +500,7 @@ export const t = {
       header: "Avis de non-responsabilité",
       firstSection: `<a href="https://generationsensante.ca/" target="_blank" rel="noopener noreferrer">La Fondation Générations en santé</a>, qui fait partie de la Société canadienne de pédiatrie (SCP), a versé une bourse d’éducation sans restrictions pour financer l’élaboration d’hyperbili.`,
       secondSection: `Le conseil d’administration de Générations en santé n’a pas procédé à une analyse scientifique approfondie d’hyperbili. Il reconnaît et accepte que cet outil sera utilisé seulement comme référence et que l’information qu’il contient n’est pas conçue (ni ne devrait l’être) pour remplacer le jugement professionnel.`,
-      thirdSection: `Étant donné la possibilité d’erreur humaine ou d’évolution de la médecine, l’utilisateur doit confirmer l’information contenue dans l’outil auprès de sources indépendantes. Ce produit est fourni sans garanties quelles qu’elles soient, explicites ou implicites, et les auteurs déclinent toute responsabilité, toutes pertes ou tous dommages dont l’outil ou son contenu serait responsable.`,
+      thirdSection: `<em>hyperbili</em> est destiné aux professionnels de la santé; il n’est pas conçu pour être utilisé par les patients ou les familles. Étant donné la possibilité d’erreur humaine ou d’évolution de la médecine, l’utilisateur doit confirmer l’information contenue dans l’outil auprès de sources indépendantes. Ce produit est fourni sans garanties quelles qu’elles soient, explicites ou implicites, et les auteurs déclinent toute responsabilité, toutes pertes ou tous dommages dont l’outil ou son contenu serait responsable.`,
       fourthSection: `En continuant d’utiliser ce produit, vous indiquez que vous en acceptez les modalités.`,
       consentBtn: "Consentir et continuer",
     },
@@ -626,17 +630,21 @@ export const t = {
         aboveCutoff: "Au-dessus du seuil",
         comment: "Commentaire",
         categories: {
+          ageExceedsThreshold: "Mesure effectuée après 336 heures (14 jours)",
           exchange: "Seuil d’exsanguinotransfusion atteint ou dépassé",
           preExchange: "Seuil de pré-exsanguinotransfusion atteint ou dépassé",
           phototherapyBelowThreshold:
             "Sous le seuil de photothérapie – traitement en cours",
-          phototherapyTSBRequired: "Dosage de la BST requis pour l’évaluation",
+          phototherapyTSBRequired:
+            "BTc saisi; comparaison fondée sur la BST non disponible",
           phototherapy: "Seuil de photothérapie atteint ou dépassé",
           prePhototherapy: "Proche du seuil de photothérapie",
-          tcbCutoff: "Confirmer par un dosage de la BST",
-          deltaTSBPreviousPhoto: "Jugement clinique requis",
-          warning: "Suivi requis",
-          routine: "Suivi de routine",
+          tcbCutoff: "La BTc répond aux critères de confirmation sérique",
+          deltaTSBPreviousPhoto:
+            "Photothérapie antérieure; la catégorie de dépistage ΔBST ne s’applique pas",
+          warning: "À moins de 90 µmol/L du seuil de photothérapie",
+          routine:
+            "Supérieur à 90 µmol/L par rapport au seuil de photothérapie",
           notApplicable:
             "Recommandations de suivi selon le ΔBST non applicables",
         },
@@ -777,6 +785,9 @@ export const t = {
       text1: "Le taux d'augmentation est élevé pour l'âge du patient !",
       text2:
         "Il est conseillé de choisir « Oui » pour les facteurs de risque, car cela pourrait indiquer une affection hémolytique. Veuillez vérifier l'exactitude des renseignements concernant le patient et ses données biliaires.",
+      mixed:
+        "Remarque : le taux d’augmentation est fondé sur des valeurs mixtes de BTc et de BST.",
+      mixedValues: "Comparaison des valeurs de TcB/TSB",
     },
 
     // Age Exceeds Threshold Warning Dialog
@@ -784,7 +795,7 @@ export const t = {
       title: "Avertissement",
       text1: "L'âge du patient est supérieur ou égal à 336 heures.",
       text2:
-        "Les mesures effectuées à 336 heures ou plus peuvent se situer partiellement ou totalement en dehors de la zone visible du graphique. Veuillez examiner attentivement les renseignements concernant le patient, les données biliaires et le graphique afin d'en garantir l'exactitude.",
+        "Les courbes de seuil CPS s’arrêtent à 336 heures (14 jours). Les mesures effectuées après 336 heures se situent hors de la plage couverte par ces courbes. De telles mesures peuvent se trouver partiellement ou entièrement en dehors de la zone visible du graphique et ne sont pas prises en compte dans l’énoncé. Veuillez examiner attentivement les renseignements sur le patient, les données sur la bilirubine ainsi que le graphique, et faire preuve de prudence lors de l’interprétation des résultats.",
     },
 
     // Clinical Disclaimer

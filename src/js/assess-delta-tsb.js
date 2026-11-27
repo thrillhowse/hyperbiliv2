@@ -14,10 +14,6 @@ export const assessDeltaTSB = (
     dataAnalysis.deltaTSB = false;
     biliDataForThisRow.result = t[lang].comments.deltaTSBComments.ageUnder12h;
     return false;
-    // } else if (patient.phototherapy.previousPhototherapy) {
-    //   dataAnalysis.deltaTSB = false;
-    //   biliDataForThisRow.result = t[lang].comments.deltaTSBComments.previousPhoto;
-    //   return false;
   }
 
   // If safe to proceed
@@ -30,11 +26,7 @@ export const assessDeltaTSB = (
     }
   }
 
-  // Second, just make sure to handle the case where patient age in hours is > 336 (last data point in the array)
   let ageInHours = biliDataForThisRow.ageInHours;
-  if (biliDataForThisRow.ageInHours > 336) {
-    ageInHours = 336;
-  }
 
   // Get the photo level based on the GA, risk factors and age for this bili
   const photoLevel =
